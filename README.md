@@ -209,8 +209,6 @@
   <br />
   • I built my first Android app at age 25
   <br />
-  • I can solve a Rubik's cube in under 2 minutes
-  <br />
   • I love hiking in the mountains of Tajikistan
   <br />
   • My first AI model was a simple neural network in Python
