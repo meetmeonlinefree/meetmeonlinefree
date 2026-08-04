@@ -26,8 +26,6 @@
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=nekruzSADRIDDNZODA&label=PROFILE+VIEWS&style=for-the-badge&color=00D4FF&base=1000" alt="Profile Views" />
-  <img src="https://img.shields.io/github/followers/nekruzSADRIDDNZODA?label=FOLLOWERS&style=for-the-badge&color=00D4FF&logo=github" alt="GitHub Followers" />
-  <img src="https://img.shields.io/github/stars/nekruzSADRIDDNZODA?label=STARS&style=for-the-badge&color=00D4FF&logo=github" alt="GitHub Stars" />
 </p>
 
 <!-- ============================================================ -->
