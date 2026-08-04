@@ -1,16 +1,3 @@
-<!--
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 NEKRUZ SADRIDDNZODA - PREMIUM GITHUB PROFILE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 PROFILE: github.com/nekruzSADRIDDNZODA (REPLACE WITH YOUR USERNAME)
-📧 EMAIL: nekruz.SADRIDDNZODA@example.com (REPLACE WITH YOUR EMAIL)
-🔗 WEBSITE: nekruzSADRIDDNZODA.com (REPLACE WITH YOUR WEBSITE)
-📚 GOOGLE SCHOLAR: scholar.google.com/citations?user=YOUR_ID (REPLACE)
-🆔 ORCID: orcid.org/0000-0000-0000-0000 (REPLACE)
-💼 LINKEDIN: linkedin.com/in/nekruzSADRIDDNZODA (REPLACE)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--->
-
 <!-- ============================================================ -->
 <!-- ANIMATED TYPING HEADER - SECTION 1                           -->
 <!-- ============================================================ -->
@@ -271,18 +258,6 @@
 </p>
 
 <!-- ============================================================ -->
-<!-- QUOTE OF THE DAY - SECTION 18                                -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  🌅 Quote of the Day
-</h2>
-
-<p align="center">
-  <img src="https://api.quotable.io/random?tags=technology" width="70%" />
-</p>
-
-<!-- ============================================================ -->
 <!-- DEVELOPER GIF - SECTION 19                                   -->
 <!-- ============================================================ -->
 
@@ -304,36 +279,6 @@
 
 <p align="center">
   <img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif?cid=ecf05e478ga2i057psadys1v5s5mp53g0iby3u9qpu7d17ol&rid=giphy.gif&ct=g" width="400" />
-</p>
-
-<!-- ============================================================ -->
-<!-- SPOTIFY WIDGET - SECTION 22 (OPTIONAL)                      -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  🎵 Now Playing
-</h2>
-
-<p align="center">
-  <img src="https://novatorem.vercel.app/api/spotify?background_color=0A0E1A&border_color=00D4FF" width="50%" />
-</p>
-
-<!--
-To use this widget:
-1. Replace the URL with your actual Spotify widget URL
-2. Or use: https://spotify-github-profile.vercel.app/api/view?uid=YOUR_SPOTIFY_ID&cover_image=true&theme=novatorem
--->
-
-<!-- ============================================================ -->
-<!-- WAKATIME - SECTION 23 (OPTIONAL)                            -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  ⏱️ WakaTime Stats
-</h2>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/wakatime?username=nekruzSADRIDDNZODA&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="60%" />
 </p>
 
 <!--
