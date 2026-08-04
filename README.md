@@ -158,44 +158,6 @@
   <img src="https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white" />
 </p>
 
-<!-- ============================================================ -->
-<!-- GITHUB STATS - SECTION 5                                     -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  <img src="https://media.giphy.com/media/fT26NYayHirI3oqppR/giphy.gif?cid=ecf05e47atbwzhn1ybsq7sfbjl99h6y535ha423e3262f4i8&rid=giphy.gif&ct=g" width="30" />
-  GitHub Analytics
-  <img src="https://media.giphy.com/media/fT26NYayHirI3oqppR/giphy.gif?cid=ecf05e47atbwzhn1ybsq7sfbjl99h6y535ha423e3262f4i8&rid=giphy.gif&ct=g" width="30" />
-</h2>
-
-<!-- ============================================================ -->
-<!-- GITHUB STREAK - SECTION 7                                    -->
-<!-- ============================================================ -->
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=nekruzSADRIDDNZODA&theme=dark&background=0A0E1A&ring=00D4FF&fire=00D4FF&currStreakLabel=00D4FF&sideLabels=00D4FF&dates=FFFFFF&border=00D4FF&border_radius=10" width="60%" />
-</p>
-
-<!-- ============================================================ -->
-<!-- GITHUB TROPHY - SECTION 9                                    -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  🏆 GitHub Trophy
-</h2>
-
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=nekruzSADRIDDNZODA&theme=darkhub&row=2&column=4&margin-w=15&margin-h=15&no-frame=true" width="80%" />
-</p>
-
-<!-- ============================================================ -->
-<!-- CONTRIBUTION GRAPH - SECTION 8                               -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  📊 Contribution Graph
-</h2>
-
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=nekruzSADRIDDNZODA&theme=react-dark&bg_color=0A0E1A&color=00D4FF&line=00D4FF&point=FFFFFF&area_color=00D4FF&area=true&hide_border=true" width="100%" />
 </p>
