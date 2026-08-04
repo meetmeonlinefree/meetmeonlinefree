@@ -207,7 +207,7 @@
 <p align="center">
   • I speak 🇹🇯 Tajik, 🇷🇺 Russian, and 🇬🇧 English
   <br />
-  • I built my first Android app at age 15
+  • I built my first Android app at age 25
   <br />
   • I can solve a Rubik's cube in under 2 minutes
   <br />
