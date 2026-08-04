@@ -223,22 +223,22 @@
 </h2>
 
 <p align="center">
-  <a href="https://github.com/nekruzSADRIDDNZODA">
+  <a href="https://github.com/meetmeonlinefree">
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
   </a>
-  <a href="https://linkedin.com/in/nekruzSADRIDDNZODA">
+  <a href="https://www.linkedin.com/in/nekruzjon-sadriddinzoda-4b1b4a334/">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
   </a>
-  <a href="mailto:nekruz.SADRIDDNZODA@example.com">
+  <a href="mailto:meetmeonlinefree@gmail.com">
     <img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" />
   </a>
-  <a href="https://nekruzSADRIDDNZODA.com">
+  <a href="https://dovtalabonline.tj/">
     <img src="https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=about.me&logoColor=white" />
   </a>
   <a href="https://scholar.google.com/citations?user=YOUR_ID">
     <img src="https://img.shields.io/badge/Google_Scholar-4285F4?style=for-the-badge&logo=google-scholar&logoColor=white" />
   </a>
-  <a href="https://orcid.org/0000-0000-0000-0000">
+  <a href="https://orcid.org/0009-0000-5486-5374">
     <img src="https://img.shields.io/badge/ORCID-A6CE39?style=for-the-badge&logo=orcid&logoColor=white" />
   </a>
 </p>
