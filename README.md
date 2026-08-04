@@ -168,11 +168,6 @@
   <img src="https://media.giphy.com/media/fT26NYayHirI3oqppR/giphy.gif?cid=ecf05e47atbwzhn1ybsq7sfbjl99h6y535ha423e3262f4i8&rid=giphy.gif&ct=g" width="30" />
 </h2>
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=nekruzSADRIDDNZODA&show_icons=true&count_private=true&hide=prs&theme=dark&bg_color=0A0E1A&title_color=00D4FF&icon_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=nekruzSADRIDDNZODA&layout=compact&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10&hide=html,css" width="48%" />
-</p>
-
 <!-- ============================================================ -->
 <!-- GITHUB STREAK - SECTION 7                                    -->
 <!-- ============================================================ -->
