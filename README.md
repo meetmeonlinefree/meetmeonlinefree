@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=22&duration=3000&pause=800&color=00D4FF&center=true&vCenter=true&width=700&lines=🇹🇯+From+Tajikistan+•+Building+the+Future+with+AI;Software+Engineering+•+Artificial+Intelligence+•+Innovation" alt="Hero Subtitle" />
+  <img src="[https://readme-typing-svg.demolab.com?font=Inter&weight=500&size=22&duration=3000&pause=800&color=00D4FF&center=true&vCenter=true&width=700&lines=🇹🇯+From+Tajikistan+•+Building+the+Future+with+AI;Software+Engineering+•+Artificial+Intelligence+•+Innovation](https://sun9-66.vkuserphoto.ru/s/v1/ig2/9DcWYq6I9RaTHAZAEqXcC3tIyuDGR8PbE-cP4T7IH5F3a9DPNWU4Em64keBGmmp8dXNZ-ifozoVZBzcsavT_SXyv.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080,2560x1920&from=bu&u=AfzW4xA0ME_vrx61uYHJyOYMos_yFqChsPFYWrBbB90&cs=2560x0)" alt="MY PHOTO" />
 </p>
 
 <!-- ============================================================ -->
