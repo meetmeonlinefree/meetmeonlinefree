@@ -317,14 +317,6 @@ To use this widget:
 </p>
 
 <!-- ============================================================ -->
-<!-- VISITOR COUNTER - ADDITIONAL WIDGET                          -->
-<!-- ============================================================ -->
-
-<p align="center">
-  <img src="https://profile-counter.glitch.me/nekruzSADRIDDNZODA/count.svg" alt="Visitor Count" />
-</p>
-
-<!-- ============================================================ -->
 <!-- SOCIAL PROOF - SECTION                                        -->
 <!-- ============================================================ -->
 
