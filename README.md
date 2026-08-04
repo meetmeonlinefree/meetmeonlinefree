@@ -158,65 +158,6 @@
   <img src="https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white" />
 </p>
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=nekruzSADRIDDNZODA&theme=react-dark&bg_color=0A0E1A&color=00D4FF&line=00D4FF&point=FFFFFF&area_color=00D4FF&area=true&hide_border=true" width="100%" />
-</p>
-
-<!-- ============================================================ -->
-<!-- ACTIVITY GRAPH - SECTION 10                                  -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  📈 Activity Graph
-</h2>
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=nekruzSADRIDDNZODA&theme=react-dark&bg_color=0A0E1A&color=00D4FF&line=00D4FF&point=FFFFFF&area_color=00D4FF&area=true&hide_border=true" width="100%" />
-</p>
-
-<!-- ============================================================ -->
-<!-- SNAKE CONTRIBUTION ANIMATION - SECTION 11                   -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  🐍 Contribution Snake
-</h2>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/nekruzSADRIDDNZODA/nekruzSADRIDDNZODA/output/snake.svg" alt="Snake animation" />
-</p>
-
-<!--
-IMPORTANT: To make the snake animation work:
-1. Create a GitHub Actions workflow (.github/workflows/snake.yml)
-2. Add this workflow to generate the snake.svg
-3. The workflow should push the generated snake.svg to the output branch
-4. Replace the URL with your actual snake.svg path
--->
-
-<!-- ============================================================ -->
-<!-- FEATURED PROJECTS - SECTION 12                               -->
-<!-- ============================================================ -->
-
-<h2 align="center">
-  📁 Featured Projects
-</h2>
-
-<p align="center">
-  <a href="https://github.com/nekruzSADRIDDNZODA/dovtalab-online">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzSADRIDDNZODA&repo=dovtalab-online&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
-  </a>
-  <a href="https://github.com/nekruzSADRIDDNZODA/koftagard">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzSADRIDDNZODA&repo=koftagard&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/nekruzSADRIDDNZODA/hamyon">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzSADRIDDNZODA&repo=hamyon&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
-  </a>
-</p>
-
 <!-- ============================================================ -->
 <!-- AI RESEARCH - SECTION 13                                     -->
 <!-- ============================================================ -->
