@@ -297,9 +297,6 @@ To use this widget:
 </h2>
 
 <p align="center">
-  <a href="https://www.buymeacoffee.com/nekruzSADRIDDNZODA">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=nekruzSADRIDDNZODA&button_colour=00D4FF&font_colour=000000&font_family=Arial&outline_colour=000000&coffee_colour=FFDD00"/>
-  </a>
   <a href="https://www.paypal.me/nekruzSADRIDDNZODA">
     <img src="https://img.shields.io/badge/Donate-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" />
   </a>
