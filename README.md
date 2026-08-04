@@ -1,13 +1,13 @@
 <!--
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 NEKRUZ ISMATOV - PREMIUM GITHUB PROFILE
+🚀 NEKRUZ SADRIDDNZODA - PREMIUM GITHUB PROFILE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 PROFILE: github.com/nekruzismatov (REPLACE WITH YOUR USERNAME)
-📧 EMAIL: nekruz.ismatov@example.com (REPLACE WITH YOUR EMAIL)
-🔗 WEBSITE: nekruzismatov.com (REPLACE WITH YOUR WEBSITE)
+🌐 PROFILE: github.com/nekruzSADRIDDNZODA (REPLACE WITH YOUR USERNAME)
+📧 EMAIL: nekruz.SADRIDDNZODA@example.com (REPLACE WITH YOUR EMAIL)
+🔗 WEBSITE: nekruzSADRIDDNZODA.com (REPLACE WITH YOUR WEBSITE)
 📚 GOOGLE SCHOLAR: scholar.google.com/citations?user=YOUR_ID (REPLACE)
 🆔 ORCID: orcid.org/0000-0000-0000-0000 (REPLACE)
-💼 LINKEDIN: linkedin.com/in/nekruzismatov (REPLACE)
+💼 LINKEDIN: linkedin.com/in/nekruzSADRIDDNZODA (REPLACE)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -->
 
@@ -17,7 +17,7 @@
 
 <p align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=40&duration=3000&pause=1000&color=00D4FF&center=true&vCenter=true&width=800&height=100&lines=Hello+%F0%9F%91%8B%2C+I'm+Nekruz+Ismatov;Software+Engineer+%F0%9F%92%BB;AI+Researcher+%F0%9F%A7%A0;PhD+Student+%F0%9F%8E%93;Android+%26+Laravel+Developer+%F0%9F%93%B1;Machine+Learning+Engineer+%F0%9F%A4%96" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=40&duration=3000&pause=1000&color=00D4FF&center=true&vCenter=true&width=800&height=100&lines=Hello+%F0%9F%91%8B%2C+I'm+Nekruz+SADRIDDNZODA;Software+Engineer+%F0%9F%92%BB;AI+Researcher+%F0%9F%A7%A0;PhD+Student+%F0%9F%8E%93;Android+%26+Laravel+Developer+%F0%9F%93%B1;Machine+Learning+Engineer+%F0%9F%A4%96" alt="Typing SVG" />
   </a>
 </p>
 
@@ -26,7 +26,7 @@
 <!-- ============================================================ -->
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0A0E1A,100:00D4FF&height=200&section=header&text=Nekruz%20Ismatov&fontSize=50&fontColor=FFFFFF&animation=fadeIn&fontAlignY=40" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0A0E1A,100:00D4FF&height=200&section=header&text=Nekruz%20SADRIDDNZODA&fontSize=50&fontColor=FFFFFF&animation=fadeIn&fontAlignY=40" width="100%" />
 </p>
 
 <p align="center">
@@ -38,9 +38,9 @@
 <!-- ============================================================ -->
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=nekruzismatov&label=PROFILE+VIEWS&style=for-the-badge&color=00D4FF&base=1000" alt="Profile Views" />
-  <img src="https://img.shields.io/github/followers/nekruzismatov?label=FOLLOWERS&style=for-the-badge&color=00D4FF&logo=github" alt="GitHub Followers" />
-  <img src="https://img.shields.io/github/stars/nekruzismatov?label=STARS&style=for-the-badge&color=00D4FF&logo=github" alt="GitHub Stars" />
+  <img src="https://komarev.com/ghpvc/?username=nekruzSADRIDDNZODA&label=PROFILE+VIEWS&style=for-the-badge&color=00D4FF&base=1000" alt="Profile Views" />
+  <img src="https://img.shields.io/github/followers/nekruzSADRIDDNZODA?label=FOLLOWERS&style=for-the-badge&color=00D4FF&logo=github" alt="GitHub Followers" />
+  <img src="https://img.shields.io/github/stars/nekruzSADRIDDNZODA?label=STARS&style=for-the-badge&color=00D4FF&logo=github" alt="GitHub Stars" />
 </p>
 
 <!-- ============================================================ -->
@@ -61,7 +61,7 @@
   <tr>
     <td>
       <p align="center">
-        <b>👋 Hello! I'm Nekruz Ismatov</b>
+        <b>👋 Hello! I'm NEKRUZ SADRIDDNZODA</b>
       </p>
       <p>
         I'm a <b>Software Engineer</b>, <b>AI Researcher (PhD Student)</b>, and <b>Full-Stack Developer</b> from <b>Tajikistan 🇹🇯</b>. 
@@ -169,8 +169,8 @@
 </h2>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=nekruzismatov&show_icons=true&count_private=true&hide=prs&theme=dark&bg_color=0A0E1A&title_color=00D4FF&icon_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=nekruzismatov&layout=compact&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10&hide=html,css" width="48%" />
+  <img src="https://github-readme-stats.vercel.app/api?username=nekruzSADRIDDNZODA&show_icons=true&count_private=true&hide=prs&theme=dark&bg_color=0A0E1A&title_color=00D4FF&icon_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="48%" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=nekruzSADRIDDNZODA&layout=compact&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10&hide=html,css" width="48%" />
 </p>
 
 <!-- ============================================================ -->
@@ -178,7 +178,7 @@
 <!-- ============================================================ -->
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=nekruzismatov&theme=dark&background=0A0E1A&ring=00D4FF&fire=00D4FF&currStreakLabel=00D4FF&sideLabels=00D4FF&dates=FFFFFF&border=00D4FF&border_radius=10" width="60%" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=nekruzSADRIDDNZODA&theme=dark&background=0A0E1A&ring=00D4FF&fire=00D4FF&currStreakLabel=00D4FF&sideLabels=00D4FF&dates=FFFFFF&border=00D4FF&border_radius=10" width="60%" />
 </p>
 
 <!-- ============================================================ -->
@@ -190,7 +190,7 @@
 </h2>
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=nekruzismatov&theme=darkhub&row=2&column=4&margin-w=15&margin-h=15&no-frame=true" width="80%" />
+  <img src="https://github-profile-trophy.vercel.app/?username=nekruzSADRIDDNZODA&theme=darkhub&row=2&column=4&margin-w=15&margin-h=15&no-frame=true" width="80%" />
 </p>
 
 <!-- ============================================================ -->
@@ -202,7 +202,7 @@
 </h2>
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=nekruzismatov&theme=react-dark&bg_color=0A0E1A&color=00D4FF&line=00D4FF&point=FFFFFF&area_color=00D4FF&area=true&hide_border=true" width="100%" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=nekruzSADRIDDNZODA&theme=react-dark&bg_color=0A0E1A&color=00D4FF&line=00D4FF&point=FFFFFF&area_color=00D4FF&area=true&hide_border=true" width="100%" />
 </p>
 
 <!-- ============================================================ -->
@@ -214,7 +214,7 @@
 </h2>
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=nekruzismatov&theme=react-dark&bg_color=0A0E1A&color=00D4FF&line=00D4FF&point=FFFFFF&area_color=00D4FF&area=true&hide_border=true" width="100%" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=nekruzSADRIDDNZODA&theme=react-dark&bg_color=0A0E1A&color=00D4FF&line=00D4FF&point=FFFFFF&area_color=00D4FF&area=true&hide_border=true" width="100%" />
 </p>
 
 <!-- ============================================================ -->
@@ -226,7 +226,7 @@
 </h2>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nekruzismatov/nekruzismatov/output/snake.svg" alt="Snake animation" />
+  <img src="https://raw.githubusercontent.com/nekruzSADRIDDNZODA/nekruzSADRIDDNZODA/output/snake.svg" alt="Snake animation" />
 </p>
 
 <!--
@@ -246,17 +246,17 @@ IMPORTANT: To make the snake animation work:
 </h2>
 
 <p align="center">
-  <a href="https://github.com/nekruzismatov/dovtalab-online">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzismatov&repo=dovtalab-online&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
+  <a href="https://github.com/nekruzSADRIDDNZODA/dovtalab-online">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzSADRIDDNZODA&repo=dovtalab-online&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
   </a>
-  <a href="https://github.com/nekruzismatov/koftagard">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzismatov&repo=koftagard&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
+  <a href="https://github.com/nekruzSADRIDDNZODA/koftagard">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzSADRIDDNZODA&repo=koftagard&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/nekruzismatov/hamyon">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzismatov&repo=hamyon&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
+  <a href="https://github.com/nekruzSADRIDDNZODA/hamyon">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=nekruzSADRIDDNZODA&repo=hamyon&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="45%" />
   </a>
 </p>
 
@@ -340,16 +340,16 @@ IMPORTANT: To make the snake animation work:
 </h2>
 
 <p align="center">
-  <a href="https://github.com/nekruzismatov">
+  <a href="https://github.com/nekruzSADRIDDNZODA">
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
   </a>
-  <a href="https://linkedin.com/in/nekruzismatov">
+  <a href="https://linkedin.com/in/nekruzSADRIDDNZODA">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
   </a>
-  <a href="mailto:nekruz.ismatov@example.com">
+  <a href="mailto:nekruz.SADRIDDNZODA@example.com">
     <img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" />
   </a>
-  <a href="https://nekruzismatov.com">
+  <a href="https://nekruzSADRIDDNZODA.com">
     <img src="https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=about.me&logoColor=white" />
   </a>
   <a href="https://scholar.google.com/citations?user=YOUR_ID">
@@ -435,7 +435,7 @@ To use this widget:
 </h2>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/wakatime?username=nekruzismatov&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="60%" />
+  <img src="https://github-readme-stats.vercel.app/api/wakatime?username=nekruzSADRIDDNZODA&theme=dark&bg_color=0A0E1A&title_color=00D4FF&text_color=FFFFFF&border_color=00D4FF&border_radius=10" width="60%" />
 </p>
 
 <!--
@@ -454,13 +454,13 @@ To use this widget:
 </h2>
 
 <p align="center">
-  <a href="https://www.buymeacoffee.com/nekruzismatov">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=nekruzismatov&button_colour=00D4FF&font_colour=000000&font_family=Arial&outline_colour=000000&coffee_colour=FFDD00" />
+  <a href="https://www.buymeacoffee.com/nekruzSADRIDDNZODA">
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=nekruzSADRIDDNZODA&button_colour=00D4FF&font_colour=000000&font_family=Arial&outline_colour=000000&coffee_colour=FFDD00" />
   </a>
-  <a href="https://www.paypal.me/nekruzismatov">
+  <a href="https://www.paypal.me/nekruzSADRIDDNZODA">
     <img src="https://img.shields.io/badge/Donate-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" />
   </a>
-  <a href="https://github.com/sponsors/nekruzismatov">
+  <a href="https://github.com/sponsors/nekruzSADRIDDNZODA">
     <img src="https://img.shields.io/badge/Sponsor-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
   </a>
 </p>
@@ -478,7 +478,7 @@ To use this widget:
 <!-- ============================================================ -->
 
 <p align="center">
-  <img src="https://profile-counter.glitch.me/nekruzismatov/count.svg" alt="Visitor Count" />
+  <img src="https://profile-counter.glitch.me/nekruzSADRIDDNZODA/count.svg" alt="Visitor Count" />
 </p>
 
 <!-- ============================================================ -->
@@ -496,12 +496,12 @@ To use this widget:
 📝 INSTRUCTIONS FOR CUSTOMIZATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. REPLACE ALL OCCURRENCES OF "nekruzismatov" WITH YOUR GITHUB USERNAME
-2. REPLACE EMAIL: nekruz.ismatov@example.com → YOUR EMAIL
-3. REPLACE WEBSITE: nekruzismatov.com → YOUR WEBSITE
+1. REPLACE ALL OCCURRENCES OF "nekruzSADRIDDNZODA" WITH YOUR GITHUB USERNAME
+2. REPLACE EMAIL: nekruz.SADRIDDNZODA@example.com → YOUR EMAIL
+3. REPLACE WEBSITE: nekruzSADRIDDNZODA.com → YOUR WEBSITE
 4. REPLACE GOOGLE SCHOLAR ID: YOUR_ID → YOUR ACTUAL ID
 5. REPLACE ORCID: 0000-0000-0000-0000 → YOUR ORCID
-6. REPLACE LINKEDIN: nekruzismatov → YOUR LINKEDIN USERNAME
+6. REPLACE LINKEDIN: nekruzSADRIDDNZODA → YOUR LINKEDIN USERNAME
 7. REPLACE SPOTIFY ID IN SPOTIFY WIDGET (SECTION 22)
 8. REPLACE WAKATIME USERNAME (SECTION 23)
 9. ADD YOUR OWN PROJECT REPOSITORIES (SECTION 12)
