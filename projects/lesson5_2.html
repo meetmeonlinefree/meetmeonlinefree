@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Lesson 5.2 — Quiz</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 15px;
+    overflow-x: hidden;
+  }
+  .app {
+    background: #fff; border-radius: 24px; padding: 30px;
+    width: 100%; max-width: 700px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    position: relative; overflow: hidden;
+  }
+  .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+  .close-btn {
+    font-size: 24px; color: #afafaf; cursor: pointer; border: none;
+    background: none; transition: transform .2s;
+  }
+  .close-btn:hover { transform: scale(1.2); color: #ff4b4b; }
+  .progress-bar {
+    flex: 1; height: 16px; background: #e5e5e5; border-radius: 10px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #58cc02, #89e219);
+    border-radius: 10px; transition: width .5s ease;
+    box-shadow: 0 0 10px rgba(88,204,2,0.6);
+  }
+  .hearts { font-size: 20px; display: flex; gap: 3px; }
+  .heart { transition: all .3s; }
+  .heart.lost { opacity: .2; transform: scale(.7); }
+
+  .stats { display: flex; justify-content: space-between; margin-bottom: 25px; font-size: 14px; color: #777; }
+  .combo { color: #ff9600; font-weight: bold; font-size: 16px; }
+  .combo.big { animation: pulse .5s ease; }
+  @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+
+  .question-area { text-align: center; margin-bottom: 25px; }
+  .question-label { font-size: 14px; color: #afafaf; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
+  .question-text { font-size: 26px; font-weight: 700; color: #3c3c3c; margin-bottom: 8px; }
+  .question-hint { font-size: 15px; color: #999; font-style: italic; }
+
+  .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 500px) { .answers { grid-template-columns: 1fr; } }
+
+  .answer {
+    padding: 18px 15px; border: 2px solid #e5e5e5; border-radius: 14px;
+    background: #fff; cursor: pointer; font-size: 16px; font-weight: 600;
+    color: #3c3c3c; transition: all .15s; text-align: left; position: relative;
+    box-shadow: 0 4px 0 #e5e5e5;
+  }
+  .answer:hover:not(.disabled) { border-color: #58cc02; background: #f7fff0; transform: translateY(-2px); }
+  .answer:active:not(.disabled) { transform: translateY(2px); box-shadow: 0 1px 0 #e5e5e5; }
+  .answer.correct { border-color: #58cc02; background: #d7ffb8; color: #3a7d00; box-shadow: 0 4px 0 #58cc02; animation: correctAnim .4s; }
+  .answer.wrong { border-color: #ff4b4b; background: #ffdfe0; color: #cc0000; box-shadow: 0 4px 0 #ff4b4b; animation: shakeAnim .4s; }
+  .answer.disabled { cursor: not-allowed; }
+  @keyframes correctAnim { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
+  @keyframes shakeAnim { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+  .feedback {
+    margin-top: 20px; padding: 15px; border-radius: 12px; font-weight: 600;
+    display: none; animation: slideUp .3s ease;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #d7ffb8; color: #3a7d00; border: 2px solid #58cc02; }
+  .feedback.fail { background: #ffdfe0; color: #cc0000; border: 2px solid #ff4b4b; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .next-btn {
+    width: 100%; margin-top: 15px; padding: 16px; border: none; border-radius: 14px;
+    background: #58cc02; color: #fff; font-size: 17px; font-weight: 700;
+    cursor: pointer; display: none; box-shadow: 0 4px 0 #46a302;
+    transition: all .15s; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .next-btn.show { display: block; animation: slideUp .3s ease; }
+  .next-btn:hover { background: #6ee026; }
+  .next-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #46a302; }
+
+  /* START SCREEN */
+  .start-screen, .end-screen { text-align: center; padding: 20px 10px; }
+  .start-screen h1 { font-size: 32px; color: #58cc02; margin-bottom: 10px; }
+  .start-screen p { color: #777; font-size: 16px; margin-bottom: 25px; line-height: 1.6; }
+  .start-btn {
+    padding: 18px 45px; border: none; border-radius: 16px;
+    background: #58cc02; color: #fff; font-size: 20px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 5px 0 #46a302; transition: all .15s;
+  }
+  .start-btn:hover { background: #6ee026; transform: translateY(-2px); }
+  .start-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #46a302; }
+  .mascot { font-size: 80px; margin-bottom: 10px; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+  /* END SCREEN */
+  .end-screen h2 { font-size: 30px; margin-bottom: 10px; }
+  .end-screen .big-emoji { font-size: 90px; margin-bottom: 15px; }
+  .result-stats { display: flex; justify-content: center; gap: 25px; margin: 20px 0; flex-wrap: wrap; }
+  .stat-box { background: #f7f7f7; padding: 15px 25px; border-radius: 14px; }
+  .stat-box .num { font-size: 28px; font-weight: 800; color: #58cc02; }
+  .stat-box .lbl { font-size: 13px; color: #999; text-transform: uppercase; }
+  .restart-btn {
+    padding: 16px 40px; border: none; border-radius: 16px;
+    background: #58cc02; color: #fff; font-size: 18px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 5px 0 #46a302; margin-top: 15px;
+  }
+  .restart-btn:hover { background: #6ee026; }
+  .restart-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #46a302; }
+
+  /* Confetti */
+  .confetti {
+    position: fixed; width: 10px; height: 10px; top: -10px;
+    animation: fall linear forwards; z-index: 999; pointer-events: none;
+  }
+  @keyframes fall {
+    to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- START SCREEN -->
+  <div id="startScreen" class="start-screen">
+    <div class="mascot">🦉</div>
+    <h1>English Lesson 5.2</h1>
+    <p>Проверь свои знания!<br>20 вопросов · 3 жизни · Комбо-бонусы</p>
+    <button class="start-btn" onclick="startGame()">НАЧАТЬ 🚀</button>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="gameScreen" class="hidden">
+    <div class="header">
+      <button class="close-btn" onclick="restartGame()">✕</button>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="hearts" id="hearts"></div>
+    </div>
+    <div class="stats">
+      <span id="questionCounter">Вопрос 1 / 20</span>
+      <span class="combo" id="comboDisplay">Комбо: 0</span>
+    </div>
+    <div class="question-area">
+      <div class="question-label" id="questionLabel">Переведите на английский</div>
+      <div class="question-text" id="questionText"></div>
+      <div class="question-hint" id="questionHint"></div>
+    </div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">ПРОДОЛЖИТЬ</button>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="endScreen" class="end-screen hidden">
+    <div class="big-emoji" id="endEmoji">🏆</div>
+    <h2 id="endTitle">Отлично!</h2>
+    <p id="endMessage" style="color:#777; margin-bottom:10px;"></p>
+    <div class="result-stats">
+      <div class="stat-box"><div class="num" id="finalScore">0</div><div class="lbl">Очки</div></div>
+      <div class="stat-box"><div class="num" id="finalCorrect">0</div><div class="lbl">Правильно</div></div>
+      <div class="stat-box"><div class="num" id="finalCombo">0</div><div class="lbl">Макс. комбо</div></div>
+    </div>
+    <button class="restart-btn" onclick="restartGame()">ИГРАТЬ СНОВА 🔄</button>
+  </div>
+
+</div>
+
+<script>
+/* ============ БАНК ВОПРОСОВ ============ */
+const QUESTIONS = [
+  { ru: "Мой босс читает все документы", en: "My boss reads all the documents", type: "en", wrong: ["My boss read all documents", "My boss is reading all documents", "My boss reads all document"] },
+  { ru: "Он пытается найти работу", en: "He tries to find a job", type: "en", wrong: ["He try to find a job", "He tries find a job", "He trying to find a job"] },
+  { ru: "Они очень усердно учатся", en: "They study very hard", type: "en", wrong: ["They studies very hard", "They study very hardly", "They are study very hard"] },
+  { ru: "Эти уроки помогают мне", en: "These lessons help me", type: "en", wrong: ["These lessons helps me", "This lessons help me", "These lessons help to me"] },
+  { ru: "У него есть деньги", en: "He has money", type: "en", wrong: ["He have money", "He is have money", "He has a money"] },
+  { ru: "Я живу в Таджикистане", en: "I live in Tajikistan", type: "en", wrong: ["I lives in Tajikistan", "I am live in Tajikistan", "I living in Tajikistan"] },
+  { ru: "Ты работаешь очень усердно", en: "You work very hard", type: "en", wrong: ["You works very hard", "You are work very hard", "You working very hard"] },
+  { ru: "Он иногда играет в компьютерные игры", en: "He sometimes plays computer games", type: "en", wrong: ["He sometimes play computer games", "He play sometimes computer games", "He sometimes playing computer games"] },
+  { ru: "Её брат часто говорит это", en: "Her brother often says it", type: "en", wrong: ["Her brother often say it", "Her brother says often it", "Her brother often saying it"] },
+  { ru: "Мои родители знают это", en: "My parents know it", type: "en", wrong: ["My parents knows it", "My parent know it", "My parents is know it"] },
+  { ru: "Мой босс обычно делает так", en: "My boss usually does so", type: "en", wrong: ["My boss usually do so", "My boss do usually so", "My boss usually doing so"] },
+  { ru: "У них есть деньги", en: "They have money", type: "en", wrong: ["They has money", "They are have money", "Their have money"] },
+  { ru: "У неё есть эта информация", en: "She has this information", type: "en", wrong: ["She have this information", "She is have this information", "She has this informations"] },
+  { ru: "Мои родители хотят это сделать", en: "My parents want to do it", type: "en", wrong: ["My parents wants to do it", "My parents want do it", "My parents wanting to do it"] },
+  { ru: "Иногда она ходит в кино", en: "She sometimes goes to the cinema", type: "en", wrong: ["She sometimes go to the cinema", "She go sometimes to cinema", "She sometimes going to cinema"] },
+  { ru: "Она хочет больше практики", en: "She wants more practice", type: "en", wrong: ["She want more practice", "She wants more practices", "She wanting more practice"] },
+  { ru: "Я это очень хорошо помню", en: "I remember it very well", type: "en", wrong: ["I remembers it very well", "I remember it very good", "I am remember it very well"] },
+  { ru: "Это кажется интересным", en: "It seems interesting", type: "en", wrong: ["It seem interesting", "It is seem interesting", "It seeming interesting"] },
+  { ru: "Он чувствует себя счастливым", en: "He feels happy", type: "en", wrong: ["He feel happy", "He is feel happy", "He feeling happy"] },
+  { ru: "Она скучает по тебе", en: "She misses you", type: "en", wrong: ["She miss you", "She is miss you", "She missing you"] },
+  { ru: "У моего друга есть машина", en: "My friend has a car", type: "en", wrong: ["My friend have a car", "My friend is have a car", "My friend has car a"] },
+  { ru: "У его отца есть машина", en: "His father has a car", type: "en", wrong: ["His father have a car", "His father is have a car", "His father has car"] },
+  { ru: "Я чувствую себя счастливым", en: "I feel happy", type: "en", wrong: ["I feels happy", "I am feel happy", "I feeling happy"] },
+  { ru: "Он хочет больше практики", en: "He wants more practice", type: "en", wrong: ["He want more practice", "He wants more practices", "He wanting more practice"] },
+  { ru: "Это действительно происходит", en: "It really happens", type: "en", wrong: ["It really happen", "It real happens", "It really happening"] },
+  { ru: "Мы тебя понимаем", en: "We understand you", type: "en", wrong: ["We understands you", "We are understand you", "We understanding you"] },
+  { ru: "Он часто ходит в кино", en: "He often goes to the cinema", type: "en", wrong: ["He often go to the cinema", "He go often to cinema", "He often going to cinema"] },
+  { ru: "Он тоже это помнит", en: "He also remembers it", type: "en", wrong: ["He also remember it", "He remembers also it", "He also remembering it"] },
+  { ru: "Он делает это каждый день", en: "He does it every day", type: "en", wrong: ["He do it every day", "He does it every days", "He doing it every day"] },
+  { ru: "Я это помню", en: "I remember it", type: "en", wrong: ["I remembers it", "I am remember it", "I remembering it"] },
+  { ru: "Мой начальник всегда это говорит", en: "My boss always says it", type: "en", wrong: ["My boss always say it", "My boss says always it", "My boss always saying it"] },
+  { ru: "Он там живёт", en: "He lives there", type: "en", wrong: ["He live there", "He is live there", "He living there"] },
+  { ru: "Эти уроки действительно помогают. Я это чувствую.", en: "These lessons really help. I feel it", type: "en", wrong: ["These lessons really helps. I feel it", "These lessons real help. I feel it", "These lessons really help. I feels it"] },
+  { ru: "Такое случается", en: "It happens", type: "en", wrong: ["It happen", "It is happen", "It happening"] },
+  { ru: "Он также здесь работает", en: "He also works here", type: "en", wrong: ["He also work here", "He works also here", "He also working here"] },
+  { ru: "Я хожу в школу", en: "I go to school", type: "en", wrong: ["I goes to school", "I am go to school", "I going to school"] },
+  { ru: "Наша мама думает так же", en: "Our mother thinks the same", type: "en", wrong: ["Our mother think the same", "Our mother thinks same the", "Our mother thinking the same"] },
+  { ru: "Он действительно так думает", en: "He really thinks so", type: "en", wrong: ["He real thinks so", "He really think so", "He really thinking so"] },
+  { ru: "Это мне очень помогает", en: "It really helps me", type: "en", wrong: ["It real helps me", "It really help me", "It really helping me"] },
+  { ru: "Она также там работает", en: "She also works there", type: "en", wrong: ["She also work there", "She works also there", "She also working there"] },
+  { ru: "Он хочет большего", en: "He wants more", type: "en", wrong: ["He want more", "He is want more", "He wanting more"] },
+  { ru: "Он знает больше", en: "He knows more", type: "en", wrong: ["He know more", "He is know more", "He knowing more"] },
+  { ru: "Он очень много работает", en: "He works very hard", type: "en", wrong: ["He work very hard", "He works very hardly", "He working very hard"] },
+  { ru: "Он так думает", en: "He thinks so", type: "en", wrong: ["He think so", "He is think so", "He thinking so"] },
+  { ru: "У него есть компания. Её прибыль кажется очень большой", en: "He has a company. Its profit seems so big", type: "en", wrong: ["He have a company. Its profit seem so big", "He has a company. It profit seems so big", "He has company. Its profit seeming so big"] },
+  { ru: "Мой начальник всё знает", en: "My boss knows everything", type: "en", wrong: ["My boss know everything", "My boss knows all", "My boss knowing everything"] },
+  { ru: "Она хочет туда поехать", en: "She wants to go there", type: "en", wrong: ["She want to go there", "She wants go there", "She wanting to go there"] },
+  { ru: "Она читает по-английски", en: "She reads in English", type: "en", wrong: ["She read in English", "She reads on English", "She reading in English"] },
+  { ru: "Мы говорим по-английски", en: "We speak English", type: "en", wrong: ["We speaks English", "We are speak English", "We speaking English"] },
+  { ru: "Вы это видите", en: "You see it", type: "en", wrong: ["You sees it", "You are see it", "You seeing it"] },
+  { ru: "Он хочет это сделать", en: "He wants to do it", type: "en", wrong: ["He want to do it", "He wants do it", "He wanting to do it"] },
+  { ru: "Она чувствует себя такой счастливой", en: "She feels so happy", type: "en", wrong: ["She feel so happy", "She feels so happily", "She feeling so happy"] },
+  { ru: "Я понимаю", en: "I understand", type: "en", wrong: ["I understands", "I am understand", "I understanding"] },
+  { ru: "У меня есть сестра", en: "I have a sister", type: "en", wrong: ["I has a sister", "I am have a sister", "I have sister a"] },
+  { ru: "У него есть идея", en: "He has an idea", type: "en", wrong: ["He have an idea", "He has a idea", "He is have an idea"] },
+  { ru: "У неё интересные идеи", en: "She has interesting ideas", type: "en", wrong: ["She have interesting ideas", "She has interesting idea", "She is have interesting ideas"] },
+  { ru: "Я всё вижу", en: "I see everything", type: "en", wrong: ["I sees everything", "I am see everything", "I seeing everything"] },
+  { ru: "Она очень много работает", en: "She works very hard", type: "en", wrong: ["She work very hard", "She works very hardly", "She working very hard"] },
+  { ru: "Мой начальник обычно проверяет всю информацию", en: "My boss usually checks all the information", type: "en", wrong: ["My boss usually check all the information", "My boss check usually all information", "My boss usually checking all the information"] },
+  { ru: "Я тебя люблю!", en: "I love you!", type: "en", wrong: ["I loves you!", "I am love you!", "I loving you!"] }
+];
+
+/* ============ СОСТОЯНИЕ ИГРЫ ============ */
+const TOTAL_QUESTIONS = 20;
+const MAX_LIVES = 3;
+let state = {};
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startGame() {
+  // Берём 20 случайных вопросов из банка
+  const selected = shuffle(QUESTIONS).slice(0, TOTAL_QUESTIONS);
+  state = {
+    questions: selected,
+    index: 0,
+    lives: MAX_LIVES,
+    score: 0,
+    combo: 0,
+    maxCombo: 0,
+    correctCount: 0,
+    answered: false
+  };
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  renderHearts();
+  renderQuestion();
+}
+
+function renderHearts() {
+  const el = document.getElementById('hearts');
+  el.innerHTML = '';
+  for (let i = 0; i < MAX_LIVES; i++) {
+    const span = document.createElement('span');
+    span.className = 'heart' + (i >= state.lives ? ' lost' : '');
+    span.textContent = '❤️';
+    el.appendChild(span);
+  }
+}
+
+function renderQuestion() {
+  state.answered = false;
+  const q = state.questions[state.index];
+
+  // Прогресс
+  const pct = (state.index / TOTAL_QUESTIONS) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  // Счётчик
+  document.getElementById('questionCounter').textContent =
+    `Вопрос ${state.index + 1} / ${TOTAL_QUESTIONS}`;
+
+  // Комбо
+  const comboEl = document.getElementById('comboDisplay');
+  comboEl.textContent = `🔥 Комбо: ${state.combo}`;
+
+  // Вопрос
+  document.getElementById('questionLabel').textContent = 'Переведите на английский';
+  document.getElementById('questionText').textContent = q.ru;
+  document.getElementById('questionHint').textContent = '';
+
+  // Ответы: правильный + 3 неправильных, перемешанные
+  const options = shuffle([q.en, ...q.wrong]);
+  const answersEl = document.getElementById('answers');
+  answersEl.innerHTML = '';
+
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'answer';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(btn, opt, q.en);
+    answersEl.appendChild(btn);
+  });
+
+  // Скрыть фидбек и кнопку "дальше"
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.textContent = '';
+  document.getElementById('nextBtn').classList.remove('show');
+  document.getElementById('nextBtn').textContent = 'ПРОДОЛЖИТЬ';
+}
+
+function selectAnswer(btn, chosen, correct) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const allBtns = document.querySelectorAll('.answer');
+  allBtns.forEach(b => {
+    b.classList.add('disabled');
+    if (b.textContent === correct) b.classList.add('correct');
+  });
+
+  const fb = document.getElementById('feedback');
+  const nextBtn = document.getElementById('nextBtn');
+
+  if (chosen === correct) {
+    // ПРАВИЛЬНО
+    btn.classList.add('correct');
+    state.combo++;
+    if (state.combo > state.maxCombo) state.maxCombo = state.combo;
+    state.correctCount++;
+
+    // Очки: базовые 10 + бонус за комбо
+    const comboBonus = Math.min(state.combo * 2, 20);
+    const points = 10 + comboBonus;
+    state.score += points;
+
+    // Анимация комбо
+    const comboEl = document.getElementById('comboDisplay');
+    comboEl.textContent = `🔥 Комбо: ${state.combo}`;
+    if (state.combo >= 3) {
+      comboEl.classList.add('big');
+      setTimeout(() => comboEl.classList.remove('big'), 500);
+    }
+
+    fb.className = 'feedback ok show';
+    fb.textContent = `✅ Правильно! +${points} очков` + (state.combo >= 3 ? ` 🔥 x${state.combo} комбо!` : '');
+    nextBtn.textContent = 'ПРОДОЛЖИТЬ';
+  } else {
+    // НЕПРАВИЛЬНО
+    btn.classList.add('wrong');
+    state.combo = 0;
+    state.lives--;
+
+    document.getElementById('comboDisplay').textContent = `🔥 Комбо: 0`;
+
+    fb.className = 'feedback fail show';
+    fb.textContent = `❌ Неверно. Правильно: "${correct}"`;
+
+    renderHearts();
+
+    if (state.lives <= 0) {
+      nextBtn.textContent = 'ПОСМОТРЕТЬ РЕЗУЛЬТАТ';
+    }
+  }
+
+  nextBtn.classList.add('show');
+}
+
+function nextQuestion() {
+  if (state.lives <= 0) {
+    endGame();
+    return;
+  }
+  state.index++;
+  if (state.index >= TOTAL_QUESTIONS) {
+    endGame();
+    return;
+  }
+  renderQuestion();
+}
+
+function endGame() {
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+
+  const pctCorrect = Math.round((state.correctCount / TOTAL_QUESTIONS) * 100);
+  const endEmoji = document.getElementById('endEmoji');
+  const endTitle = document.getElementById('endTitle');
+  const endMsg = document.getElementById('endMessage');
+
+  if (state.lives <= 0) {
+    endEmoji.textContent = '💔';
+    endTitle.textContent = 'Жизни закончились';
+    endTitle.style.color = '#ff4b4b';
+    endMsg.textContent = `Ты ответил правильно на ${state.correctCount} из ${TOTAL_QUESTIONS}. Попробуй ещё раз!`;
+  } else if (pctCorrect >= 90) {
+    endEmoji.textContent = '🏆';
+    endTitle.textContent = 'Легенда!';
+    endTitle.style.color = '#58cc02';
+    endMsg.textContent = `Великолепно! ${pctCorrect}% правильных ответов. Ты мастер английского!`;
+    fireConfetti();
+  } else if (pctCorrect >= 70) {
+    endEmoji.textContent = '🎉';
+    endTitle.textContent = 'Отлично!';
+    endTitle.style.color = '#58cc02';
+    endMsg.textContent = `${pctCorrect}% правильных. Очень хороший результат!`;
+    fireConfetti();
+  } else if (pctCorrect >= 50) {
+    endEmoji.textContent = '👍';
+    endTitle.textContent = 'Неплохо!';
+    endTitle.style.color = '#ff9600';
+    endMsg.textContent = `${pctCorrect}% правильных. Есть куда расти!`;
+  } else {
+    endEmoji.textContent = '📚';
+    endTitle.textContent = 'Нужно повторить';
+    endTitle.style.color = '#ff9600';
+    endMsg.textContent = `${pctCorrect}% правильных. Повтори урок и попробуй снова!`;
+  }
+
+  document.getElementById('finalScore').textContent = state.score;
+  document.getElementById('finalCorrect').textContent = `${state.correctCount}/${TOTAL_QUESTIONS}`;
+  document.getElementById('finalCombo').textContent = state.maxCombo;
+}
+
+function restartGame() {
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('startScreen').classList.remove('hidden');
+}
+
+/* ============ CONFETTI ============ */
+function fireConfetti() {
+  const colors = ['#58cc02', '#ff4b4b', '#ff9600', '#1cb0f6', '#ce82ff', '#ffd900'];
+  for (let i = 0; i < 100; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    c.style.width = c.style.height = (6 + Math.random() * 8) + 'px';
+    if (Math.random() > 0.5) c.style.borderRadius = '50%';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+}
+</script>
+</body>
+</html>
