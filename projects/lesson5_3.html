@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇬🇧 Duolingo‑style: Lesson 5.3 quiz</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+    body {
+      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .game-container {
+      background: #0b1120;
+      max-width: 780px;
+      width: 100%;
+      border-radius: 48px;
+      padding: 28px 24px 32px;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 2px #2d3a5e inset;
+      border: 1px solid #4e6188;
+    }
+    /* header */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding: 0 8px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #facc15;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      background: #facc15;
+      color: #0b1120;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 26px;
+      transform: rotate(-5deg);
+      box-shadow: 0 4px 0 #b45309;
+    }
+    .progress-indicator {
+      background: #1e2b45;
+      padding: 8px 18px;
+      border-radius: 40px;
+      color: #b9c7e0;
+      font-weight: 600;
+      font-size: 15px;
+      border: 1px solid #40557a;
+      box-shadow: inset 0 -3px 0 #0f172a;
+    }
+    .progress-indicator strong {
+      color: #facc15;
+      font-size: 18px;
+    }
+    /* card */
+    .quiz-card {
+      background: #141e33;
+      border-radius: 36px;
+      padding: 28px 24px 20px;
+      border: 1px solid #40557a;
+      box-shadow: 0 12px 0 #0b1120, inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      margin-bottom: 18px;
+    }
+    .sentence-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .sentence-text {
+      font-size: 28px;
+      line-height: 1.35;
+      font-weight: 700;
+      color: #f0f4ff;
+      letter-spacing: -0.3px;
+      text-shadow: 0 2px 0 #0b1120;
+      flex: 1;
+      word-break: break-word;
+    }
+    .audio-btn {
+      background: #3b4c6e;
+      border: none;
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      font-size: 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 7px 0 #1a2338;
+      transition: all 0.07s;
+      color: white;
+      flex-shrink: 0;
+      border: 1px solid #7a8eb0;
+    }
+    .audio-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 2px 0 #1a2338;
+    }
+    .audio-btn:hover {
+      background: #4e6a94;
+    }
+    .prompt {
+      color: #9db1d6;
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    /* options */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .option {
+      background: #1e2b45;
+      border: 2px solid #334a6b;
+      border-radius: 40px;
+      padding: 18px 22px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #dbe7ff;
+      cursor: pointer;
+      transition: all 0.1s;
+      box-shadow: 0 6px 0 #0e1528;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: -0.2px;
+      border-bottom-width: 2px;
+    }
+    .option:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #0e1528;
+    }
+    .option.correct {
+      background: #3f8f4b;
+      border-color: #7bdc8b;
+      box-shadow: 0 6px 0 #1d5326;
+      color: white;
+    }
+    .option.wrong {
+      background: #b13e4a;
+      border-color: #e57c87;
+      box-shadow: 0 6px 0 #6e1f28;
+      color: white;
+    }
+    .option.disabled {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    /* feedback & footer */
+    .feedback-message {
+      text-align: center;
+      font-weight: 700;
+      font-size: 18px;
+      min-height: 30px;
+      margin: 12px 0 4px;
+      color: #facc15;
+      text-shadow: 0 2px 0 #0b1120;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 6px;
+    }
+    .restart-btn {
+      background: #2d3a5e;
+      color: #b9c7e0;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #151e2e;
+      transition: all 0.08s;
+      border: 1px solid #4e6188;
+    }
+    .restart-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #151e2e;
+    }
+    .score-badge {
+      background: #facc15;
+      color: #0b1120;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 6px 0 #b45309;
+      letter-spacing: 0.5px;
+    }
+    .finished-screen {
+      text-align: center;
+      padding: 18px 8px;
+    }
+    .finished-screen h2 {
+      font-size: 42px;
+      color: #facc15;
+      font-weight: 800;
+      margin-bottom: 8px;
+      text-shadow: 0 4px 0 #7c5c0a;
+    }
+    .finished-screen p {
+      color: #b9c7e0;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+    .big-emoji {
+      font-size: 70px;
+      display: block;
+      margin-bottom: 6px;
+    }
+    /* hidden */
+    .hidden {
+      display: none !important;
+    }
+    /* audio emoji small size */
+    .speaker-emoji {
+      font-size: 28px;
+      filter: drop-shadow(0 2px 2px black);
+    }
+  </style>
+</head>
+<body>
+<div class="game-container">
+  <!-- top bar -->
+  <div class="top-bar">
+    <div class="logo">
+      <span>🎓</span> Lesson 5.3
+    </div>
+    <div class="progress-indicator">
+      <strong id="progressCounter">1</strong> / 10
+    </div>
+  </div>
+
+  <!-- quiz area -->
+  <div id="quizArea">
+    <div class="quiz-card">
+      <div class="sentence-box">
+        <div class="sentence-text" id="englishSentence">I have a family</div>
+        <button class="audio-btn" id="audioBtn" title="Listen pronunciation">
+          <span class="speaker-emoji">🔊</span>
+        </button>
+      </div>
+      <div class="prompt">Choose the correct translation:</div>
+      <div class="options" id="optionsContainer"></div>
+      <div class="feedback-message" id="feedbackMsg"></div>
+    </div>
+    <div class="footer">
+      <button class="restart-btn" id="restartBtn">⟲ Restart</button>
+      <div class="score-badge" id="scoreDisplay">0</div>
+    </div>
+  </div>
+
+  <!-- finished screen -->
+  <div id="finishedScreen" class="finished-screen hidden">
+    <span class="big-emoji">🎉</span>
+    <h2>Lesson complete!</h2>
+    <p id="finalScoreMsg">You scored 8 out of 10</p>
+    <button class="restart-btn" id="playAgainBtn" style="font-size: 20px; padding: 16px 40px;">PLAY AGAIN</button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ------------------------------
+    // 60 sentences from the lesson
+    // ------------------------------
+    const allSentences = [
+      { en: "I have a family", ru: "У меня есть семья" },
+      { en: "I work here", ru: "Я работаю здесь" },
+      { en: "This lesson seems interesting", ru: "Этот урок кажется интересным" },
+      { en: "She does it very well", ru: "Она делает это очень хорошо" },
+      { en: "My friend thinks so", ru: "Мой друг так думает" },
+      { en: "She loves you", ru: "Она любит тебя" },
+      { en: "Our boss knows it", ru: "Наш босс знает это" },
+      { en: "It looks interesting", ru: "Это выглядит интересным" },
+      { en: "My brother wants it", ru: "Мой брат хочет это" },
+      { en: "All your ideas seem very interesting", ru: "Все твои идеи кажутся очень интересными" },
+      { en: "He loves you", ru: "Он любит тебя" },
+      { en: "We remember it", ru: "Мы помним это" },
+      { en: "My brother tries to do it", ru: "Мой брат пытается сделать это" },
+      { en: "My sister lives there", ru: "Моя сестра живёт там" },
+      { en: "I work there", ru: "Я работаю там" },
+      { en: "I understand those people", ru: "Я понимаю тех людей" },
+      { en: "She always does it well", ru: "Она всегда делает это хорошо" },
+      { en: "I live in this country", ru: "Я живу в этой стране" },
+      { en: "I live in this city", ru: "Я живу в этом городе" },
+      { en: "She teaches it", ru: "Она преподаёт это" },
+      { en: "I think so", ru: "Я так думаю" },
+      { en: "She also thinks so", ru: "Она тоже так думает" },
+      { en: "He tries to do it", ru: "Он пытается сделать это" },
+      { en: "He lives in this country", ru: "Он живёт в этой стране" },
+      { en: "His idea seems very interesting", ru: "Его идея кажется очень интересной" },
+      { en: "His lessons seem very useful", ru: "Его уроки кажутся очень полезными" },
+      { en: "He also works here", ru: "Он также работает здесь" },
+      { en: "She goes to school", ru: "Она ходит в школу" },
+      { en: "I read English books", ru: "Я читаю английские книги" },
+      { en: "She helps me", ru: "Она помогает мне" },
+      { en: "He also knows it", ru: "Он тоже это знает" },
+      { en: "We see his success", ru: "Мы видим его успех" },
+      { en: "She often goes to the park", ru: "Она часто ходит в парк" },
+      { en: "That offer seems strange", ru: "Это предложение кажется странным" },
+      { en: "He has an offer", ru: "У него есть предложение" },
+      { en: "Their ideas seem very interesting", ru: "Их идеи кажутся очень интересными" },
+      { en: "She always does it on time", ru: "Она всегда делает это вовремя" },
+      { en: "He sees that mistake", ru: "Он видит эту ошибку" },
+      { en: "She watches TV", ru: "Она смотрит телевизор" },
+      { en: "She wants more", ru: "Она хочет большего" },
+      { en: "I work", ru: "Я работаю" },
+      { en: "Her words seem strange", ru: "Её слова кажутся странными" },
+      { en: "He often plays computer games", ru: "Он часто играет в компьютерные игры" },
+      { en: "He goes to work", ru: "Он идёт на работу" },
+      { en: "She lives in that place", ru: "Она живёт в этом месте" },
+      { en: "He understands you very well", ru: "Он очень хорошо тебя понимает" },
+      { en: "They go to work", ru: "Они идут на работу" },
+      { en: "You always say it", ru: "Ты всегда это говоришь" },
+      { en: "This lesson helps me", ru: "Этот урок помогает мне" },
+      { en: "They often go to the cinema", ru: "Они часто ходят в кино" },
+      { en: "These lessons seem very useful", ru: "Эти уроки кажутся очень полезными" },
+      { en: "They help me", ru: "Они помогают мне" },
+      { en: "I speak English", ru: "Я говорю по-английски" },
+      { en: "He sometimes wants to do it", ru: "Иногда ему хочется это сделать" },
+      { en: "I understand everything", ru: "Я всё понимаю" },
+      { en: "She lives in this place", ru: "Она живёт в этом месте" },
+      { en: "I read in English", ru: "Я читаю на английском" },
+      { en: "He says interesting things", ru: "Он говорит интересные вещи" },
+      { en: "We see their success", ru: "Мы видим их успех" },
+      { en: "I know this word", ru: "Я знаю это слово" }
+    ];
+
+    // ---------- Game state ----------
+    let currentQuestions = [];          // 10 random { en, ru }
+    let currentIndex = 0;
+    let score = 0;
+    let canAnswer = true;
+    let currentCorrectAnswer = '';
+    let currentOptions = [];
+
+    // DOM elements
+    const quizArea = document.getElementById('quizArea');
+    const finishedScreen = document.getElementById('finishedScreen');
+    const englishSentenceEl = document.getElementById('englishSentence');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackMsg = document.getElementById('feedbackMsg');
+    const progressCounter = document.getElementById('progressCounter');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const audioBtn = document.getElementById('audioBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const playAgainBtn = document.getElementById('playAgainBtn');
+    const finalScoreMsg = document.getElementById('finalScoreMsg');
+
+    // ---------- Utility: shuffle ----------
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // ---------- Pick 10 random sentences ----------
+    function pickRandomSentences(count = 10) {
+      const shuffledAll = shuffleArray([...allSentences]);
+      return shuffledAll.slice(0, count);
+    }
+
+    // ---------- Generate 3 wrong russian options (distractors) ----------
+    function generateOptions(correctRu) {
+      // collect all russian translations except the correct one
+      const allRu = allSentences.map(s => s.ru).filter(ru => ru !== correctRu);
+      // remove duplicates (in case of repeated russian) then shuffle and take 3
+      const uniqueDistractors = [...new Set(allRu)];
+      const shuffledDistractors = shuffleArray([...uniqueDistractors]);
+      const selectedDistractors = shuffledDistractors.slice(0, 3);
+      const opts = [correctRu, ...selectedDistractors];
+      return shuffleArray(opts);
+    }
+
+    // ---------- Speak English sentence using SpeechSynthesis ----------
+    function speakEnglish(text) {
+      if (!window.speechSynthesis) {
+        alert('Speech synthesis not supported in your browser.');
+        return;
+      }
+      // cancel any ongoing speech
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+      // optional: choose a voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const enVoice = voices.find(v => v.lang.startsWith('en'));
+      if (enVoice) utterance.voice = enVoice;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // ---------- Load a question (by index) ----------
+    function loadQuestion(index) {
+      if (index >= currentQuestions.length) {
+        finishGame();
+        return;
+      }
+
+      canAnswer = true;
+      const q = currentQuestions[index];
+      currentCorrectAnswer = q.ru;
+      englishSentenceEl.textContent = q.en;
+      progressCounter.textContent = index + 1;
+
+      // generate options and store them
+      currentOptions = generateOptions(q.ru);
+      // render option buttons
+      optionsContainer.innerHTML = '';
+      currentOptions.forEach((optText) => {
+        const btn = document.createElement('div');
+        btn.classList.add('option');
+        btn.textContent = optText;
+        btn.dataset.value = optText;
+        btn.addEventListener('click', () => handleOptionClick(btn, optText));
+        optionsContainer.appendChild(btn);
+      });
+
+      // clear feedback
+      feedbackMsg.textContent = '';
+      // remove disabled class from all options (fresh)
+      document.querySelectorAll('.option').forEach(el => {
+        el.classList.remove('correct', 'wrong', 'disabled');
+      });
+    }
+
+    // ---------- Handle option click ----------
+    function handleOptionClick(btn, selectedText) {
+      if (!canAnswer) return;
+      canAnswer = false;
+
+      const isCorrect = (selectedText === currentCorrectAnswer);
+      const allOptions = document.querySelectorAll('.option');
+
+      // disable all options
+      allOptions.forEach(el => el.classList.add('disabled'));
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        score++;
+        feedbackMsg.textContent = '✅ Correct! Great job!';
+        scoreDisplay.textContent = score;
+      } else {
+        btn.classList.add('wrong');
+        // highlight the correct one
+        allOptions.forEach(el => {
+          if (el.dataset.value === currentCorrectAnswer) {
+            el.classList.add('correct');
+          }
+        });
+        feedbackMsg.textContent = `❌ Oops! Correct answer: ${currentCorrectAnswer}`;
+      }
+
+      // move to next question after delay
+      setTimeout(() => {
+        currentIndex++;
+        if (currentIndex < currentQuestions.length) {
+          loadQuestion(currentIndex);
+        } else {
+          finishGame();
+        }
+      }, 1300);
+    }
+
+    // ---------- Finish game ----------
+    function finishGame() {
+      quizArea.classList.add('hidden');
+      finishedScreen.classList.remove('hidden');
+      finalScoreMsg.textContent = `You scored ${score} out of ${currentQuestions.length}`;
+    }
+
+    // ---------- Reset & start new game ----------
+    function startNewGame() {
+      // reset state
+      currentQuestions = pickRandomSentences(10);
+      currentIndex = 0;
+      score = 0;
+      canAnswer = true;
+      scoreDisplay.textContent = '0';
+
+      // show quiz area, hide finished
+      quizArea.classList.remove('hidden');
+      finishedScreen.classList.add('hidden');
+
+      // load first question
+      loadQuestion(0);
+    }
+
+    // ---------- Event listeners ----------
+    audioBtn.addEventListener('click', () => {
+      const englishText = englishSentenceEl.textContent;
+      if (englishText) speakEnglish(englishText);
+    });
+
+    restartBtn.addEventListener('click', () => {
+      startNewGame();
+    });
+
+    playAgainBtn.addEventListener('click', () => {
+      startNewGame();
+    });
+
+    // Preload voices (some browsers need this)
+    if (window.speechSynthesis) {
+      window.speechSynthesis.getVoices();
+    }
+
+    // ---------- Initialize game ----------
+    startNewGame();
+  })();
+</script>
+</body>
+</html>
