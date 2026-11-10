@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Quiz — Lesson 6: I want</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, sans-serif; }
+  body {
+    min-height:100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-size: 300% 300%;
+    animation: bgShift 12s ease infinite;
+    display:flex; justify-content:center; align-items:center;
+    padding:20px;
+  }
+  @keyframes bgShift {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .app {
+    width:100%; max-width:640px;
+    background:rgba(255,255,255,0.97);
+    border-radius:28px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.35);
+    padding:32px 28px 28px;
+    position:relative;
+    overflow:hidden;
+    animation: popIn .6s cubic-bezier(.2,1.4,.4,1);
+  }
+  @keyframes popIn {
+    from { transform:scale(.8) translateY(40px); opacity:0; }
+    to { transform:scale(1) translateY(0); opacity:1; }
+  }
+  h1 { font-size:1.4rem; color:#4c1d95; text-align:center; margin-bottom:6px; }
+  .subtitle { text-align:center; color:#888; font-size:.85rem; margin-bottom:18px; }
+
+  /* Прогресс */
+  .progress-wrap { display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .progress-bar {
+    flex:1; height:12px; background:#e9e4f5; border-radius:20px; overflow:hidden;
+  }
+  .progress-fill {
+    height:100%; width:0%;
+    background: linear-gradient(90deg,#8b5cf6,#ec4899);
+    border-radius:20px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-text { font-size:.8rem; color:#7c3aed; font-weight:700; min-width:44px; }
+
+  /* Карточка */
+  .card {
+    background:linear-gradient(160deg,#faf7ff,#f3ecff);
+    border:2px solid #e5dbff;
+    border-radius:22px;
+    padding:24px 20px;
+    text-align:center;
+    margin-bottom:18px;
+    animation: fadeUp .4s ease;
+  }
+  @keyframes fadeUp { from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)} }
+
+  .word-eng {
+    font-size:2.2rem; font-weight:800; color:#4c1d95;
+    margin-bottom:8px; letter-spacing:.5px;
+  }
+  .word-ru-hint { font-size:.95rem; color:#a78bfa; margin-bottom:12px; }
+  .speak-btn {
+    background:linear-gradient(135deg,#8b5cf6,#6366f1);
+    border:none; color:white; font-size:1.2rem;
+    width:56px; height:56px; border-radius:50%;
+    cursor:pointer; box-shadow:0 6px 18px rgba(139,92,246,.45);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .speak-btn:hover { transform:scale(1.1); box-shadow:0 8px 24px rgba(139,92,246,.65); }
+  .speak-btn:active { transform:scale(.92); }
+
+  /* Варианты */
+  .options { display:grid; gap:12px; margin-bottom:8px; }
+  .option-btn {
+    padding:16px 18px; border-radius:16px; border:2px solid #e5dbff;
+    background:white; font-size:1.05rem; font-weight:600; color:#4c1d95;
+    cursor:pointer; text-align:left;
+    transition: all .2s;
+    display:flex; align-items:center; gap:12px;
+  }
+  .option-btn:hover:not(:disabled) { border-color:#a78bfa; transform:translateX(4px); background:#faf7ff; }
+  .option-btn:disabled { cursor:default; }
+  .option-btn.correct { background:linear-gradient(135deg,#d1fae5,#a7f3d0); border-color:#10b981; color:#065f46; animation: correctPop .4s; }
+  .option-btn.wrong { background:linear-gradient(135deg,#fee2e2,#fecaca); border-color:#ef4444; color:#991b1b; animation: shake .4s; }
+  @keyframes correctPop { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+  .badge { display:inline-block; background:#ede9fe; color:#7c3aed; font-size:.75rem; font-weight:700; padding:4px 12px; border-radius:20px; margin-bottom:12px; }
+
+  /* Сборка предложения */
+  .sentence-build {
+    min-height:64px; background:white; border:2px dashed #c4b5fd;
+    border-radius:16px; padding:12px; display:flex; flex-wrap:wrap; gap:8px;
+    align-items:center; margin-bottom:14px;
+  }
+  .sentence-build.filled { border-style:solid; }
+  .word-chip {
+    background:linear-gradient(135deg,#8b5cf6,#6366f1); color:white;
+    padding:8px 16px; border-radius:12px; font-weight:700; font-size:1rem;
+    cursor:pointer; animation: chipIn .25s ease;
+    box-shadow:0 4px 10px rgba(99,102,241,.35);
+  }
+  .word-chip:active { transform:scale(.94); }
+  @keyframes chipIn { from{transform:scale(.6); opacity:0} to{transform:scale(1); opacity:1} }
+
+  .word-bank {
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:18px; min-height:50px;
+  }
+  .bank-chip {
+    background:white; border:2px solid #d8ccfa; color:#4c1d95;
+    padding:10px 18px; border-radius:12px; font-weight:600; font-size:1rem;
+    cursor:pointer; transition: all .18s;
+    box-shadow:0 3px 8px rgba(139,92,246,.15);
+  }
+  .bank-chip:hover { border-color:#8b5cf6; transform:translateY(-3px); box-shadow:0 6px 14px rgba(139,92,246,.35); }
+  .bank-chip.hidden { opacity:0; pointer-events:none; transform:scale(.7); }
+
+  .translation-hint { font-size:.95rem; color:#9333ea; font-weight:600; margin-bottom:6px; text-align:center; }
+  .translate-label { font-size:.75rem; color:#aaa; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; text-align:center; }
+
+  /* Кнопки */
+  .btn-main {
+    width:100%; padding:16px; border:none; border-radius:16px;
+    font-size:1.05rem; font-weight:800; cursor:pointer; color:white;
+    background:linear-gradient(135deg,#8b5cf6,#ec4899);
+    box-shadow:0 8px 20px rgba(139,92,246,.4);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn-main:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 12px 26px rgba(139,92,246,.55); }
+  .btn-main:active:not(:disabled) { transform:scale(.97); }
+  .btn-main:disabled { opacity:.45; cursor:not-allowed; box-shadow:none; }
+
+  /* Финальный экран */
+  .final { text-align:center; animation: fadeUp .5s ease; }
+  .final-emoji { font-size:4.5rem; animation: bounce 1.2s infinite; display:block; margin:10px 0; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+  .final h2 { font-size:1.8rem; color:#4c1d95; margin-bottom:10px; }
+  .final-score { font-size:3rem; font-weight:900; background:linear-gradient(135deg,#8b5cf6,#ec4899); -webkit-background-clip:text; background-clip:text; color:transparent; margin:10px 0; }
+  .final-msg { color:#666; margin-bottom:24px; font-size:1.05rem; }
+
+  .feedback { text-align:center; font-weight:700; min-height:26px; font-size:1rem; margin-top:4px; }
+  .feedback.ok { color:#059669; }
+  .feedback.no { color:#dc2626; }
+
+  .top-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .mode-tag { background:#ede9fe; color:#7c3aed; font-weight:700; font-size:.8rem; padding:6px 14px; border-radius:20px; }
+  .score-tag { background:#fef3c7; color:#b45309; font-weight:800; font-size:.85rem; padding:6px 14px; border-radius:20px; }
+
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <!-- ЭКРАН СТАРТА -->
+  <div id="startScreen">
+    <h1>🎓 Lesson #6 — I want</h1>
+    <p class="subtitle">Игра-квиз: слова и предложения</p>
+    <div class="card" style="text-align:left;">
+      <p style="margin-bottom:10px; color:#4c1d95; font-weight:700;">📚 Что тебя ждёт:</p>
+      <p style="margin-bottom:8px;">🔊 <b>Режим «Слова»</b> — слушай произношение и выбирай перевод</p>
+      <p style="margin-bottom:8px;">🧩 <b>Режим «Предложения»</b> — собирай фразы с want / want to / a-an</p>
+      <p>⭐ 12 вопросов. Удачи!</p>
+    </div>
+    <button class="btn-main" onclick="startGame()">🚀 Начать игру</button>
+  </div>
+
+  <!-- ЭКРАН ИГРЫ -->
+  <div id="gameScreen" class="hidden">
+    <div class="top-row">
+      <span class="mode-tag" id="modeTag">Слова</span>
+      <span class="score-tag" id="scoreTag">⭐ 0</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">1/12</span>
+    </div>
+
+    <!-- Вопрос: слова -->
+    <div id="wordQuestion">
+      <div class="card">
+        <div class="badge">Переведи слово</div>
+        <div class="word-eng" id="wordEng">thing</div>
+        <div class="word-ru-hint">🔊 нажми и послушай</div>
+        <button class="speak-btn" id="speakBtn" title="Прослушать">🔊</button>
+      </div>
+      <div class="options" id="wordOptions"></div>
+    </div>
+
+    <!-- Вопрос: предложение -->
+    <div id="sentenceQuestion" class="hidden">
+      <div class="card">
+        <div class="badge">Собери предложение</div>
+        <div class="translate-label">Переведи на английский</div>
+        <div class="translation-hint" id="ruSentence">Я хочу новую квартиру</div>
+      </div>
+      <div class="sentence-build" id="sentenceBuild"></div>
+      <div class="word-bank" id="wordBank"></div>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-main" id="checkBtn" onclick="checkAnswer()">✅ Проверить</button>
+    <button class="btn-main hidden" id="nextBtn" onclick="nextQuestion()" style="margin-top:10px;">➡️ Далее</button>
+  </div>
+
+  <!-- ФИНАЛЬНЫЙ ЭКРАН -->
+  <div id="finalScreen" class="hidden final">
+    <span class="final-emoji" id="finalEmoji">🏆</span>
+    <h2 id="finalTitle">Отлично!</h2>
+    <div class="final-score" id="finalScore">0 / 12</div>
+    <p class="final-msg" id="finalMsg"></p>
+    <button class="btn-main" onclick="restartGame()">🔁 Играть снова</button>
+  </div>
+</div>
+
+<script>
+// ===== ДАННЫЕ =====
+const WORDS = [
+  { en:"thing", ru:["вещь","вещи"], wrong:["платье","квартира","работа"] },
+  { en:"dress", ru:["платье"], wrong:["вещь","квартира","грамматика"] },
+  { en:"flat", ru:["квартира"], wrong:["платье","вещь","работа"] },
+  { en:"apartment", ru:["квартира"], wrong:["платье","вещь","свободно"] },
+  { en:"improve", ru:["улучшить"], wrong:["выучить","проверить","купить"] },
+  { en:"better", ru:["лучше"], wrong:["правильно","без","свободно"] },
+  { en:"without", ru:["без"], wrong:["лучше","правильно","другой"] },
+  { en:"grammar", ru:["грамматика"], wrong:["вещь","квартира","работа"] },
+  { en:"correctly", ru:["правильно"], wrong:["свободно","без","лучше"] },
+  { en:"learn", ru:["выучить","учить"], wrong:["проверить","улучшить","купить"] },
+  { en:"fluently", ru:["свободно"], wrong:["правильно","без","лучше"] },
+  { en:"abroad", ru:["за границу","за границей"], wrong:["квартира","работа","другой"] },
+  { en:"another", ru:["другой"], wrong:["лучше","без","правильно"] },
+  { en:"check", ru:["проверить"], wrong:["выучить","улучшить","купить"] },
+  { en:"to buy", ru:["купить"], wrong:["проверить","выучить","улучшить"] },
+  { en:"right now", ru:["прямо сейчас"], wrong:["ещё один раз","свободно","без"] },
+  { en:"one more time", ru:["ещё один раз"], wrong:["прямо сейчас","свободно","лучше"] },
+];
+
+const SENTENCES = [
+  { ru:"Я хочу новую квартиру.", tokens:["I","want","a","new","flat"] },
+  { ru:"Я хочу хорошую машину.", tokens:["I","want","a","good","car"] },
+  { ru:"Я действительно хочу это.", tokens:["I","really","want","it"] },
+  { ru:"Я хочу знать это.", tokens:["I","want","to","know","it"] },
+  { ru:"Я хочу улучшить мой английский.", tokens:["I","want","to","improve","my","English"] },
+  { ru:"Я хочу говорить по-английски без ошибок.", tokens:["I","want","to","speak","English","without","mistakes"] },
+  { ru:"Я хочу выучить английский быстро.", tokens:["I","want","to","learn","English","fast"] },
+  { ru:"Я хочу иметь хорошую работу.", tokens:["I","want","to","have","a","good","job"] },
+  { ru:"Я хочу быть счастливым.", tokens:["I","want","to","be","happy"] },
+  { ru:"Она хочет сделать это прямо сейчас.", tokens:["She","wants","to","do","it","right","now"] },
+  { ru:"Он хочет купить эту вещь.", tokens:["He","wants","to","buy","this","thing"] },
+  { ru:"Мой друг хочет проверить это ещё один раз.", tokens:["My","friend","wants","to","check","it","one","more","time"] },
+];
+
+// ===== СОСТОЯНИЕ =====
+let questions = [];
+let current = 0;
+let score = 0;
+let answered = false;
+let selectedChips = [];
+let poolChips = [];
+
+// ===== УТИЛИТЫ =====
+function shuffle(a){ return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]); }
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+// ===== СТАРТ =====
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  document.getElementById('finalScreen').classList.add('hidden');
+  buildQuestions();
+  current = 0; score = 0;
+  document.getElementById('scoreTag').textContent = '⭐ 0';
+  renderQuestion();
+}
+
+function buildQuestions(){
+  // 6 слов + 6 предложений, перемешанные
+  const wordQ = shuffle(WORDS).slice(0,6).map(w=>({type:'word', data:w}));
+  const sentQ = shuffle(SENTENCES).slice(0,6).map(s=>({type:'sentence', data:s}));
+  questions = shuffle([...wordQ, ...sentQ]);
+}
+
+function updateProgress(){
+  const total = questions.length;
+  document.getElementById('progressFill').style.width = (current/total*100) + '%';
+  document.getElementById('progressText').textContent = (current+1)+'/'+total;
+}
+
+// ===== РЕНДЕР ВОПРОСА =====
+function renderQuestion(){
+  answered = false;
+  selectedChips = [];
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('checkBtn').classList.remove('hidden');
+  document.getElementById('checkBtn').disabled = false;
+  document.getElementById('nextBtn').classList.add('hidden');
+
+  const q = questions[current];
+  updateProgress();
+
+  if(q.type === 'word'){
+    renderWord(q.data);
+  } else {
+    renderSentence(q.data);
+  }
+}
+
+// --- Слова ---
+function renderWord(w){
+  document.getElementById('modeTag').textContent = '🔤 Слова';
+  document.getElementById('wordQuestion').classList.remove('hidden');
+  document.getElementById('sentenceQuestion').classList.add('hidden');
+
+  document.getElementById('wordEng').textContent = w.en;
+  document.getElementById('speakBtn').onclick = () => speak(w.en);
+
+  // Собираем варианты: 1 правильный + 3 неправильных
+  const correct = w.ru[0];
+  const wrongs = shuffle(w.wrong).slice(0,3);
+  const opts = shuffle([correct, ...wrongs]);
+
+  const box = document.getElementById('wordOptions');
+  box.innerHTML = '';
+  opts.forEach(opt=>{
+    const b = document.createElement('button');
+    b.className = 'option-btn';
+    b.textContent = opt;
+    b.onclick = () => selectWordOption(b, opt === correct);
+    box.appendChild(b);
+  });
+
+  // Автопроизношение через 300мс
+  setTimeout(()=>speak(w.en), 300);
+}
+
+function selectWordOption(btn, isCorrect){
+  if(answered) return;
+  // подсветить правильный
+  document.querySelectorAll('#wordOptions .option-btn').forEach(b=>b.disabled = true);
+  if(isCorrect){
+    btn.classList.add('correct');
+    showFeedback(true);
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    // показать правильный
+    document.querySelectorAll('#wordOptions .option-btn').forEach(b=>{
+      if(b.textContent === questions[current].data.ru[0]) b.classList.add('correct');
+    });
+    showFeedback(false);
+  }
+  finishQuestion();
+}
+
+// --- Предложения ---
+function renderSentence(s){
+  document.getElementById('modeTag').textContent = '🧩 Предложение';
+  document.getElementById('wordQuestion').classList.add('hidden');
+  document.getElementById('sentenceQuestion').classList.remove('hidden');
+
+  document.getElementById('ruSentence').textContent = s.ru;
+
+  // Перемешанные токены для банка
+  poolChips = shuffle([...s.tokens]);
+  selectedChips = [];
+  drawBuild();
+  drawBank();
+}
+
+function drawBuild(){
+  const build = document.getElementById('sentenceBuild');
+  build.innerHTML = '';
+  if(selectedChips.length === 0){
+    build.innerHTML = '<span style="color:#c4b5fd; font-size:.9rem; padding:8px;">Нажми на слова ниже 👇</span>';
+    build.classList.remove('filled');
+  } else {
+    build.classList.add('filled');
+    selectedChips.forEach((tok, i)=>{
+      const chip = document.createElement('div');
+      chip.className = 'word-chip';
+      chip.textContent = tok;
+      chip.onclick = () => removeChip(i);
+      build.appendChild(chip);
+    });
+  }
+  document.getElementById('checkBtn').disabled = selectedChips.length === 0;
+}
+
+function drawBank(){
+  const bank = document.getElementById('wordBank');
+  bank.innerHTML = '';
+  poolChips.forEach((tok, i)=>{
+    const chip = document.createElement('button');
+    chip.className = 'bank-chip';
+    chip.textContent = tok;
+    chip.dataset.idx = i;
+    chip.onclick = () => addChip(i);
+    if(tok === null) chip.classList.add('hidden');
+    bank.appendChild(chip);
+  });
+}
+
+function addChip(i){
+  if(answered) return;
+  const tok = poolChips[i];
+  if(tok === null) return;
+  selectedChips.push(tok);
+  poolChips[i] = null;
+  drawBuild();
+  drawBank();
+}
+
+function removeChip(selIdx){
+  if(answered) return;
+  const tok = selectedChips[selIdx];
+  // найти первую "пустую" позицию в pool и вернуть
+  // Проще: пересобрать pool из исходных токенов, но лучше хранить
+  // Найдём индекс в исходном порядке — используем пустую ячейку
+  selectedChips.splice(selIdx,1);
+  // Вернуть токен в pool: найдём первый null и поставим
+  // Но нужно сохранить исходный порядок? Не критично — просто пушим
+  const emptyIdx = poolChips.indexOf(null);
+  if(emptyIdx !== -1) poolChips[emptyIdx] = tok;
+  else poolChips.push(tok);
+  drawBuild();
+  drawBank();
+}
+
+// ===== ПРОВЕРКА =====
+function checkAnswer(){
+  if(answered) return;
+  const q = questions[current];
+
+  if(q.type === 'word'){
+    // уже обработано в selectWordOption
+    return;
+  }
+
+  // sentence
+  const userSentence = selectedChips.join(' ');
+  const correctSentence = q.data.tokens.join(' ');
+  const isCorrect = userSentence === correctSentence;
+
+  document.getElementById('checkBtn').classList.add('hidden');
+  document.getElementById('nextBtn').classList.remove('hidden');
+
+  // Подсветка
+  const build = document.getElementById('sentenceBuild');
+  const chips = build.querySelectorAll('.word-chip');
+  chips.forEach((c, i)=>{
+    c.onclick = null;
+    if(q.data.tokens[i] !== undefined && c.textContent === q.data.tokens[i]){
+      c.style.background = 'linear-gradient(135deg,#10b981,#34d399)';
+    } else {
+      c.style.background = 'linear-gradient(135deg,#ef4444,#f87171)';
+    }
+  });
+
+  if(isCorrect){
+    showFeedback(true);
+    score++;
+  } else {
+    showFeedback(false, 'Правильно: "' + correctSentence + '"');
+  }
+  finishQuestion(true);
+}
+
+function showFeedback(ok, extra){
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback ' + (ok ? 'ok' : 'no');
+  if(ok){
+    fb.textContent = ['✅ Отлично!','✅ Верно!','✅ Молодец!','✅ Супер!'][Math.floor(Math.random()*4)];
+  } else {
+    fb.textContent = '❌ ' + (extra || 'Попробуй ещё раз в следующий раз!');
+  }
+}
+
+function finishQuestion(fromCheck){
+  if(!answered){
+    answered = true;
+    document.getElementById('scoreTag').textContent = '⭐ ' + score;
+  }
+  if(fromCheck !== true){
+    // для слов: показать кнопку Далее
+    document.getElementById('checkBtn').classList.add('hidden');
+    document.getElementById('nextBtn').classList.remove('hidden');
+    document.getElementById('scoreTag').textContent = '⭐ ' + score;
+  }
+}
+
+// ===== ДАЛЕЕ =====
+function nextQuestion(){
+  current++;
+  if(current >= questions.length){
+    showFinal();
+    return;
+  }
+  renderQuestion();
+}
+
+function showFinal(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  const final = document.getElementById('finalScreen');
+  final.classList.remove('hidden');
+
+  const total = questions.length;
+  document.getElementById('finalScore').textContent = score + ' / ' + total;
+
+  let emoji, title, msg;
+  const pct = score/total;
+  if(pct === 1){
+    emoji='🏆'; title='Идеально!'; msg='Ты отлично знаешь конструкцию I want! Так держать! 🎉';
+  } else if(pct >= 0.75){
+    emoji='🌟'; title='Отличный результат!'; msg='Очень хорошо! Немного повтори — и будет идеально.';
+  } else if(pct >= 0.5){
+    emoji='👍'; title='Неплохо!'; msg='Хороший старт. Повтори правила a/an и want to — и всё получится!';
+  } else {
+    emoji='💪'; title='Есть над чем работать'; msg='Не сдавайся! Посмотри урок ещё раз и попробуй снова.';
+  }
+  document.getElementById('finalEmoji').textContent = emoji;
+  document.getElementById('finalTitle').textContent = title;
+  document.getElementById('finalMsg').textContent = msg;
+
+  // конфетти из эмодзи
+  if(pct >= 0.75) fireConfetti();
+}
+
+function fireConfetti(){
+  const emojis = ['🎉','⭐','✨','🎊','💜','🏆'];
+  for(let i=0;i<40;i++){
+    const el = document.createElement('div');
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.cssText = `position:fixed;left:${Math.random()*100}vw;top:-40px;font-size:${18+Math.random()*22}px;pointer-events:none;z-index:9999;transition:transform ${2+Math.random()*2}s linear, opacity ${2+Math.random()*2}s linear;`;
+    document.body.appendChild(el);
+    requestAnimationFrame(()=>{
+      el.style.transform = `translateY(110vh) rotate(${Math.random()*720-360}deg)`;
+      el.style.opacity = '0';
+    });
+    setTimeout(()=>el.remove(), 5000);
+  }
+}
+
+function restartGame(){
+  document.getElementById('finalScreen').classList.add('hidden');
+  startGame();
+}
+
+// Горячие клавиши: Enter — проверить/далее
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Enter'){
+    const next = document.getElementById('nextBtn');
+    const check = document.getElementById('checkBtn');
+    if(!next.classList.contains('hidden')) next.click();
+    else if(!check.classList.contains('hidden') && !check.disabled) check.click();
+  }
+});
+</script>
+</body>
+</html>
