@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English 3D Quiz — Урок 6.1: Конструкция «I want» (Практика)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Three.js for interactive 3D background world & 3D knowledge crystal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 3D WebGL Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Floating Ambient HUD / Header -->
+    <header class="top-hud">
+        <div class="brand" id="btn-home" title="На главную">
+            <div class="brand-cube">
+                <div class="cube-face front">6.1</div>
+                <div class="cube-face back">EN</div>
+                <div class="cube-face right">3D</div>
+                <div class="cube-face left">GO</div>
+                <div class="cube-face top">★</div>
+                <div class="cube-face bottom">✓</div>
+            </div>
+            <div class="brand-text">
+                <span class="lesson-badge">УРОК #6.1 • ПРАКТИКА</span>
+                <h1>Construction «I want»</h1>
+            </div>
+        </div>
+
+        <nav class="mode-tabs" aria-label="Режимы игры">
+            <button class="tab-btn active" data-view="menu">
+                <span class="tab-icon">🎮</span>
+                <span>Арена 3D</span>
+            </button>
+            <button class="tab-btn" data-view="play">
+                <span class="tab-icon">⚡</span>
+                <span>Тренировка</span>
+            </button>
+            <button class="tab-btn" data-view="grammar">
+                <span class="tab-icon">📐</span>
+                <span>Правило 6.1</span>
+            </button>
+            <button class="tab-btn" data-view="table">
+                <span class="tab-icon">📚</span>
+                <span>Все 37 фраз</span>
+            </button>
+        </nav>
+
+        <div class="hud-stats">
+            <div class="stat-pill xp-pill" title="Очки опыта">
+                <span class="stat-icon">✨</span>
+                <div>
+                    <small>ОПЫТ (XP)</small>
+                    <strong id="hud-xp">0</strong>
+                </div>
+            </div>
+            <div class="stat-pill streak-pill" title="Серия правильных ответов подряд">
+                <span class="stat-icon">🔥</span>
+                <div>
+                    <small>СЕРИЯ</small>
+                    <strong id="hud-streak">0</strong>
+                </div>
+            </div>
+            <div class="stat-pill mastered-pill" title="Изучено фраз из 37">
+                <span class="stat-icon">🏆</span>
+                <div>
+                    <small>ИЗУЧЕНО</small>
+                    <strong><span id="hud-mastered">0</span>/37</strong>
+                </div>
+            </div>
+            <button class="icon-btn" id="btn-sound" title="Звуковые эффекты Вкл/Выкл" aria-label="Переключить звук">
+                🔊
+            </button>
+        </div>
+    </header>
+
+    <!-- Main 3D Viewport Container -->
+    <main class="viewport-3d">
+
+        <!-- VIEW 1: 3D MENU / HUB -->
+        <section id="view-menu" class="view-section active">
+            <div class="hero-3d-card" data-tilt>
+                <div class="hero-badge">ИНТЕРАКТИВНЫЙ 3D-ТРЕНАЖЁР</div>
+                <h2>Практика конструкции <span class="gradient-text">«I want / She wants»</span></h2>
+                <p class="hero-sub">
+                    Закрепите все <strong>37 предложений</strong> из видеоурока №6.1! Сравните дословный учебный перевод и живой перевод Google Translate, слушайте произношение и тренируйтесь в 4 игровых 3D-режимах.
+                </p>
+
+                <!-- Filter Selection -->
+                <div class="filter-bar">
+                    <span class="filter-label">Набор фраз для игры:</span>
+                    <div class="filter-chips" id="deck-filter-chips">
+                        <button class="chip active" data-filter="all">Все фразы (37)</button>
+                        <button class="chip" data-filter="infinitive">want + to + глагол (28)</button>
+                        <button class="chip" data-filter="third_person">He / She wants (6)</button>
+                        <button class="chip" data-filter="noun">want + предмет (9)</button>
+                        <button class="chip" data-filter="unmastered">Только неизученные</button>
+                    </div>
+                </div>
+
+                <!-- 4 3D Mode Cards -->
+                <div class="modes-grid-3d">
+                    <article class="mode-card-3d" data-mode="builder" tabindex="0">
+                        <div class="mode-card-inner">
+                            <div class="mode-glow"></div>
+                            <div class="mode-icon-3d">🧩</div>
+                            <span class="mode-tag">РЕКОМЕНДУЕМ</span>
+                            <h3>3D Конструктор</h3>
+                            <p>Собирайте английские предложения из парящих 3D-блоков слов по русскому переводу.</p>
+                            <span class="mode-action">Начать игру →</span>
+                        </div>
+                    </article>
+
+                    <article class="mode-card-3d" data-mode="quiz" tabindex="0">
+                        <div class="mode-card-inner">
+                            <div class="mode-glow"></div>
+                            <div class="mode-icon-3d">🎯</div>
+                            <span class="mode-tag">НА СКОРОСТЬ</span>
+                            <h3>3D Квиз-Арена</h3>
+                            <p>Выбирайте верный перевод из 4 карточек в 3D-пространстве и набирайте комбо-очки.</p>
+                            <span class="mode-action">Начать игру →</span>
+                        </div>
+                    </article>
+
+                    <article class="mode-card-3d" data-mode="flashcards" tabindex="0">
+                        <div class="mode-card-inner">
+                            <div class="mode-glow"></div>
+                            <div class="mode-icon-3d">🔄</div>
+                            <span class="mode-tag">ЗАПОМИНАНИЕ</span>
+                            <h3>3D Флеш-карточки</h3>
+                            <p>Вращайте объёмные 3D-карточки, слушайте диктора и сравнивайте два варианта перевода.</p>
+                            <span class="mode-action">Открыть карточки →</span>
+                        </div>
+                    </article>
+
+                    <article class="mode-card-3d" data-mode="typing" tabindex="0">
+                        <div class="mode-card-inner">
+                            <div class="mode-glow"></div>
+                            <div class="mode-icon-3d">⌨️</div>
+                            <span class="mode-tag">ЭКЗАМЕН</span>
+                            <h3>Мастер письма</h3>
+                            <p>Переводите фразы по памяти с клавиатуры с умными подсказками и проверкой ошибок.</p>
+                            <span class="mode-action">Проверить себя →</span>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="hero-footer">
+                    <div class="progress-overview">
+                        <div class="progress-bar-label">
+                            <span>Общий прогресс освоения урока 6.1</span>
+                            <span id="menu-progress-percent">0%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="menu-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="btn-secondary btn-reset" id="btn-reset-progress" title="Сбросить сохранённый прогресс">
+                        Сбросить прогресс
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: ACTIVE 3D GAMEPLAY ARENA -->
+        <section id="view-play" class="view-section">
+            <div class="game-top-bar">
+                <div class="mode-switcher-pills">
+                    <button class="mini-mode-btn active" data-switch-mode="builder">🧩 Конструктор</button>
+                    <button class="mini-mode-btn" data-switch-mode="quiz">🎯 Квиз 4х</button>
+                    <button class="mini-mode-btn" data-switch-mode="flashcards">🔄 3D Карточки</button>
+                    <button class="mini-mode-btn" data-switch-mode="typing">⌨️ Письмо</button>
+                </div>
+
+                <div class="session-progress-wrap">
+                    <span class="question-counter" id="question-counter">Фраза 1 из 37</span>
+                    <div class="session-progress-bar">
+                        <div class="session-progress-fill" id="session-progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="audio-controls">
+                    <label class="toggle-label" title="Показывать перевод Google Translate вместе с основным">
+                        <input type="checkbox" id="toggle-google-tr" checked>
+                        <span>Перевод Google</span>
+                    </label>
+                    <button class="btn-pill" id="btn-speak-current" title="Прослушать английскую фразу (клавиша R)">
+                        🔊 Озвучить
+                    </button>
+                    <button class="btn-pill" id="btn-speak-slow" title="Медленное произношение 0.75x">
+                        🐢 Медленно
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3D Perspective Stage -->
+            <div class="stage-3d" id="stage-3d">
+                <!-- Question / Prompt 3D Card -->
+                <div class="question-card-3d" id="question-card-3d">
+                    <div class="card-header-badges">
+                        <span class="phrase-num-badge" id="q-num-badge">№ 1</span>
+                        <span class="grammar-tag-badge" id="q-grammar-badge">I want + to + V</span>
+                        <span class="mastery-badge" id="q-mastery-badge">Новое</span>
+                    </div>
+
+                    <div class="prompt-content">
+                        <div class="ru-primary-box">
+                            <span class="tr-label">Учебный перевод (Русский):</span>
+                            <h2 class="ru-prompt-text" id="q-ru-text">Я хочу улучшить мою грамматику</h2>
+                        </div>
+
+                        <div class="ru-google-box" id="q-google-box">
+                            <span class="tr-label">Google Translate:</span>
+                            <p class="ru-google-text" id="q-google-text">Я хочу улучшить свою грамматику.</p>
+                        </div>
+                    </div>
+
+                    <!-- Grammar mini-hint collapsible -->
+                    <div class="grammar-hint-strip" id="q-hint-strip">
+                        <span class="hint-icon">💡</span>
+                        <span id="q-hint-text">После <strong>I want</strong> перед действием ставим частицу <strong>to</strong>.</span>
+                    </div>
+                </div>
+
+                <!-- MODE A: WORD BUILDER -->
+                <div class="interaction-zone" id="zone-builder">
+                    <div class="answer-tray-label">Соберите фразу на английском (нажимайте на 3D-блоки слов):</div>
+                    <div class="answer-tray-3d" id="builder-answer-tray">
+                        <span class="tray-placeholder">Нажмите на слова ниже, чтобы собрать предложение...</span>
+                    </div>
+                    <div class="word-bank-3d" id="builder-word-bank"></div>
+                    <div class="action-row">
+                        <button class="btn-ghost" id="btn-builder-hint">💡 Подсказка слова</button>
+                        <button class="btn-ghost" id="btn-builder-clear">🧹 Очистить</button>
+                        <button class="btn-primary-3d" id="btn-builder-check">Проверить ответ ✓</button>
+                    </div>
+                </div>
+
+                <!-- MODE B: MULTIPLE CHOICE 3D QUIZ -->
+                <div class="interaction-zone hidden" id="zone-quiz">
+                    <div class="answer-tray-label">Выберите правильный перевод на английский (клавиши 1–4):</div>
+                    <div class="quiz-options-grid-3d" id="quiz-options-grid"></div>
+                </div>
+
+                <!-- MODE C: 3D FLASHCARDS -->
+                <div class="interaction-zone hidden" id="zone-flashcards">
+                    <div class="flashcard-scene-3d">
+                        <div class="flashcard-3d" id="flashcard-3d" tabindex="0" aria-label="Нажмите, чтобы перевернуть 3D карточку">
+                            <div class="flashcard-face flashcard-front">
+                                <span class="fc-corner-badge" id="fc-num-front">№ 1</span>
+                                <span class="fc-Instruction">РУССКИЙ • Нажмите (или Пробел), чтобы перевернуть ↻</span>
+                                <h3 class="fc-main-text" id="fc-ru-main">Я хочу улучшить мою грамматику</h3>
+                                <p class="fc-sub-text" id="fc-ru-google">Google: Я хочу улучшить свою грамматику.</p>
+                                <div class="fc-flip-hint">🔄 Перевернуть в 3D</div>
+                            </div>
+                            <div class="flashcard-face flashcard-back">
+                                <span class="fc-corner-badge" id="fc-num-back">ENGLISH</span>
+                                <span class="fc-Instruction">АНГЛИЙСКИЙ ОРИГИНАЛ</span>
+                                <h3 class="fc-main-text en-highlight" id="fc-en-main">I want to improve my grammar</h3>
+                                <p class="fc-sub-text" id="fc-grammar-note">Конструкция: I want + to + глагол</p>
+                                <button class="btn-pill fc-audio-btn" id="btn-fc-speak" type="button">🔊 Прослушать произношение</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flashcard-actions">
+                        <button class="btn-danger-3d" id="btn-fc-hard">🔄 Ещё повторить</button>
+                        <button class="btn-success-3d" id="btn-fc-know">✓ Знаю отлично! (+15 XP)</button>
+                    </div>
+                </div>
+
+                <!-- MODE D: TYPING CHALLENGE -->
+                <div class="interaction-zone hidden" id="zone-typing">
+                    <div class="typing-box-3d">
+                        <label for="typing-input" class="answer-tray-label">Введите перевод на английском языке:</label>
+                        <div class="typing-input-wrapper">
+                            <input type="text" id="typing-input" class="typing-input-3d" placeholder="Например: I want to improve my grammar" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="typing-letter-hint" id="typing-letter-hint"></div>
+                        <div class="action-row">
+                            <button class="btn-ghost" id="btn-typing-hint">💡 Открыть слово</button>
+                            <button class="btn-primary-3d" id="btn-typing-check">Проверить (Enter) ✓</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Banner -->
+                <div class="feedback-banner hidden" id="feedback-banner">
+                    <div class="feedback-content">
+                        <div class="feedback-icon" id="feedback-icon">🎉</div>
+                        <div class="feedback-text-wrap">
+                            <h4 id="feedback-title">Отлично! Правильный ответ!</h4>
+                            <p id="feedback-correct-en">I want to improve my grammar</p>
+                        </div>
+                    </div>
+                    <div class="feedback-buttons">
+                        <button class="btn-pill" id="btn-feedback-listen">🔊 Слушать</button>
+                        <button class="btn-next-3d" id="btn-next-question">Дальше (Enter) →</button>
+                    </div>
+                </div>
+
+                <!-- Navigation Footer inside Stage -->
+                <div class="stage-Bottom-nav">
+                    <button class="btn-nav" id="btn-prev-item">← Предыдущая</button>
+                    <button class="btn-nav" id="btn-shuffle-deck">🔀 Перемешать</button>
+                    <button class="btn-nav" id="btn-next-item">Следующая →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: GRAMMAR GUIDE LESSON 6.1 -->
+        <section id="view-grammar" class="view-section">
+            <div class="grammar-container">
+                <div class="section-header">
+                    <span class="hero-badge">ТЕОРИЯ И ШПАРГАЛКА УРОКА 6.1</span>
+                    <h2>Конструкция <span class="gradient-text">«I want / He, She wants»</span></h2>
+                    <p>Разбор всех конструкций, которые встречаются в 37 предложениях практики.</p>
+                </div>
+
+                <div class="grammar-grid-3d">
+                    <div class="grammar-card-3d">
+                        <div class="g-badge">ФОРМУЛА №1</div>
+                        <h3>Желание получить предмет: <code>want + существительное</code></h3>
+                        <p>Когда мы хотим какую-то вещь или предмет (без действия), частица <code>to</code> <strong>не ставится</strong>. Перед исчисляемым существительным в единственном числе нужен артикль <code>a</code> или указательное местоимение <code>this</code>.</p>
+                        <ul class="g-examples">
+                            <li><strong>I want this computer</strong> — Я хочу этот компьютер <em>(№8)</em></li>
+                            <li><strong>I want a good car</strong> — Я хочу хорошую машину <em>(№10)</em></li>
+                            <li><strong>I want a new flat (apartment)</strong> — Я хочу новую квартиру <em>(№27 / a)</em></li>
+                            <li><strong>I really want it</strong> — Я действительно хочу это <em>(№15)</em></li>
+                        </ul>
+                    </div>
+
+                    <div class="grammar-card-3d">
+                        <div class="g-badge">ФОРМУЛА №2</div>
+                        <h3>Желание совершить действие: <code>want + to + глагол</code></h3>
+                        <p>Когда после «хочу» идёт глагол в неопределённой форме (что сделать? — улучшить, пойти, знать, говорить), между двумя глаголами обязательно ставится частица <strong><code>to</code></strong>.</p>
+                        <ul class="g-examples">
+                            <li><strong>I want to improve my grammar</strong> — Я хочу улучшить мою грамматику <em>(№1)</em></li>
+                            <li><strong>I want to speak English without mistakes</strong> — Я хочу говорить по-английски без ошибок <em>(№6)</em></li>
+                            <li><strong>I want to be happy</strong> — Я хочу быть счастливым <em>(№17)</em></li>
+                            <li><strong>We want to know English</strong> — Мы хотим знать английский <em>(№37)</em></li>
+                        </ul>
+                    </div>
+
+                    <div class="grammar-card-3d">
+                        <div class="g-badge">ФОРМУЛА №3</div>
+                        <h3>3-е лицо ед. числа: <code>He / She / My friend wants</code></h3>
+                        <p>Если подлежащее — <strong>He</strong> (он), <strong>She</strong> (она) или существительное в единственном числе (например, <strong>My friend</strong> — мой друг), к глаголу <code>want</code> добавляется окончание <strong><code>-s</code></strong> → <strong><code>wants</code></strong>! Во множественном числе (<strong>My parents</strong> — мои родители) окончание <code>-s</code> у глагола не ставится.</p>
+                        <ul class="g-examples">
+                            <li><strong>She wants to live in another place</strong> — Она хочет жить в другом месте <em>(№3)</em></li>
+                            <li><strong>He wants to buy this thing</strong> — Он хочет купить эту вещь <em>(№11)</em></li>
+                            <li><strong>My friend wants to live abroad</strong> — Мой друг хочет жить за границей <em>(№29)</em></li>
+                            <li><strong>My parents want to live in another place</strong> — Мои родители хотят жить в другом месте <em>(№24)</em></li>
+                        </ul>
+                    </div>
+
+                    <div class="grammar-card-3d">
+                        <div class="g-badge">ПОЛЕЗНЫЕ ВЫРАЖЕНИЯ УРОКА 6.1</div>
+                        <h3>Устойчивые словосочетания (предлоги и наречия)</h3>
+                        <p>Обратите внимание на предлоги (или их отсутствие!) в выражениях места и образа действия:</p>
+                        <ul class="g-examples">
+                            <li><strong>go there / go abroad</strong> — пойти туда / поехать за границу <em>(предлог <code>to</code> перед <code>there</code> и <code>abroad</code> НЕ ставится! №2, 12, 33)</em></li>
+                            <li><strong>go to another place</strong> — пойти/поехать в другое место <em>(направление — <code>to</code>, №26)</em>, но <strong>live in another place</strong> — жить в другом месте <em>(где? — <code>in</code>, №3, 24)</em></li>
+                            <li><strong>one more time / again</strong> — ещё один раз / снова <em>(№2, 12, 31)</em></li>
+                            <li><strong>fluently and correctly / without mistakes</strong> — свободно и правильно / без ошибок <em>(№6, 14, 23)</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: FULL INTERACTIVE TABLE OF 37 PHRASES -->
+        <section id="view-table" class="view-section">
+            <div class="table-container-3d">
+                <div class="table-header-bar">
+                    <div>
+                        <span class="hero-badge">ПОЛНЫЙ СПИСОК МАТЕРИАЛОВ</span>
+                        <h2>Таблица всех 37 предложений (Урок 6.1)</h2>
+                    </div>
+                    <div class="table-controls">
+                        <input type="search" id="table-search" class="search-input-3d" placeholder="🔍 Поиск по-английски или по-русски...">
+                        <select id="table-filter-select" class="select-3d" aria-label="Фильтр категорий">
+                            <option value="all">Все категории (37)</option>
+                            <option value="infinitive">want + to + глагол</option>
+                            <option value="third_person">He / She / My friend wants</option>
+                            <option value="noun">want + предмет (сущ.)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-scroll-wrapper">
+                    <table class="lesson-table">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Озвучка</th>
+                                <th>English (Оригинал)</th>
+                                <th>Русский (Учебный перевод)</th>
+                                <th>Google Translate Русский</th>
+                                <th>Статус</th>
+                                <th>Тренировать</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lesson-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
