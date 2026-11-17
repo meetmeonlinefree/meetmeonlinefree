@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tobish · Moon Outpost — Lesson 7.1 (I like ... / I'd like ...)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ==================== PARALLAX MOON OUTPOST SVG SCENE ==================== -->
+    <svg class="scene-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#071229" />
+          <stop offset="45%" stop-color="#1d2238" />
+          <stop offset="72%" stop-color="#4e3546" />
+          <stop offset="100%" stop-color="#6b4552" />
+        </linearGradient>
+        <linearGradient id="moonGround" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#d4aba7" />
+          <stop offset="45%" stop-color="#b78c8b" />
+          <stop offset="100%" stop-color="#76565c" />
+        </linearGradient>
+        <linearGradient id="mountainFar" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5d4d61" />
+          <stop offset="100%" stop-color="#3a2f42" />
+        </linearGradient>
+        <linearGradient id="mountainMid" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#745f72" />
+          <stop offset="100%" stop-color="#4b3b4e" />
+        </linearGradient>
+        <linearGradient id="glassDome" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7ef2c8" stop-opacity="0.65" />
+          <stop offset="100%" stop-color="#246b5c" stop-opacity="0.82" />
+        </linearGradient>
+        <linearGradient id="solarPanel" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5283d8" />
+          <stop offset="100%" stop-color="#2c4d8f" />
+        </linearGradient>
+        <radialGradient id="earthGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4ea8de" />
+          <stop offset="75%" stop-color="#2c5e9e" />
+          <stop offset="100%" stop-color="#1d3561" />
+        </radialGradient>
+      </defs>
+
+      <!-- Sky Backdrop -->
+      <rect width="1600" height="900" fill="url(#skyGrad)" />
+
+      <!-- Twinkling Stars -->
+      <g fill="#ffffff">
+        <circle class="star-twinkle" cx="140" cy="120" r="2" />
+        <circle class="star-twinkle d2" cx="290" cy="210" r="2.5" />
+        <circle class="star-twinkle d3" cx="460" cy="140" r="1.8" />
+        <circle class="star-twinkle" cx="620" cy="240" r="2.2" />
+        <circle class="star-twinkle d2" cx="760" cy="110" r="2" />
+        <circle class="star-twinkle d3" cx="930" cy="190" r="2.4" />
+        <circle class="star-twinkle" cx="1120" cy="130" r="2" />
+        <circle class="star-twinkle d2" cx="1060" cy="290" r="1.8" />
+        <circle class="star-twinkle d3" cx="370" cy="310" r="2" />
+        <circle class="star-twinkle" cx="840" cy="330" r="2.2" />
+        <!-- 4-point sparkle star -->
+        <path class="star-twinkle d2" d="M695 210 L700 222 L712 227 L700 232 L695 244 L690 232 L678 227 L690 222 Z" fill="#ffffff" opacity="0.45" />
+      </g>
+
+      <!-- Shooting Stars / Solar Streaks -->
+      <g stroke-linecap="round" opacity="0.55">
+        <line x1="160" y1="80" x2="70" y2="230" stroke="#ff9f43" stroke-width="3" />
+        <line x1="220" y1="240" x2="140" y2="370" stroke="#ff9f43" stroke-width="2.5" />
+        <line x1="840" y1="260" x2="790" y2="345" stroke="#ff9f43" stroke-width="2.5" />
+        <line x1="1060" y1="70" x2="990" y2="180" stroke="#ffd23f" stroke-width="3.5" />
+        <line x1="1140" y1="310" x2="1085" y2="395" stroke="#ffd23f" stroke-width="3" />
+        <line x1="1380" y1="150" x2="1270" y2="320" stroke="#ff9f43" stroke-width="3.5" />
+      </g>
+
+      <!-- Glowing Earth in Upper-Right Sky -->
+      <g transform="translate(1450, 145)">
+        <circle cx="0" cy="0" r="168" fill="#63b3ed" opacity="0.14" />
+        <circle cx="0" cy="0" r="150" fill="url(#earthGlow)" />
+        <!-- Continents -->
+        <path d="M-90 -70 Q-40 -95 10 -60 Q45 -30 20 20 Q-15 55 -70 30 Q-115 -10 -90 -70 Z" fill="#529471" opacity="0.78" />
+        <path d="M40 -100 Q95 -80 120 -20 Q110 45 55 60 Q25 30 40 -100 Z" fill="#529471" opacity="0.78" />
+        <path d="M-40 65 Q20 75 65 115 Q10 145 -55 120 Z" fill="#529471" opacity="0.65" />
+        <!-- Soft Clouds -->
+        <rect x="-110" y="30" width="95" height="26" rx="13" fill="#f6ad9e" opacity="0.68" />
+        <rect x="20" y="55" width="110" height="30" rx="15" fill="#f6ad9e" opacity="0.65" />
+        <rect x="-50" y="-45" width="85" height="22" rx="11" fill="#ffffff" opacity="0.35" />
+      </g>
+
+      <!-- Far Lunar Mountain Range -->
+      <polygon points="0,440 160,390 320,375 490,425 690,380 860,420 1040,378 1230,425 1440,375 1600,415 1600,500 0,500" fill="url(#mountainFar)" />
+      <!-- Mid Lunar Mountain Ridges -->
+      <polygon points="160,445 320,375 470,445" fill="url(#mountainMid)" opacity="0.85" />
+      <polygon points="880,445 1040,378 1210,445" fill="url(#mountainMid)" opacity="0.85" />
+
+      <!-- Lunar Surface Horizon -->
+      <path d="M0 445 Q800 420 1600 448 L1600 900 L0 900 Z" fill="url(#moonGround)" />
+
+      <!-- Lunar Craters -->
+      <g>
+        <ellipse cx="575" cy="512" rx="30" ry="8" fill="#8b696c" stroke="#e2bdbc" stroke-width="2" />
+        <ellipse cx="400" cy="650" rx="50" ry="12" fill="#8b696c" stroke="#e2bdbc" stroke-width="2.5" />
+        <ellipse cx="775" cy="605" rx="34" ry="8" fill="#8b696c" stroke="#e2bdbc" stroke-width="2" />
+        <ellipse cx="980" cy="665" rx="64" ry="15" fill="#8b696c" stroke="#e2bdbc" stroke-width="3" />
+        <ellipse cx="1185" cy="618" rx="52" ry="13" fill="#8b696c" stroke="#e2bdbc" stroke-width="2.5" />
+        <ellipse cx="1290" cy="602" rx="34" ry="8" fill="#8b696c" stroke="#e2bdbc" stroke-width="2" />
+      </g>
+
+      <!-- ==================== 1. GREENHOUSE (X: 335, Y: 500) ==================== -->
+      <g transform="translate(240, 445)">
+        <ellipse cx="95" cy="70" rx="115" ry="14" fill="#6d4f55" opacity="0.55" />
+        <!-- Glass Dome -->
+        <path d="M5 65 A90 68 0 0 1 185 65 Z" fill="url(#glassDome)" stroke="#88d8c0" stroke-width="3" />
+        <!-- Plants inside -->
+        <circle cx="52" cy="50" r="14" fill="#3bb273" />
+        <circle cx="95" cy="44" r="18" fill="#4cd987" />
+        <circle cx="138" cy="50" r="14" fill="#3bb273" />
+        <!-- Ribs -->
+        <path d="M40 16 Q35 42 35 65" fill="none" stroke="#a6ebd7" stroke-width="2" opacity="0.7" />
+        <path d="M95 -3 L95 65" fill="none" stroke="#a6ebd7" stroke-width="2" opacity="0.7" />
+        <path d="M150 16 Q155 42 155 65" fill="none" stroke="#a6ebd7" stroke-width="2" opacity="0.7" />
+        <!-- Base Rim & Airlock -->
+        <rect x="0" y="58" width="190" height="12" rx="5" fill="#8f7578" />
+        <rect x="184" y="45" width="24" height="24" rx="8" fill="#d8c3c1" />
+        <ellipse cx="204" cy="57" rx="7" ry="9" fill="#5e494e" />
+      </g>
+
+      <!-- ==================== 2. SOLAR FARM (X: 910, Y: 500) ==================== -->
+      <g transform="translate(800, 445)">
+        <ellipse cx="125" cy="66" rx="145" ry="14" fill="#6d4f55" opacity="0.55" />
+        <!-- 3 Solar Panels -->
+        <g transform="translate(5, 0)">
+          <rect x="28" y="42" width="8" height="22" fill="#8e7980" />
+          <ellipse cx="32" cy="64" rx="16" ry="5" fill="#7c656c" />
+          <polygon points="0,12 68,4 64,44 -4,52" fill="url(#solarPanel)" stroke="#dce8ff" stroke-width="2.5" />
+          <line x1="22" y1="9" x2="18" y2="49" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+          <line x1="45" y1="6" x2="41" y2="46" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+          <line x1="-2" y1="32" x2="66" y2="24" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+        </g>
+        <g transform="translate(85, 0)">
+          <rect x="28" y="42" width="8" height="22" fill="#8e7980" />
+          <ellipse cx="32" cy="64" rx="16" ry="5" fill="#7c656c" />
+          <polygon points="0,12 68,4 64,44 -4,52" fill="url(#solarPanel)" stroke="#dce8ff" stroke-width="2.5" />
+          <line x1="22" y1="9" x2="18" y2="49" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+          <line x1="45" y1="6" x2="41" y2="46" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+          <line x1="-2" y1="32" x2="66" y2="24" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+        </g>
+        <g transform="translate(165, 0)">
+          <rect x="28" y="42" width="8" height="22" fill="#8e7980" />
+          <ellipse cx="32" cy="64" rx="16" ry="5" fill="#7c656c" />
+          <polygon points="0,12 68,4 64,44 -4,52" fill="url(#solarPanel)" stroke="#dce8ff" stroke-width="2.5" />
+          <line x1="22" y1="9" x2="18" y2="49" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+          <line x1="45" y1="6" x2="41" y2="46" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+          <line x1="-2" y1="32" x2="66" y2="24" stroke="#9ec2ff" stroke-width="1.5" opacity="0.6" />
+          <!-- Sparkle on 3rd panel -->
+          <path d="M26 24 L30 32 L38 36 L30 40 L26 48 L22 40 L14 36 L22 32 Z" fill="#ffffff" />
+        </g>
+        <!-- Power Cable to Shelter -->
+        <path d="M117 65 L40 195" stroke="#ffaa2b" stroke-width="3.5" opacity="0.8" />
+      </g>
+
+      <!-- ==================== 3. RADIO DISH (X: 1510, Y: 480) ==================== -->
+      <g transform="translate(1435, 410)">
+        <ellipse cx="75" cy="128" rx="90" ry="12" fill="#6d4f55" opacity="0.55" />
+        <!-- Mast -->
+        <rect x="58" y="65" width="9" height="62" fill="#9a7d82" />
+        <polygon points="44,127 81,127 73,115 52,115" fill="#7c6368" />
+        <!-- Parabolic Dish -->
+        <g transform="translate(62, 62) rotate(-28)">
+          <path d="M-55 -10 Q0 38 55 -10 Z" fill="#b39296" stroke="#e4c8ca" stroke-width="3" />
+          <line x1="-35" y1="-8" x2="0" y2="-38" stroke="#c87d87" stroke-width="2.5" />
+          <line x1="35" y1="-8" x2="0" y2="-38" stroke="#c87d87" stroke-width="2.5" />
+          <circle cx="0" cy="-40" r="5" fill="#ff5c77" />
+        </g>
+        <!-- Comms Box -->
+        <rect x="108" y="95" width="60" height="32" rx="6" fill="#e2cbc9" />
+        <rect x="116" y="103" width="22" height="12" rx="3" fill="#ff5c77" />
+      </g>
+
+      <!-- ==================== 4. HABITAT DOME (X: 155, Y: 700) ==================== -->
+      <g transform="translate(40, 620)">
+        <!-- Glowing Golden Target Rings -->
+        <ellipse cx="115" cy="115" rx="125" ry="22" fill="none" stroke="#ffaa2b" stroke-width="2.5" opacity="0.7" />
+        <ellipse cx="115" cy="115" rx="145" ry="28" fill="none" stroke="#ffaa2b" stroke-width="1.8" opacity="0.4" />
+        <!-- Dome Structure -->
+        <path d="M12 105 A95 75 0 0 1 198 105 Z" fill="#e5d0ce" stroke="#cdb2b0" stroke-width="3" />
+        <path d="M48 45 Q40 75 40 105" fill="none" stroke="#c5a7a6" stroke-width="2.5" />
+        <path d="M105 30 L105 105" fill="none" stroke="#c5a7a6" stroke-width="2.5" />
+        <path d="M162 45 Q170 75 170 105" fill="none" stroke="#c5a7a6" stroke-width="2.5" />
+        <!-- Warm Window -->
+        <rect x="48" y="58" width="64" height="32" rx="12" fill="#f6a04d" stroke="#734b44" stroke-width="4" />
+        <!-- Base & Side Airlock -->
+        <rect x="4" y="98" width="202" height="14" rx="6" fill="#b79a99" />
+        <rect x="180" y="72" width="48" height="38" rx="8" fill="#d9c0be" />
+      </g>
+
+      <!-- ==================== 5. RADIATION SHELTER (X: 785, Y: 745) ==================== -->
+      <g transform="translate(660, 680)">
+        <ellipse cx="125" cy="78" rx="145" ry="15" fill="#5e4349" opacity="0.65" />
+        <!-- Regolith Mound -->
+        <path d="M10 75 Q125 -20 240 75 Z" fill="#9c7e82" />
+        <!-- Vault Door -->
+        <path d="M92 75 L92 38 A33 33 0 0 1 158 38 L158 75 Z" fill="#6f5a60" stroke="#e0b956" stroke-width="4" />
+        <circle cx="125" cy="48" r="11" fill="#46373c" stroke="#d5be97" stroke-width="2.5" />
+        <line x1="125" y1="37" x2="125" y2="59" stroke="#d5be97" stroke-width="2" />
+        <line x1="114" y1="48" x2="136" y2="48" stroke="#d5be97" stroke-width="2" />
+        <!-- Radiation Badge on top of door -->
+        <circle cx="125" cy="12" r="10" fill="#ffd23f" />
+        <circle cx="125" cy="12" r="3" fill="#231800" />
+      </g>
+
+      <!-- ==================== 6. LAB MODULE (X: 1410, Y: 720) ==================== -->
+      <g transform="translate(1310, 660)">
+        <ellipse cx="110" cy="82" rx="135" ry="14" fill="#5e4349" opacity="0.65" />
+        <!-- Main Lab Building -->
+        <rect x="18" y="18" width="160" height="60" rx="12" fill="#d9c2c0" stroke="#b89d9b" stroke-width="2" />
+        <!-- Waveform Monitor Screen -->
+        <rect x="34" y="30" width="102" height="36" rx="8" fill="#2a3a56" />
+        <polyline points="42,48 64,48 72,36 82,58 90,42 98,50 128,50" fill="none" stroke="#53e2a1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Side Pod & Sphere Tank -->
+        <rect x="164" y="32" width="34" height="46" rx="8" fill="#e6d2d0" />
+        <rect x="164" y="58" width="34" height="10" fill="#ff9f43" />
+        <circle cx="222" cy="58" r="22" fill="#d9b8b7" />
+      </g>
+
+      <!-- Tiny Moon Rover near Center-Right -->
+      <g transform="translate(1055, 608)">
+        <ellipse cx="28" cy="36" rx="34" ry="6" fill="#6d4f55" opacity="0.6" />
+        <rect x="6" y="14" width="44" height="16" rx="5" fill="#f0dedc" />
+        <rect x="14" y="8" width="22" height="6" rx="2" fill="#ff9f43" />
+        <circle cx="12" cy="32" r="6" fill="#3a2f42" stroke="#cdb2b0" stroke-width="2" />
+        <circle cx="28" cy="32" r="6" fill="#3a2f42" stroke="#cdb2b0" stroke-width="2" />
+        <circle cx="44" cy="32" r="6" fill="#3a2f42" stroke="#cdb2b0" stroke-width="2" />
+      </g>
+    </svg>
+
+    <!-- ==================== INTERACTIVE STATION HOTSPOTS ==================== -->
+    <div id="mapLayer" class="map-layer"></div>
+
+    <!-- ==================== ASTRONAUT MASCOT TOBISH ==================== -->
+    <div id="astronautWrap" class="astronaut-wrap" style="left: 17%; top: 82%;">
+      <svg viewBox="0 0 120 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <g class="astro-body">
+          <!-- Shadow -->
+          <ellipse cx="60" cy="140" rx="32" ry="7" fill="rgba(0,0,0,0.35)" />
+          <!-- Backpack -->
+          <rect x="22" y="56" width="22" height="46" rx="8" fill="#d9c6c5" stroke="#ff9f43" stroke-width="3" />
+          <!-- Legs & Orange Boots -->
+          <rect x="42" y="108" width="14" height="22" rx="5" fill="#f4eaea" />
+          <rect x="64" y="108" width="14" height="22" rx="5" fill="#f4eaea" />
+          <rect x="38" y="124" width="20" height="11" rx="5" fill="#ff8c2b" />
+          <rect x="62" y="124" width="20" height="11" rx="5" fill="#ff8c2b" />
+          <!-- Suit Torso -->
+          <rect x="34" y="64" width="52" height="50" rx="16" fill="#ffffff" stroke="#e2d2d1" stroke-width="2" />
+          <rect x="34" y="96" width="52" height="8" fill="#ff8c2b" />
+          <!-- Chest Control Box -->
+          <rect x="46" y="74" width="28" height="18" rx="5" fill="#2c3548" />
+          <circle cx="53" cy="83" r="3" fill="#ff5c77" />
+          <circle cx="60" cy="83" r="3" fill="#ffd23f" />
+          <circle cx="67" cy="83" r="3" fill="#3fe07e" />
+          <!-- Arms -->
+          <rect x="20" y="68" width="16" height="32" rx="8" fill="#ffffff" />
+          <circle cx="28" cy="100" r="6" fill="#ff8c2b" />
+          <rect x="84" y="68" width="16" height="32" rx="8" fill="#ffffff" />
+          <circle cx="92" cy="100" r="6" fill="#ff8c2b" />
+          <!-- Helmet -->
+          <circle cx="60" cy="40" r="34" fill="#ffffff" stroke="#e2d2d1" stroke-width="3" />
+          <!-- Ear Caps -->
+          <circle cx="25" cy="42" r="6" fill="#7b88eb" />
+          <circle cx="95" cy="42" r="6" fill="#7b88eb" />
+          <!-- Dark Visor -->
+          <rect x="35" y="20" width="50" height="38" rx="19" fill="#28263d" />
+          <!-- Cute Face Inside Visor -->
+          <circle cx="49" cy="38" r="4" fill="#ffffff" />
+          <circle cx="71" cy="38" r="4" fill="#ffffff" />
+          <circle cx="44" cy="44" r="3.5" fill="#ff85a2" opacity="0.7" />
+          <circle cx="76" cy="44" r="3.5" fill="#ff85a2" opacity="0.7" />
+          <path d="M55 44 Q60 49 65 44" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+          <!-- Visor Glint -->
+          <ellipse cx="45" cy="27" rx="7" ry="3.5" transform="rotate(-20 45 27)" fill="#ffffff" opacity="0.45" />
+        </g>
+      </svg>
+    </div>
+
+    <!-- ==================== TOP HUD BAR ==================== -->
+    <header class="hud-top">
+      <!-- 5 Grammar Resource Meters -->
+      <div id="resGrid" class="res-grid"></div>
+
+      <!-- Sub-HUD Row -->
+      <div class="hud-sub">
+        <div class="hud-sub__left">
+          <div class="hud-chip" title="Current Lunar Day">
+            <span>🧲</span>
+            <span id="hudDay">Day 1</span>
+          </div>
+          <div id="hudDots" class="hud-chip action-dots" title="Actions left today"></div>
+          <div id="hudScore" class="hud-chip" title="Science Score & Mastered Phrases">
+            🔬 0
+          </div>
+          <button id="hudSoundBtn" class="hud-chip hud-chip--btn" onclick="toggleSound()">
+            🔊
+          </button>
+          <button id="hudRankBtn" class="hud-chip hud-chip--btn" onclick="toggleRankFromHud()" title="Switch between Cadet (A/B/C) and Specialist (Word Builder)">
+            🧑‍🚀 Cadet
+          </button>
+          <button class="hud-chip hud-chip--btn" onclick="openShelterVaultModal()" title="View all 40 phrases from the Excel sheet">
+            📚 All 40 Phrases
+          </button>
+        </div>
+
+        <div class="hud-sub__right">
+          <button class="mbtn mbtn--blue" onclick="endDayCycle()">
+            End day 🌙
+          </button>
+        </div>
+      </div>
+
+      <!-- Collapsible Mission Pill -->
+      <div class="mission-wrap">
+        <div id="missionPill" class="mission-pill" onclick="toggleMissionExpand()"></div>
+      </div>
+    </header>
+
+    <!-- ==================== BOTTOM HELPER TOAST ==================== -->
+    <footer class="bottom-toast-wrap">
+      <div class="bottom-toast" onclick="visitStation(getCurrentMission().recommendedStation)">
+        <span id="bottomToastText">👆 Tap the Habitat or Lab to continue</span>
+      </div>
+    </footer>
+
+    <!-- ==================== SPLASH SCREEN OVERLAY ==================== -->
+    <div id="splashOverlay" class="splash-overlay">
+      <div class="splash-center">
+        <div class="splash-pill">🚀 Junior Astronaut · Moon Outpost</div>
+        <h1 class="splash-title">Lesson 7.1 Practice<br><span style="color:#ffd23f;">I like ... &amp; I'd like ...</span></h1>
+        <p class="splash-sub">
+          Pin your knowledge of all <strong>40 English phrases</strong> from your Excel table with your Russian translations, Google Translate comparisons, voice pronunciation, and interactive Moon Outpost missions!
+        </p>
+        <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+          <button class="mbtn mbtn--big" onclick="showRankSelector()">
+            ▶ PLAY
+          </button>
+          <button class="mbtn mbtn--blue mbtn--big" onclick="selectRankAndStart('cadet'); openShelterVaultModal();">
+            📚 40 Phrases Table
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MODAL ROOT & CONFETTI LAYER ==================== -->
+    <div id="modalRoot"></div>
+    <div id="confettiLayer" class="confetti-layer"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
