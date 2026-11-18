@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson #8: Present Simple (Negative Form) Quiz</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="h-full bg-gradient-to-br from-indigo-900 via-slate-900 to-purple-950 text-slate-100 font-sans antialiased flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Header / Navigation -->
+    <header class="w-full px-6 py-4 flex items-center justify-between border-b border-white/10 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <i class="fa-solid fa-graduation-cap text-white text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-tight text-white flex items-center gap-2">
+                    <span>Lesson #8 Quiz</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">18.11.2026</span>
+                </h1>
+                <p class="text-xs text-slate-400">Present Simple (Negative Form) / Отрицательная форма</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button onclick="toggleRulesModal(true)" class="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-xs font-semibold text-indigo-300 border border-slate-700 transition flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-book-open"></i>
+                <span class="hidden sm:inline">Rules / Правила</span>
+            </button>
+            <div class="px-3 py-2 rounded-xl bg-indigo-600/20 text-indigo-200 border border-indigo-500/30 text-xs font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-globe"></i>
+                <span>EN / RU Bilingual</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 flex items-center justify-center p-4 sm:p-6 max-w-4xl mx-auto w-full">
+
+        <!-- Welcome / Start Screen -->
+        <div id="start-screen" class="w-full glass-panel text-slate-900 p-8 rounded-3xl shadow-2xl text-center space-y-6 animate-float">
+            <div class="w-20 h-20 bg-gradient-to-tr from-indigo-600 to-violet-600 text-white rounded-2xl mx-auto flex items-center justify-center shadow-xl text-3xl">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-900">Master Don't & Doesn't!</h2>
+                <p class="text-sm text-slate-600 max-w-md mx-auto">
+                    Practice negative sentences in Present Simple based on Lesson #8. <br>
+                    <span class="font-semibold text-indigo-600">Практикуйте отрицательные предложения в Present Simple (Урок №8).</span>
+                </p>
+            </div>
+
+            <!-- Quick Rule Reminder Card -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-lg mx-auto bg-slate-100 p-4 rounded-2xl border border-slate-200">
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Rule 1</span>
+                    <p class="text-xs font-semibold text-slate-800">I, We, You, They + <span class="text-indigo-600 font-bold">don't</span> + Verb</p>
+                    <p class="text-[11px] text-slate-500">I know → I <span class="font-bold text-slate-700">don't</span> know</p>
+                </div>
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Rule 2</span>
+                    <p class="text-xs font-semibold text-slate-800">He, She, It + <span class="text-purple-600 font-bold">doesn't</span> + Verb</p>
+                    <p class="text-[11px] text-slate-500">He knows → He <span class="font-bold text-slate-700">doesn't</span> know</p>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="startQuiz()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0 text-base flex items-center justify-center gap-3 mx-auto">
+                    <span>Start Quiz / Начать викторину</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen (Hidden initially) -->
+        <div id="quiz-screen" class="w-full glass-panel text-slate-900 p-6 sm:p-8 rounded-3xl shadow-2xl hidden flex-col space-y-6">
+            
+            <!-- Progress & Score Header -->
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-3">
+                    <span id="question-counter" class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg bg-indigo-100 text-indigo-700">
+                        Question 1 of 12
+                    </span>
+                    <span id="score-badge" class="text-xs font-semibold px-3 py-1 rounded-lg bg-emerald-100 text-emerald-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-star text-amber-500"></i>
+                        Score: <span id="current-score">0</span>
+                    </span>
+                </div>
+                <div class="w-32 bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                    <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 8%"></div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="space-y-3 text-center sm:text-left">
+                <div class="inline-flex items-center gap-2 text-xs font-semibold text-purple-600 bg-purple-100 px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span id="question-category">Transform to Negative / Превратите в отрицание</span>
+                </div>
+                <h3 id="question-text" class="text-xl sm:text-2xl font-bold text-slate-900">
+                    Loading question...
+                </h3>
+                <p id="question-translation" class="text-sm text-slate-500 italic">
+                    Перевод или подсказка появится здесь...
+                </p>
+            </div>
+
+            <!-- Answer Options Container -->
+            <div id="options-container" class="grid grid-cols-1 gap-3 pt-2">
+                <!-- Dynamically populated options -->
+            </div>
+
+            <!-- Feedback / Explanation Banner -->
+            <div id="feedback-box" class="hidden p-4 rounded-2xl border text-sm flex items-start gap-3 transition-all">
+                <div id="feedback-icon" class="text-lg mt-0.5"></div>
+                <div class="space-y-1 flex-1">
+                    <h4 id="feedback-title" class="font-bold"></h4>
+                    <p id="feedback-text" class="text-xs text-slate-600"></p>
+                </div>
+                <button id="next-btn" onclick="nextQuestion()" class="hidden px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl shadow transition self-center">
+                    Next / Дальше <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Result Screen (Hidden initially) -->
+        <div id="result-screen" class="w-full glass-panel text-slate-900 p-8 rounded-3xl shadow-2xl text-center space-y-6 hidden">
+            <div class="w-24 h-24 bg-gradient-to-tr from-amber-400 to-orange-500 text-white rounded-3xl mx-auto flex items-center justify-center shadow-2xl text-4xl animate-bounce">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="space-y-2">
+                <h2 id="result-title" class="text-3xl font-extrabold text-slate-900">Great Job! / Отличная работа!</h2>
+                <p class="text-sm text-slate-600">You have completed Lesson #8 Present Simple (Negative Form) quiz.</p>
+            </div>
+
+            <div class="bg-slate-100 p-6 rounded-2xl max-w-sm mx-auto border border-slate-200 space-y-3">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-600 font-medium">Final Score / Итоговый счет:</span>
+                    <span id="final-score" class="font-bold text-indigo-600 text-lg">0 / 12</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-600 font-medium">Accuracy / Точность:</span>
+                    <span id="final-accuracy" class="font-bold text-emerald-600 text-lg">0%</span>
+                </div>
+            </div>
+
+            <div class="pt-4 flex flex-wrap justify-center gap-4">
+                <button onclick="restartQuiz()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Play Again / Играть снова</span>
+                </button>
+                <button onclick="toggleRulesModal(true)" class="px-6 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-xl transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Review Rules / Повторить правила</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Rules Modal -->
+    <div id="rules-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">Lesson #8 Rules</h3>
+                        <p class="text-xs text-slate-500">Present Simple (Negative Form) • 18.11.2026</p>
+                    </div>
+                </div>
+                <button onclick="toggleRulesModal(false)" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-700">
+                <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 space-y-2">
+                    <h4 class="font-bold text-indigo-900 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs flex items-center justify-center">1</span>
+                        I, We, You, They + don't + verb
+                    </h4>
+                    <p class="text-xs text-indigo-700">Используется с местоимениями I, We, You, They и множественным числом.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs font-medium">
+                        <div class="bg-white p-2 rounded-lg border border-indigo-100">I know → I <b>don't</b> know <span class="block text-[10px] text-slate-400">Я знаю → Я не знаю</span></div>
+                        <div class="bg-white p-2 rounded-lg border border-indigo-100">We understand → We <b>don't</b> understand <span class="block text-[10px] text-slate-400">Мы понимаем → Мы не понимаем</span></div>
+                        <div class="bg-white p-2 rounded-lg border border-indigo-100">You try → You <b>don't</b> try <span class="block text-[10px] text-slate-400">Ты стараешься → Ты не стараешься</span></div>
+                        <div class="bg-white p-2 rounded-lg border border-indigo-100">They help me → They <b>don't</b> help me <span class="block text-[10px] text-slate-400">Они помогают мне → Они не помогают</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 p-4 rounded-2xl border border-purple-100 space-y-2">
+                    <h4 class="font-bold text-purple-900 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center">2</span>
+                        He, She, It + doesn't + verb
+                    </h4>
+                    <p class="text-xs text-purple-700">Используется с местоимениями He, She, It (он, она, оно). Окончание -s у глагола пропадает!</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs font-medium">
+                        <div class="bg-white p-2 rounded-lg border border-purple-100">He knows it → He <b>doesn't</b> know it <span class="block text-[10px] text-slate-400">Он знает это → Он не знает это</span></div>
+                        <div class="bg-white p-2 rounded-lg border border-purple-100">She wants → She <b>doesn't</b> want <span class="block text-[10px] text-slate-400">Она хочет → Она не хочет</span></div>
+                        <div class="bg-white p-2 rounded-lg border border-purple-100">It helps → It <b>doesn't</b> help <span class="block text-[10px] text-slate-400">Это помогает → Это не помогает</span></div>
+                        <div class="bg-white p-2 rounded-lg border border-purple-100">It seems → It <b>doesn't</b> seem <span class="block text-[10px] text-slate-400">Кажется → Не кажется странным</span></div>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-slate-50 rounded-xl text-xs text-slate-600 space-y-1">
+                    <p class="font-semibold text-slate-800"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Key Lesson Phrases / Ключевые фразы урока:</p>
+                    <ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-500">
+                        <li>I don't want to discuss it (Я не хочу это обсуждать)</li>
+                        <li>I don't want to do it right now (Я не хочу делать это прямо сейчас)</li>
+                        <li>I don't want to tell you about this problem (Я не хочу говорить тебе об этой проблеме)</li>
+                        <li>I don't want to think about it (Я не хочу думать об этом)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-2 text-center">
+                <button onclick="toggleRulesModal(false)" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow transition text-sm">
+                    Got it! / Понятно!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full py-3 px-6 text-center text-xs text-slate-400 border-t border-white/10 bg-slate-900/60 backdrop-blur-md">
+        <span>Lesson #8 Quiz Game • Bilingual English / Russian • 18.11.2026</span>
+    </footer>
+
+    <!-- Quiz Logic Script -->
+    <script>
+        const quizData = [
+            {
+                category: "Sentence Transformation / Преобразование предложения",
+                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"I know\"</span>",
+                translation: "Я знаю ➔ Я не знаю",
+                options: [
+                    { text: "I don't know", correct: true, explanation: "Correct! With 'I', we use 'don't' + verb (I don't know). / Правильно! С местоимением 'I' используется 'don't'." },
+                    { text: "I doesn't know", correct: false, explanation: "Incorrect. 'Doesn't' is only used for He, She, It. / Неверно. 'Doesn't' используется только с He, She, It." },
+                    { text: "I am not know", correct: false, explanation: "Incorrect. Present Simple negative uses 'don't/doesn't', not 'am not' with action verbs. / Неверно. В Present Simple с глаголами используется don't/doesn't." }
+                ]
+            },
+            {
+                category: "Sentence Transformation / Преобразование предложения",
+                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"He knows it\"</span>",
+                translation: "Он знает это ➔ Он не знает это",
+                options: [
+                    { text: "He don't know it", correct: false, explanation: "Incorrect. For 'He', we must use 'doesn't', and drop the -s on 'know'. / Неверно. Для 'He' нужен 'doesn't', а окончание -s убирается." },
+                    { text: "He doesn't know it", correct: true, explanation: "Correct! 'He' + doesn't + know (without -s). / Правильно! 'He' + doesn't + know (без -s)." },
+                    { text: "He doesn't knows it", correct: false, explanation: "Incorrect. After 'doesn't', the main verb loses its -s ending. / Неверно. После 'doesn't' глагол идет без окончания -s." }
+                ]
+            },
+            {
+                category: "Grammar Rule / Грамматическое правило",
+                prompt: "Choose the correct auxiliary verb: <br><span class='text-indigo-600 font-extrabold'>\"We _____ understand.\"</span>",
+                translation: "Мы не понимаем.",
+                options: [
+                    { text: "doesn't", correct: false, explanation: "Incorrect. 'We' takes 'don't', not 'doesn't'. / Неверно. С 'We' используется 'don't'." },
+                    { text: "don't", correct: true, explanation: "Correct! We + don't + understand. / Правильно! We + don't + understand." },
+                    { text: "not", correct: false, explanation: "Incorrect. Present Simple negatives require 'don't' or 'doesn't'. / Неверно. Требуется вспомогательный глагол don't." }
+                ]
+            },
+            {
+                category: "Vocabulary Practice / Практика лексики",
+                prompt: "Translate and complete: <br><span class='text-indigo-600 font-extrabold'>\"Я не хочу это обсуждать\"</span>",
+                translation: "I want to discuss it ➔ ?",
+                options: [
+                    { text: "I don't want to discuss it", correct: true, explanation: "Correct! Directly from Lesson #8: I don't want to discuss it. / Правильно! Прямо из урока №8." },
+                    { text: "I doesn't want to discuss it", correct: false, explanation: "Incorrect. 'I' takes 'don't', not 'doesn't'. / Неверно. С 'I' используется 'don't'." },
+                    { text: "I want don't to discuss it", correct: false, explanation: "Incorrect word order. 'Don't' comes right before the main verb 'want'. / Неправильный порядок слов." }
+                ]
+            },
+            {
+                category: "Sentence Transformation / Преобразование предложения",
+                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"You try to learn English\"</span>",
+                translation: "Ты стараешься учить английский ➔ Ты не стараешься...",
+                options: [
+                    { text: "You doesn't try to learn English", correct: false, explanation: "Incorrect. 'You' requires 'don't'. / Неверно. С 'You' используется 'don't'." },
+                    { text: "You don't try to learn English", correct: true, explanation: "Correct! You + don't + try to learn English. / Правильно! You + don't + try..." },
+                    { text: "You not try to learn English", correct: false, explanation: "Incorrect. Missing 'don't'. / Неверно. Пропущено 'don't'." }
+                ]
+            },
+            {
+                category: "Grammar Rule / Грамматическое правило",
+                prompt: "Which pronoun uses <span class='text-purple-600 font-extrabold'>\"doesn't\"</span>?",
+                translation: "Какое местоимение требует 'doesn't'?",
+                options: [
+                    { text: "They", correct: false, explanation: "Incorrect. 'They' uses 'don't'. / Неверно. 'They' использует 'don't'." },
+                    { text: "She", correct: true, explanation: "Correct! He, She, It use 'doesn't'. / Правильно! He, She, It используют 'doesn't'." },
+                    { text: "We", correct: false, explanation: "Incorrect. 'We' uses 'don't'. / Неверно. 'We' использует 'don't'." }
+                ]
+            },
+            {
+                category: "Vocabulary Practice / Практика лексики",
+                prompt: "Complete the sentence from Lesson #8: <br><span class='text-indigo-600 font-extrabold'>\"I _____ want to do it right now.\"</span>",
+                translation: "Я не хочу делать это прямо сейчас.",
+                options: [
+                    { text: "doesn't", correct: false, explanation: "Incorrect. Subject is 'I'. / Неверно. Подлежащее 'I'." },
+                    { text: "don't", correct: true, explanation: "Correct! I don't want to do it right now. / Правильно! I don't want to do it right now." },
+                    { text: "not", correct: false, explanation: "Incorrect. Needs 'don't'. / Неверно. Требуется 'don't'." }
+                ]
+            },
+            {
+                category: "Sentence Transformation / Преобразование предложения",
+                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"It helps me\"</span>",
+                translation: "Это помогает мне ➔ Это не помогает мне",
+                options: [
+                    { text: "It don't help me", correct: false, explanation: "Incorrect. 'It' is 3rd person singular, so it takes 'doesn't'. / Неверно. Для 'It' нужен 'doesn't'." },
+                    { text: "It doesn't help me", correct: true, explanation: "Correct! It + doesn't + help me (without -s). / Правильно! It + doesn't + help me." },
+                    { text: "It doesn't helps me", correct: false, explanation: "Incorrect. Do not keep -s after 'doesn't'. / Неверно. Окончание -s после doesn't не пишется." }
+                ]
+            },
+            {
+                category: "Vocabulary Practice / Практика лексики",
+                prompt: "Translate: <br><span class='text-indigo-600 font-extrabold'>\"Я не хочу рассказывать тебе об этой проблеме\"</span>",
+                translation: "Choose the exact Lesson #8 phrase:",
+                options: [
+                    { text: "I don't want to tell you about this problem", correct: true, explanation: "Correct! Perfect match from Lesson #8. / Правильно! Точная фраза из урока." },
+                    { text: "I doesn't want to tell you about this problem", correct: false, explanation: "Incorrect pronoun rule with 'I'. / Неверное правило для 'I'." },
+                    { text: "I don't want to say you about this problem", correct: false, explanation: "Incorrect verb choice ('tell' is used with a direct person object). / Неверный глагол ('tell' используется при обращении к человеку)." }
+                ]
+            },
+            {
+                category: "Grammar Rule / Грамматическое правило",
+                prompt: "What happens to the verb in He/She/It negative sentences?",
+                translation: "Что происходит с глаголом в отрицаниях с He/She/It?",
+                options: [
+                    { text: "It keeps the -s ending", correct: false, explanation: "Incorrect. The -s is dropped because 'does' absorbs it in 'doesn't'. / Неверно. Окончание -s убирается." },
+                    { text: "It loses the -s ending (e.g., knows → know)", correct: true, explanation: "Correct! 'He knows' becomes 'He doesn't know'. / Правильно! Окончание -s исчезает." },
+                    { text: "It changes to past tense", correct: false, explanation: "Incorrect. This is Present Simple. / Неверно. Это Present Simple." }
+                ]
+            },
+            {
+                category: "Vocabulary Practice / Практика лексики",
+                prompt: "Complete: <br><span class='text-indigo-600 font-extrabold'>\"It _____ seem strange.\"</span>",
+                translation: "Это не кажется странным.",
+                options: [
+                    { text: "don't", correct: false, explanation: "Incorrect. Subject is 'It'. / Неверно. Подлежащее 'It'." },
+                    { text: "doesn't", correct: true, explanation: "Correct! It + doesn't + seem strange. / Правильно! It + doesn't + seem strange." },
+                    { text: "not", correct: false, explanation: "Incorrect. / Неверно." }
+                ]
+            },
+            {
+                category: "Vocabulary Practice / Практика лексики",
+                prompt: "Translate: <br><span class='text-indigo-600 font-extrabold'>\"Я не хочу думать об этом\"</span>",
+                translation: "Choose the correct Lesson #8 ending:",
+                options: [
+                    { text: "I don't want to think about it", correct: true, explanation: "Correct! Lesson #8 phrase: I don't want to think about it. / Правильно! Фраза из урока №8." },
+                    { text: "I don't want to think of this", correct: false, explanation: "Inaccurate preposition compared to lesson notes ('about it'). / Неточный предлог по сравнению с конспектом." },
+                    { text: "I doesn't want to think about it", correct: false, explanation: "Incorrect auxiliary verb for 'I'. / Неверный вспомогательный глагол." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuiz() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('quiz-screen').classList.add('flex');
+            currentQuestionIndex = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const q = quizData[currentQuestionIndex];
+            
+            // Update counter & score & progress
+            document.getElementById('question-counter').innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            document.getElementById('current-score').innerText = score;
+            const progressPercent = ((currentQuestionIndex) / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = `${Math.max(progressPercent, 8)}%`;
+
+            // Update question content
+            document.getElementById('question-category').innerHTML = `<i class="fa-solid fa-circle-question"></i> ${q.category}`;
+            document.getElementById('question-text').innerHTML = q.prompt;
+            document.getElementById('question-translation').innerText = q.translation;
+
+            // Hide feedback box & next button
+            const feedbackBox = document.getElementById('feedback-box');
+            feedbackBox.classList.add('hidden');
+            feedbackBox.classList.remove('bg-emerald-50', 'border-emerald-200', 'bg-rose-50', 'border-rose-200');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            // Render options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            // Shuffle options for variety
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 font-medium text-slate-800 transition shadow-sm flex items-center justify-between group cursor-pointer";
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 h-7 rounded-xl bg-slate-100 group-hover:bg-indigo-100 group-hover:text-indigo-600 text-slate-600 text-xs font-bold flex items-center justify-center transition">${String.fromCharCode(65 + idx)}</span>
+                        <span>${opt.text}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-indigo-600 transition text-xs"></i>
+                `;
+                btn.onclick = () => selectOption(opt, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedOpt, selectedBtn) {
+            if (answered) return;
+            answered = true;
+
+            const allButtons = document.getElementById('options-container').querySelectorAll('button');
+            const q = quizData[currentQuestionIndex];
+
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-50');
+                const textSpan = btn.querySelector('span:nth-child(2)').innerText;
+                const matchesOption = q.options.find(o => o.text === textSpan);
+                if (matchesOption && matchesOption.correct) {
+                    btn.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-900');
+                    const icon = btn.querySelector('i');
+                    icon.className = "fa-solid fa-check text-emerald-600";
+                }
+            });
+
+            if (selectedOpt.correct) {
+                score++;
+                selectedBtn.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-900');
+                showFeedback(true, selectedOpt.explanation);
+            } else {
+                selectedBtn.classList.add('bg-rose-50', 'border-rose-300', 'text-rose-900');
+                const icon = selectedBtn.querySelector('i');
+                icon.className = "fa-solid fa-xmark text-rose-600";
+                showFeedback(false, selectedOpt.explanation);
+            }
+
+            document.getElementById('current-score').innerText = score;
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function showFeedback(isCorrect, explanationText) {
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+
+            feedbackBox.classList.remove('hidden');
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                feedbackIcon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600"></i>';
+                feedbackTitle.innerText = "Correct! / Правильно!";
+            } else {
+                feedbackBox.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+                feedbackIcon.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600"></i>';
+                feedbackTitle.innerText = "Incorrect! / Неправильно!";
+            }
+            feedbackText.innerText = explanationText;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('flex');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = `${score} / ${quizData.length}`;
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('final-accuracy').innerText = `${percentage}%`;
+
+            const titleEl = document.getElementById('result-title');
+            if (percentage === 100) {
+                titleEl.innerText = "Flawless! / Безупречно!";
+            } else if (percentage >= 70) {
+                titleEl.innerText = "Great Job! / Отличная работа!";
+            } else {
+                titleEl.innerText = "Good Practice! / Хорошая практика!";
+            }
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        function toggleRulesModal(show) {
+            const modal = document.getElementById('rules-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
