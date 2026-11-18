@@ -84,8 +84,8 @@
             <div class="space-y-2">
                 <h2 class="text-3xl font-extrabold text-slate-900">Master Don't & Doesn't!</h2>
                 <p class="text-sm text-slate-600 max-w-md mx-auto">
-                    Practice negative sentences in Present Simple based on Lesson #8. <br>
-                    <span class="font-semibold text-indigo-600">Практикуйте отрицательные предложения в Present Simple (Урок №8).</span>
+                    Practice negative sentences in Present Simple based on Lesson #8 with audio assistance. <br>
+                    <span class="font-semibold text-indigo-600">Практикуйте отрицательные предложения в Present Simple с аудио-озвучкой.</span>
                 </p>
             </div>
 
@@ -103,10 +103,14 @@
                 </div>
             </div>
 
-            <div class="pt-2">
-                <button onclick="startQuiz()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0 text-base flex items-center justify-center gap-3 mx-auto">
+            <div class="pt-2 flex flex-col sm:flex-row justify-center gap-3">
+                <button onclick="startQuiz()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0 text-base flex items-center justify-center gap-3">
                     <span>Start Quiz / Начать викторину</span>
                     <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button onclick="speakWelcome()" class="px-6 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold rounded-2xl transition flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-volume-high text-indigo-600"></i>
+                    <span>Listen Intro / Прослушать введение</span>
                 </button>
             </div>
         </div>
@@ -125,8 +129,14 @@
                         Score: <span id="current-score">0</span>
                     </span>
                 </div>
-                <div class="w-32 bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                    <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 8%"></div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="speakCurrentQuestion()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Read Question / Прочитать</span>
+                    </button>
+                    <div class="w-24 sm:w-32 bg-slate-200 rounded-full h-2.5 overflow-hidden hidden sm:block">
+                        <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 8%"></div>
+                    </div>
                 </div>
             </div>
 
@@ -266,7 +276,7 @@
 
     <!-- Footer -->
     <footer class="w-full py-3 px-6 text-center text-xs text-slate-400 border-t border-white/10 bg-slate-900/60 backdrop-blur-md">
-        <span>Lesson #8 Quiz Game • Bilingual English / Russian • 18.11.2026</span>
+        <span>Lesson #8 Quiz Game • Bilingual English / Russian with Audio • 18.11.2026</span>
     </footer>
 
     <!-- Quiz Logic Script -->
@@ -274,8 +284,9 @@
         const quizData = [
             {
                 category: "Sentence Transformation / Преобразование предложения",
-                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"I know\"</span>",
+                prompt: "Transform to negative: I know",
                 translation: "Я знаю ➔ Я не знаю",
+                rawText: "Transform to negative. I know. Choose the correct negative form.",
                 options: [
                     { text: "I don't know", correct: true, explanation: "Correct! With 'I', we use 'don't' + verb (I don't know). / Правильно! С местоимением 'I' используется 'don't'." },
                     { text: "I doesn't know", correct: false, explanation: "Incorrect. 'Doesn't' is only used for He, She, It. / Неверно. 'Doesn't' используется только с He, She, It." },
@@ -284,8 +295,9 @@
             },
             {
                 category: "Sentence Transformation / Преобразование предложения",
-                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"He knows it\"</span>",
+                prompt: "Transform to negative: He knows it",
                 translation: "Он знает это ➔ Он не знает это",
+                rawText: "Transform to negative. He knows it. Choose the correct negative form.",
                 options: [
                     { text: "He don't know it", correct: false, explanation: "Incorrect. For 'He', we must use 'doesn't', and drop the -s on 'know'. / Неверно. Для 'He' нужен 'doesn't', а окончание -s убирается." },
                     { text: "He doesn't know it", correct: true, explanation: "Correct! 'He' + doesn't + know (without -s). / Правильно! 'He' + doesn't + know (без -s)." },
@@ -294,8 +306,9 @@
             },
             {
                 category: "Grammar Rule / Грамматическое правило",
-                prompt: "Choose the correct auxiliary verb: <br><span class='text-indigo-600 font-extrabold'>\"We _____ understand.\"</span>",
+                prompt: "Choose the correct auxiliary verb: We _____ understand.",
                 translation: "Мы не понимаем.",
+                rawText: "Choose the correct auxiliary verb. We don't understand.",
                 options: [
                     { text: "doesn't", correct: false, explanation: "Incorrect. 'We' takes 'don't', not 'doesn't'. / Неверно. С 'We' используется 'don't'." },
                     { text: "don't", correct: true, explanation: "Correct! We + don't + understand. / Правильно! We + don't + understand." },
@@ -304,8 +317,9 @@
             },
             {
                 category: "Vocabulary Practice / Практика лексики",
-                prompt: "Translate and complete: <br><span class='text-indigo-600 font-extrabold'>\"Я не хочу это обсуждать\"</span>",
+                prompt: "Translate and complete: \"Я не хочу это обсуждать\"",
                 translation: "I want to discuss it ➔ ?",
+                rawText: "Translate and complete. I don't want to discuss it.",
                 options: [
                     { text: "I don't want to discuss it", correct: true, explanation: "Correct! Directly from Lesson #8: I don't want to discuss it. / Правильно! Прямо из урока №8." },
                     { text: "I doesn't want to discuss it", correct: false, explanation: "Incorrect. 'I' takes 'don't', not 'doesn't'. / Неверно. С 'I' используется 'don't'." },
@@ -314,8 +328,9 @@
             },
             {
                 category: "Sentence Transformation / Преобразование предложения",
-                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"You try to learn English\"</span>",
+                prompt: "Transform to negative: You try to learn English",
                 translation: "Ты стараешься учить английский ➔ Ты не стараешься...",
+                rawText: "Transform to negative. You try to learn English.",
                 options: [
                     { text: "You doesn't try to learn English", correct: false, explanation: "Incorrect. 'You' requires 'don't'. / Неверно. С 'You' используется 'don't'." },
                     { text: "You don't try to learn English", correct: true, explanation: "Correct! You + don't + try to learn English. / Правильно! You + don't + try..." },
@@ -324,8 +339,9 @@
             },
             {
                 category: "Grammar Rule / Грамматическое правило",
-                prompt: "Which pronoun uses <span class='text-purple-600 font-extrabold'>\"doesn't\"</span>?",
+                prompt: "Which pronoun uses \"doesn't\"?",
                 translation: "Какое местоимение требует 'doesn't'?",
+                rawText: "Which pronoun uses doesn't?",
                 options: [
                     { text: "They", correct: false, explanation: "Incorrect. 'They' uses 'don't'. / Неверно. 'They' использует 'don't'." },
                     { text: "She", correct: true, explanation: "Correct! He, She, It use 'doesn't'. / Правильно! He, She, It используют 'doesn't'." },
@@ -334,8 +350,9 @@
             },
             {
                 category: "Vocabulary Practice / Практика лексики",
-                prompt: "Complete the sentence from Lesson #8: <br><span class='text-indigo-600 font-extrabold'>\"I _____ want to do it right now.\"</span>",
+                prompt: "Complete the sentence: I _____ want to do it right now.",
                 translation: "Я не хочу делать это прямо сейчас.",
+                rawText: "Complete the sentence. I don't want to do it right now.",
                 options: [
                     { text: "doesn't", correct: false, explanation: "Incorrect. Subject is 'I'. / Неверно. Подлежащее 'I'." },
                     { text: "don't", correct: true, explanation: "Correct! I don't want to do it right now. / Правильно! I don't want to do it right now." },
@@ -344,8 +361,9 @@
             },
             {
                 category: "Sentence Transformation / Преобразование предложения",
-                prompt: "Transform to negative: <br><span class='text-indigo-600 font-extrabold'>\"It helps me\"</span>",
+                prompt: "Transform to negative: It helps me",
                 translation: "Это помогает мне ➔ Это не помогает мне",
+                rawText: "Transform to negative. It helps me.",
                 options: [
                     { text: "It don't help me", correct: false, explanation: "Incorrect. 'It' is 3rd person singular, so it takes 'doesn't'. / Неверно. Для 'It' нужен 'doesn't'." },
                     { text: "It doesn't help me", correct: true, explanation: "Correct! It + doesn't + help me (without -s). / Правильно! It + doesn't + help me." },
@@ -354,8 +372,9 @@
             },
             {
                 category: "Vocabulary Practice / Практика лексики",
-                prompt: "Translate: <br><span class='text-indigo-600 font-extrabold'>\"Я не хочу рассказывать тебе об этой проблеме\"</span>",
+                prompt: "Translate: \"Я не хочу рассказывать тебе об этой проблеме\"",
                 translation: "Choose the exact Lesson #8 phrase:",
+                rawText: "Translate. I don't want to tell you about this problem.",
                 options: [
                     { text: "I don't want to tell you about this problem", correct: true, explanation: "Correct! Perfect match from Lesson #8. / Правильно! Точная фраза из урока." },
                     { text: "I doesn't want to tell you about this problem", correct: false, explanation: "Incorrect pronoun rule with 'I'. / Неверное правило для 'I'." },
@@ -366,6 +385,7 @@
                 category: "Grammar Rule / Грамматическое правило",
                 prompt: "What happens to the verb in He/She/It negative sentences?",
                 translation: "Что происходит с глаголом в отрицаниях с He/She/It?",
+                rawText: "What happens to the verb in He, She, It negative sentences? It loses the s ending.",
                 options: [
                     { text: "It keeps the -s ending", correct: false, explanation: "Incorrect. The -s is dropped because 'does' absorbs it in 'doesn't'. / Неверно. Окончание -s убирается." },
                     { text: "It loses the -s ending (e.g., knows → know)", correct: true, explanation: "Correct! 'He knows' becomes 'He doesn't know'. / Правильно! Окончание -s исчезает." },
@@ -374,8 +394,9 @@
             },
             {
                 category: "Vocabulary Practice / Практика лексики",
-                prompt: "Complete: <br><span class='text-indigo-600 font-extrabold'>\"It _____ seem strange.\"</span>",
+                prompt: "Complete: It _____ seem strange.",
                 translation: "Это не кажется странным.",
+                rawText: "Complete. It doesn't seem strange.",
                 options: [
                     { text: "don't", correct: false, explanation: "Incorrect. Subject is 'It'. / Неверно. Подлежащее 'It'." },
                     { text: "doesn't", correct: true, explanation: "Correct! It + doesn't + seem strange. / Правильно! It + doesn't + seem strange." },
@@ -384,8 +405,9 @@
             },
             {
                 category: "Vocabulary Practice / Практика лексики",
-                prompt: "Translate: <br><span class='text-indigo-600 font-extrabold'>\"Я не хочу думать об этом\"</span>",
+                prompt: "Translate: \"Я не хочу думать об этом\"",
                 translation: "Choose the correct Lesson #8 ending:",
+                rawText: "Translate. I don't want to think about it.",
                 options: [
                     { text: "I don't want to think about it", correct: true, explanation: "Correct! Lesson #8 phrase: I don't want to think about it. / Правильно! Фраза из урока №8." },
                     { text: "I don't want to think of this", correct: false, explanation: "Inaccurate preposition compared to lesson notes ('about it'). / Неточный предлог по сравнению с конспектом." },
@@ -398,6 +420,26 @@
         let score = 0;
         let answered = false;
 
+        // Speech Synthesis Helper
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // stop any ongoing speech
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9; // slight slow down for learners
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakWelcome() {
+            speakText("Welcome to Lesson 8 Quiz. Practice negative sentences in Present Simple using don't and doesn't.");
+        }
+
+        function speakCurrentQuestion() {
+            const q = quizData[currentQuestionIndex];
+            speakText(q.rawText || q.prompt);
+        }
+
         function startQuiz() {
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.add('hidden');
@@ -406,6 +448,8 @@
             currentQuestionIndex = 0;
             score = 0;
             loadQuestion();
+            // Automatically read first question
+            setTimeout(() => speakCurrentQuestion(), 300);
         }
 
         function loadQuestion() {
@@ -474,11 +518,13 @@
                 score++;
                 selectedBtn.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-900');
                 showFeedback(true, selectedOpt.explanation);
+                speakText("Correct!");
             } else {
                 selectedBtn.classList.add('bg-rose-50', 'border-rose-300', 'text-rose-900');
                 const icon = selectedBtn.querySelector('i');
                 icon.className = "fa-solid fa-xmark text-rose-600";
                 showFeedback(false, selectedOpt.explanation);
+                speakText("Incorrect.");
             }
 
             document.getElementById('current-score').innerText = score;
@@ -508,8 +554,10 @@
             currentQuestionIndex++;
             if (currentQuestionIndex < quizData.length) {
                 loadQuestion();
+                speakCurrentQuestion();
             } else {
                 showResults();
+                speakText("Quiz completed! Great job!");
             }
         }
 
