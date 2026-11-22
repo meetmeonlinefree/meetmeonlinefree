@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 8.1 Practice — English Trainer</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #0ea5e9;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            background: var(--card);
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #f1f5f9;
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section {
+            display: none;
+            background: var(--card);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dictionary Styles */
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus {
+            border-color: var(--primary);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .speak-btn {
+            background: #eef2ff;
+            color: var(--primary);
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .speak-btn:hover {
+            background: #e0e7ff;
+        }
+
+        /* Auto-Telling Styles */
+        .auto-box {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .phrase-display {
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #f8fafc;
+            border: 2px dashed var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .auto-num {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .auto-en {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .auto-ru {
+            font-size: 1.25rem;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .auto-gt {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .control-group select, .control-group input[type="range"] {
+            width: 100%;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+
+        .btn-primary { background: var(--primary); }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: var(--text-muted); }
+        .btn-secondary:hover { background: #475569; }
+
+        /* Quiz Game Styles */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            font-weight: 600;
+        }
+
+        .stat-badge {
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .quiz-question-box {
+            background: #eef2ff;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .quiz-prompt-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .quiz-question-text {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 16px 20px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1.05rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 500;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
+        .option-btn.correct {
+            background: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+            font-weight: 700;
+        }
+
+        .option-btn.wrong {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .quiz-feedback {
+            margin-top: 18px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            min-height: 28px;
+        }
+
+        @media (max-width: 600px) {
+            .tabs { flex-direction: column; }
+            .auto-en { font-size: 1.35rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Lesson 8.1 Practice — Тренажёр фраз</h1>
+        <p>Словарь, авто-диктовка с озвучкой и игра-викторина для закрепления знаний (36 фраз)</p>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('quiz')">🎮 Игра-викторина</button>
+        <button class="tab-btn" onclick="switchTab('auto')">🎧 Авто-диктовка (Auto-Telling)</button>
+        <button class="tab-btn" onclick="switchTab('dict')">📖 Словарь (36 фраз)</button>
+    </div>
+
+    <!-- TAB 1: QUIZ GAME -->
+    <div id="quiz" class="section active">
+        <div class="quiz-header">
+            <div>
+                <label for="quizMode" style="font-weight:600; font-size:0.9rem;">Режим перевода: </label>
+                <select id="quizMode" onchange="nextQuestion()" style="padding:6px 10px; border-radius:6px; border:1px solid var(--border);">
+                    <option value="ru-en">Русский → English</option>
+                    <option value="en-ru">English → Русский</option>
+                </select>
+            </div>
+            <div class="stats">
+                <span class="stat-badge">Счёт: <span id="score">0</span></span>
+                <span class="stat-badge">Серия: 🔥 <span id="streak">0</span></span>
+                <span class="stat-badge">Пройдено: <span id="answeredCount">0</span></span>
+            </div>
+        </div>
+
+        <div class="quiz-question-box">
+            <div class="quiz-prompt-label" id="quizDirectionLabel">Переведите на английский:</div>
+            <div class="quiz-question-text" id="quizQuestion">Загрузка...</div>
+            <button class="speak-btn" id="quizSpeakBtn" onclick="speakCurrentQuiz()">🔊 Озвучить вопрос</button>
+        </div>
+
+        <div class="options-grid" id="optionsContainer"></div>
+
+        <div class="quiz-feedback" id="quizFeedback"></div>
+        <div style="text-align: center; margin-top: 16px;">
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;">Следующий вопрос ➔</button>
+        </div>
+    </div>
+
+    <!-- TAB 2: AUTO-TELLING -->
+    <div id="auto" class="section">
+        <div class="auto-box">
+            <div class="phrase-display">
+                <div class="auto-num" id="autoNum">Фраза 1 из 36</div>
+                <div class="auto-en" id="autoEn">You don't try to learn English</div>
+                <div class="auto-ru" id="autoRu">Ты не пытаешься изучить английский</div>
+                <div class="auto-gt" id="autoGt">Google: Вы не пытаетесь выучить английский язык.</div>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label>Порядок воспроизведения:</label>
+                    <select id="autoOrder">
+                        <option value="en-ru">English → Русский</option>
+                        <option value="ru-en">Русский → English</option>
+                        <option value="en-only">Только English</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Режим списка:</label>
+                    <select id="autoShuffle">
+                        <option value="seq">По порядку (1 → 36)</option>
+                        <option value="rnd">Вперемешку (Случайно)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Пауза между языками: <span id="pauseVal">1.5</span> сек</label>
+                    <input type="range" id="autoPause" min="0.5" max="5" step="0.5" value="1.5" oninput="document.getElementById('pauseVal').textContent = this.value">
+                </div>
+                <div class="control-group">
+                    <label>Скорость речи: <span id="rateVal">0.95</span>x</label>
+                    <input type="range" id="autoRate" min="0.6" max="1.3" step="0.05" value="0.95" oninput="document.getElementById('rateVal').textContent = this.value">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevAuto()">⏮ Назад</button>
+                <button class="btn btn-primary" id="startAutoBtn" onclick="startAutoTell()">▶ Запустить авто-диктовку</button>
+                <button class="btn btn-danger" id="stopAutoBtn" onclick="stopAutoTell()" style="display:none;">⏹ Остановить</button>
+                <button class="btn btn-secondary" onclick="nextAuto()">Вперёд ⏭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: DICTIONARY -->
+    <div id="dict" class="section">
+        <input type="text" class="search-bar" id="searchInput" placeholder="🔍 Поиск по английской или русской фразе..." onkeyup="filterDictionary()">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>English</th>
+                        <th>Русский</th>
+                        <th>Google Translate</th>
+                    </tr>
+                </thead>
+                <tbody id="dictTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const phrases = [
+        { id: 1, en: "You don't try to learn English", ru: "Ты не пытаешься изучить английский", gt: "Вы не пытаетесь выучить английский язык." },
+        { id: 2, en: "It doesn't work", ru: "Это не работает", gt: "Это не работает" },
+        { id: 3, en: "I don't want to know it", ru: "Я не хочу знать это", gt: "Я не хочу этого знать." },
+        { id: 4, en: "I don't agree with you", ru: "Я не согласен с тобой", gt: "Я с вами не согласен." },
+        { id: 5, en: "I don't like it", ru: "Мне это не нравится", gt: "Мне это не нравится" },
+        { id: 6, en: "She doesn't want to discuss it", ru: "Она не хочет обсуждать это", gt: "Она не хочет это обсуждать." },
+        { id: 7, en: "He doesn't work there", ru: "Он не работает там", gt: "Он там не работает." },
+        { id: 8, en: "He works here", ru: "Он работает здесь", gt: "Он здесь работает" },
+        { id: 9, en: "He doesn't know it", ru: "Он не знает это", gt: "Он этого не знает." },
+        { id: 10, en: "It doesn't seem strange", ru: "Это не кажется странным", gt: "В этом нет ничего странного." },
+        { id: 11, en: "I don't know it", ru: "Я не знаю это", gt: "Я этого не знаю." },
+        { id: 12, en: "She doesn't remember it", ru: "Она не помнит это", gt: "Она этого не помнит." },
+        { id: 13, en: "He doesn't want to read these books. He wants to read those books", ru: "Он не хочет читать эти книги. Он хочет читать те книги", gt: "Он не хочет читать эти книги. Он хочет читать те книги." },
+        { id: 14, en: "I don't want to say it", ru: "Я не хочу говорить это", gt: "Я не хочу этого говорить." },
+        { id: 15, en: "He doesn't have this information", ru: "У него нет информации", gt: "У него нет этой информации." },
+        { id: 16, en: "I don't want to play computer games", ru: "Я не хочу играть в компьютерные игры", gt: "Я не хочу играть в компьютерные игры." },
+        { id: 17, en: "I don't know this person", ru: "Я не знаю этого человека", gt: "Я не знаю этого человека." },
+        { id: 18, en: "I don't want to do it right now", ru: "Я не хочу сделать это прямо сейчас", gt: "Я не хочу делать это прямо сейчас." },
+        { id: 19, en: "He doesn't want to try to find a good job", ru: "Он не хочет стараться найти хорошую работу", gt: "Он не хочет пытаться найти хорошую работу." },
+        { id: 20, en: "He doesn't try to find a good job", ru: "Он не старается найти хорошую работу", gt: "Он не пытается найти хорошую работу." },
+        { id: 21, en: "I don't want to live in this country", ru: "Я не хочу жить в этой стране", gt: "Я не хочу жить в этой стране." },
+        { id: 22, en: "My friend doesn't think so", ru: "Мой друг не думает так", gt: "Мой друг так не считает." },
+        { id: 23, en: "I don't want to tell you about this problem", ru: "Я не хочу говорить тебе эту информацию", gt: "Я не хочу рассказывать вам об этой проблеме." },
+        { id: 24, en: "I don't want to study there", ru: "Я не хочу учиться там", gt: "Я не хочу там учиться." },
+        { id: 25, en: "We don't want to live in another place", ru: "Мы не хотим жить в другом месте", gt: "Мы не хотим жить в другом месте." },
+        { id: 26, en: "It doesn't seem useful", ru: "Это не кажется полезным", gt: "Кажется, это бесполезно." },
+        { id: 27, en: "They don't help me", ru: "Они не помогают мне", gt: "Они мне не помогают" },
+        { id: 28, en: "I don't want to tell you this thing", ru: "Я не хочу говорить тебе эту вещь", gt: "Я не хочу тебе этого рассказывать." },
+        { id: 29, en: "I don't want to think about it", ru: "Я не хочу думать об этом", gt: "Я не хочу об этом думать." },
+        { id: 30, en: "I don't understand these people", ru: "Я не понимаю этих людей", gt: "Я не понимаю этих людей." },
+        { id: 31, en: "We don't understand it", ru: "Мы не понимаем это", gt: "Мы этого не понимаем" },
+        { id: 32, en: "I don't want to discuss it", ru: "Я не хочу обсуждать это", gt: "Я не хочу это обсуждать." },
+        { id: 33, en: "He doesn't have a car", ru: "У него нет машины", gt: "У него нет машины." },
+        { id: 34, en: "I don't want to drink", ru: "Я не хочу пить", gt: "Я не хочу пить" },
+        { id: 35, en: "I don't want to live in that city", ru: "Я не хочу жить в том городе", gt: "Я не хочу жить в этом городе." },
+        { id: 36, en: "It doesn't help me", ru: "Это не помогает мне", gt: "Это мне не помогает." }
+    ];
+
+    // --- SPEECH SYNTHESIS ---
+    function speakText(text, lang, rate = 0.95, callback = null) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = rate;
+        if (callback) {
+            utterance.onend = callback;
+            utterance.onerror = callback;
+        }
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // --- TABS NAVIGATION ---
+    function switchTab(tabId) {
+        stopAutoTell();
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // --- DICTIONARY LOGIC ---
+    function renderDictionary(list) {
+        const tbody = document.getElementById('dictTableBody');
+        tbody.innerHTML = '';
+        list.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${item.id}</strong></td>
+                <td>
+                    <div style="margin-bottom:4px; font-weight:600;">${item.en}</div>
+                    <button class="speak-btn" onclick="speakText('${item.en.replace(/'/g, "\\'")}', 'en-US')">🔊 EN</button>
+                </td>
+                <td>
+                    <div style="margin-bottom:4px;">${item.ru}</div>
+                    <button class="speak-btn" onclick="speakText('${item.ru.replace(/'/g, "\\'")}', 'ru-RU')">🔊 RU</button>
+                </td>
+                <td style="color: var(--text-muted); font-size:0.9rem;">${item.gt}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function filterDictionary() {
+        const q = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = phrases.filter(p =>
+            p.en.toLowerCase().includes(q) ||
+            p.ru.toLowerCase().includes(q) ||
+            p.gt.toLowerCase().includes(q) ||
+            String(p.id) === q
+        );
+        renderDictionary(filtered);
+    }
+
+    // --- AUTO-TELLING LOGIC ---
+    let autoIndex = 0;
+    let isAutoRunning = false;
+    let autoTimer = null;
+
+    function updateAutoDisplay() {
+        const p = phrases[autoIndex];
+        document.getElementById('autoNum').textContent = `Фраза ${p.id} из ${phrases.length}`;
+        document.getElementById('autoEn').textContent = p.en;
+        document.getElementById('autoRu').textContent = p.ru;
+        document.getElementById('autoGt').textContent = `Google: ${p.gt}`;
+    }
+
+    function nextAuto() {
+        const shuffle = document.getElementById('autoShuffle').value === 'rnd';
+        if (shuffle) {
+            autoIndex = Math.floor(Math.random() * phrases.length);
+        } else {
+            autoIndex = (autoIndex + 1) % phrases.length;
+        }
+        updateAutoDisplay();
+        if (isAutoRunning) playAutoStep();
+    }
+
+    function prevAuto() {
+        autoIndex = (autoIndex - 1 + phrases.length) % phrases.length;
+        updateAutoDisplay();
+        if (isAutoRunning) playAutoStep();
+    }
+
+    function startAutoTell() {
+        isAutoRunning = true;
+        document.getElementById('startAutoBtn').style.display = 'none';
+        document.getElementById('stopAutoBtn').style.display = 'inline-block';
+        playAutoStep();
+    }
+
+    function stopAutoTell() {
+        isAutoRunning = false;
+        clearTimeout(autoTimer);
+        window.speechSynthesis.cancel();
+        document.getElementById('startAutoBtn').style.display = 'inline-block';
+        document.getElementById('stopAutoBtn').style.display = 'none';
+    }
+
+    function playAutoStep() {
+        if (!isAutoRunning) return;
+        clearTimeout(autoTimer);
+        const p = phrases[autoIndex];
+        const order = document.getElementById('autoOrder').value;
+        const pauseMs = parseFloat(document.getElementById('autoPause').value) * 1000;
+        const rate = parseFloat(document.getElementById('autoRate').value);
+
+        if (order === 'en-only') {
+            speakText(p.en, 'en-US', rate, () => {
+                if (!isAutoRunning) return;
+                autoTimer = setTimeout(nextAuto, pauseMs);
+            });
+        } else if (order === 'en-ru') {
+            speakText(p.en, 'en-US', rate, () => {
+                if (!isAutoRunning) return;
+                autoTimer = setTimeout(() => {
+                    if (!isAutoRunning) return;
+                    speakText(p.ru, 'ru-RU', rate, () => {
+                        if (!isAutoRunning) return;
+                        autoTimer = setTimeout(nextAuto, pauseMs);
+                    });
+                }, pauseMs);
+            });
+        } else if (order === 'ru-en') {
+            speakText(p.ru, 'ru-RU', rate, () => {
+                if (!isAutoRunning) return;
+                autoTimer = setTimeout(() => {
+                    if (!isAutoRunning) return;
+                    speakText(p.en, 'en-US', rate, () => {
+                        if (!isAutoRunning) return;
+                        autoTimer = setTimeout(nextAuto, pauseMs);
+                    });
+                }, pauseMs);
+            });
+        }
+    }
+
+    // --- QUIZ GAME LOGIC ---
+    let currentQuizPhrase = null;
+    let score = 0;
+    let streak = 0;
+    let answeredCount = 0;
+    let quizAnswered = false;
+
+    function nextQuestion() {
+        quizAnswered = false;
+        document.getElementById('quizFeedback').textContent = '';
+        document.getElementById('nextBtn').style.display = 'none';
+
+        const mode = document.getElementById('quizMode').value;
+        currentQuizPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+
+        // Pick 3 unique wrong options
+        const distractors = [];
+        while (distractors.length < 3) {
+            const candidate = phrases[Math.floor(Math.random() * phrases.length)];
+            if (candidate.id !== currentQuizPhrase.id && !distractors.some(d => d.id === candidate.id)) {
+                distractors.push(candidate);
+            }
+        }
+
+        const options = [currentQuizPhrase, ...distractors].sort(() => Math.random() - 0.5);
+
+        if (mode === 'ru-en') {
+            document.getElementById('quizDirectionLabel').textContent = 'Переведите на английский:';
+            document.getElementById('quizQuestion').textContent = currentQuizPhrase.ru;
+        } else {
+            document.getElementById('quizDirectionLabel').textContent = 'Переведите на русский:';
+            document.getElementById('quizQuestion').textContent = currentQuizPhrase.en;
+            speakText(currentQuizPhrase.en, 'en-US');
+        }
+
+        const container = document.getElementById('optionsContainer');
+        container.innerHTML = '';
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = mode === 'ru-en' ? opt.en : opt.ru;
+            btn.onclick = () => checkAnswer(btn, opt.id === currentQuizPhrase.id);
+            container.appendChild(btn);
+        });
+    }
+
+    function speakCurrentQuiz() {
+        if (!currentQuizPhrase) return;
+        const mode = document.getElementById('quizMode').value;
+        if (mode === 'ru-en') {
+            speakText(currentQuizPhrase.ru, 'ru-RU');
+        } else {
+            speakText(currentQuizPhrase.en, 'en-US');
+        }
+    }
+
+    function checkAnswer(selectedBtn, isCorrect) {
+        if (quizAnswered) return;
+        quizAnswered = true;
+        answeredCount++;
+        document.getElementById('answeredCount').textContent = answeredCount;
+
+        const mode = document.getElementById('quizMode').value;
+        const buttons = document.querySelectorAll('.option-btn');
+        buttons.forEach(b => b.disabled = true);
+
+        const feedback = document.getElementById('quizFeedback');
+
+        if (isCorrect) {
+            selectedBtn.classList.add('correct');
+            score += 10;
+            streak++;
+            feedback.style.color = 'var(--success)';
+            feedback.textContent = `✅ Верно! (${currentQuizPhrase.en} — ${currentQuizPhrase.ru})`;
+        } else {
+            selectedBtn.classList.add('wrong');
+            streak = 0;
+            feedback.style.color = 'var(--danger)';
+            feedback.textContent = `❌ Ошибка. Правильно: ${mode === 'ru-en' ? currentQuizPhrase.en : currentQuizPhrase.ru}`;
+            buttons.forEach(b => {
+                const correctText = mode === 'ru-en' ? currentQuizPhrase.en : currentQuizPhrase.ru;
+                if (b.textContent === correctText) {
+                    b.classList.add('correct');
+                }
+            });
+        }
+
+        // Always pronounce the English phrase after answering to pin knowledge
+        speakText(currentQuizPhrase.en, 'en-US');
+
+        document.getElementById('score').textContent = score;
+        document.getElementById('streak').textContent = streak;
+        document.getElementById('nextBtn').style.display = 'inline-block';
+    }
+
+    // Initialize
+    renderDictionary(phrases);
+    updateAutoDisplay();
+    nextQuestion();
+</script>
+
+</body>
+</html>
