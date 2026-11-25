@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENGLISH QUEST 90s - LESSON 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0d1a;
+            --panel-bg: #1a1a2e;
+            --neon-cyan: #00f5d4;
+            --neon-pink: #f15bb5;
+            --neon-yellow: #fee440;
+            --neon-green: #00ff66;
+            --neon-red: #ff2a6d;
+            --text-light: #e0e1dd;
+            --border-color: #4ea8de;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 15px;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: 
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            background-size: 100% 4px, 6px 100%;
+        }
+
+        .arcade-cabinet {
+            width: 100%;
+            max-width: 820px;
+            background: var(--panel-bg);
+            border: 4px solid var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.4), inset 0 0 15px rgba(0, 245, 212, 0.2);
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 4px dashed var(--neon-pink);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            color: var(--neon-yellow);
+            text-shadow: 3px 3px 0px var(--neon-pink);
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .subtitle {
+            color: var(--neon-cyan);
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #090912;
+            border: 2px solid var(--border-color);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hud-item span {
+            color: var(--neon-yellow);
+        }
+
+        .mode-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 140px;
+            background: #121225;
+            color: var(--text-light);
+            border: 3px solid var(--border-color);
+            padding: 12px 8px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.1s;
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--neon-yellow);
+            color: var(--neon-yellow);
+        }
+
+        .tab-btn.active {
+            background: var(--neon-pink);
+            color: #fff;
+            border-color: #fff;
+            box-shadow: 0 0 12px var(--neon-pink);
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-box {
+            background: #0a0a16;
+            border: 3px solid var(--neon-yellow);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .q-label {
+            font-size: 18px;
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .q-text-ru {
+            font-size: 30px;
+            color: #fff;
+            margin: 10px 0;
+            line-height: 1.2;
+        }
+
+        .q-sub-ru {
+            font-size: 20px;
+            color: #8d99ae;
+            font-style: italic;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #16213e;
+            color: var(--text-light);
+            border: 3px solid var(--neon-cyan);
+            padding: 14px 18px;
+            font-family: 'VT323', monospace;
+            font-size: 26px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.05s;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #1f305e;
+            border-color: var(--neon-yellow);
+            transform: translateX(4px);
+        }
+
+        .option-btn.correct {
+            background: #004b23;
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .option-btn.wrong {
+            background: #590d22;
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        /* Word Builder Mode */
+        .answer-slot {
+            min-height: 60px;
+            background: #090912;
+            border: 3px dashed var(--neon-cyan);
+            padding: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .word-chip {
+            background: #2b2d42;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            padding: 8px 14px;
+            font-size: 25px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .word-chip:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000;
+        }
+
+        .word-chip.in-slot {
+            background: var(--neon-cyan);
+            color: #000;
+            border-color: #fff;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .retro-btn {
+            background: var(--neon-yellow);
+            color: #000;
+            border: 3px solid #fff;
+            padding: 12px 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--neon-pink);
+        }
+
+        .retro-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--neon-pink);
+        }
+
+        .retro-btn.secondary {
+            background: var(--border-color);
+            color: #fff;
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        .feedback-banner {
+            margin-top: 15px;
+            padding: 12px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 13px;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .feedback-banner.win {
+            display: block;
+            background: rgba(0, 255, 102, 0.15);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .feedback-banner.lose {
+            display: block;
+            background: rgba(255, 42, 109, 0.15);
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        /* Dictionary / Cards Table */
+        .dict-list {
+            max-height: 440px;
+            overflow-y: auto;
+            border: 2px solid var(--border-color);
+            background: #0a0a16;
+            padding: 10px;
+        }
+
+        .dict-item {
+            border-bottom: 1px dashed #3a3a5c;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dict-item:last-child {
+            border-bottom: none;
+        }
+
+        .dict-en {
+            color: var(--neon-yellow);
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .dict-ru {
+            color: var(--text-light);
+            font-size: 21px;
+        }
+
+        .dict-gt {
+            color: #8d99ae;
+            font-size: 18px;
+        }
+
+        .speak-btn {
+            background: var(--neon-pink);
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 6px 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Auto Player */
+        .player-card {
+            background: #090912;
+            border: 3px solid var(--neon-green);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .player-num {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: var(--neon-pink);
+            margin-bottom: 15px;
+        }
+
+        .player-en {
+            font-size: 34px;
+            color: var(--neon-yellow);
+            margin-bottom: 12px;
+        }
+
+        .player-ru {
+            font-size: 26px;
+            color: var(--neon-cyan);
+            margin-bottom: 6px;
+        }
+
+        .player-gt {
+            font-size: 20px;
+            color: #8d99ae;
+            margin-bottom: 20px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090912;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+        }
+
+        @media (max-width: 600px) {
+            .title { font-size: 15px; }
+            .q-text-ru { font-size: 24px; }
+            .option-btn { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="arcade-cabinet">
+    <div class="header">
+        <h1 class="title">★ ENGLISH QUEST 1990 ★</h1>
+        <div class="subtitle">LESSON 9: PRESENT SIMPLE & DEMONSTRATIVES (22 PHRASES)</div>
+    </div>
+
+    <div class="hud">
+        <div class="hud-item">SCORE: <span id="score">0000</span></div>
+        <div class="hud-item">STREAK: <span id="streak">0</span>🔥</div>
+        <div class="hud-item">STAGE: <span id="progress">1/22</span></div>
+        <div class="hud-item">
+            <button class="speak-btn" id="soundToggle" onclick="toggleSound()">SFX: ON</button>
+        </div>
+    </div>
+
+    <div class="mode-tabs">
+        <button class="tab-btn active" onclick="switchMode('quiz')">1. ARCADE QUIZ</button>
+        <button class="tab-btn" onclick="switchMode('builder')">2. WORD BUILDER</button>
+        <button class="tab-btn" onclick="switchMode('player')">3. AUTO TRAINER</button>
+        <button class="tab-btn" onclick="switchMode('dict')">4. DATABASE (22)</button>
+    </div>
+
+    <!-- MODE 1: QUIZ -->
+    <div id="screen-quiz" class="screen active">
+        <div class="question-box">
+            <div class="q-label">ПЕРЕВЕДИТЕ НА АНГЛИЙСКИЙ:</div>
+            <div class="q-text-ru" id="quiz-ru">...</div>
+            <div class="q-sub-ru" id="quiz-gt">...</div>
+        </div>
+        <div class="options-grid" id="quiz-options"></div>
+        <div class="feedback-banner" id="quiz-feedback"></div>
+        <div class="controls-row">
+            <button class="retro-btn secondary" onclick="speakCurrentQuiz()">🔊 LISTEN EN</button>
+            <button class="retro-btn" id="quiz-next-btn" onclick="nextQuizQuestion()" style="display:none;">NEXT STAGE ►</button>
+        </div>
+    </div>
+
+    <!-- MODE 2: WORD BUILDER -->
+    <div id="screen-builder" class="screen">
+        <div class="question-box">
+            <div class="q-label">СОБЕРИТЕ ПРЕДЛОЖЕНИЕ ИЗ СЛОВ:</div>
+            <div class="q-text-ru" id="builder-ru">...</div>
+            <div class="q-sub-ru" id="builder-gt">...</div>
+        </div>
+        <div class="answer-slot" id="builder-slot"></div>
+        <div class="word-bank" id="builder-bank"></div>
+        <div class="feedback-banner" id="builder-feedback"></div>
+        <div class="controls-row">
+            <button class="retro-btn secondary" onclick="resetBuilderCurrent()">↺ CLEAR</button>
+            <button class="retro-btn" id="builder-check-btn" onclick="checkBuilder()">CHECK ANSWER</button>
+            <button class="retro-btn" id="builder-next-btn" onclick="nextBuilderQuestion()" style="display:none;">NEXT ►</button>
+        </div>
+    </div>
+
+    <!-- MODE 3: AUTO PLAYER -->
+    <div id="screen-player" class="screen">
+        <div class="player-card">
+            <div class="player-num" id="player-counter">CARD 1 OF 22</div>
+            <div class="player-en" id="player-en">...</div>
+            <div class="player-ru" id="player-ru">...</div>
+            <div class="player-gt" id="player-gt">...</div>
+            <div class="controls-row">
+                <button class="retro-btn secondary" onclick="prevPlayerCard()">◄ PREV</button>
+                <button class="retro-btn" id="autoplay-btn" onclick="toggleAutoPlay()">▶ AUTO PLAY</button>
+                <button class="retro-btn secondary" onclick="speakPlayerCard()">🔊 VOICE</button>
+                <button class="retro-btn secondary" onclick="nextPlayerCard()">NEXT ►</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODE 4: DICTIONARY -->
+    <div id="screen-dict" class="screen">
+        <div class="dict-list" id="dict-container"></div>
+    </div>
+</div>
+
+<script>
+    // База данных Урока 9 (исправлены опечатки в русских вариантах для удобства чтения, смысл сохранён 1 в 1)
+    const lessonData = [
+        { id: 1, en: "This thing doesn't interest me", ru: "Эта вещь не интересует меня", gt: "Меня это не интересует." },
+        { id: 2, en: "These things don't attract me", ru: "Эти вещи не привлекают меня", gt: "Меня это не привлекает." },
+        { id: 3, en: "That thing doesn't seem interesting", ru: "Та вещь не кажется интересной", gt: "Эта штука не кажется интересной." },
+        { id: 4, en: "Those things don't seem strange", ru: "Те вещи не кажутся странными", gt: "Эти вещи не кажутся странными." },
+        { id: 5, en: "Those lessons don't seem useful", ru: "Те уроки не кажутся полезными", gt: "Эти уроки, похоже, бесполезны." },
+        { id: 6, en: "These lessons seem very useful", ru: "Эти уроки кажутся очень полезными", gt: "Эти уроки кажутся очень полезными." },
+        { id: 7, en: "That method doesn't help", ru: "Тот метод не помогает", gt: "Этот метод не помогает." },
+        { id: 8, en: "This method really helps", ru: "Этот метод реально помогает", gt: "Этот метод действительно помогает." },
+        { id: 9, en: "My brother doesn't want to think about his future", ru: "Мой брат не хочет думать о своём будущем", gt: "Мой брат не хочет думать о своем будущем." },
+        { id: 10, en: "My sister doesn't know this person", ru: "Моя сестра не знает этого человека", gt: "Моя сестра не знает этого человека." },
+        { id: 11, en: "My friends don't recommend this hotel", ru: "Мои друзья не рекомендуют этот отель", gt: "Мои друзья не рекомендуют этот отель." },
+        { id: 12, en: "His son doesn't want to become a doctor", ru: "Его сын не хочет стать доктором", gt: "Его сын не хочет становиться врачом." },
+        { id: 13, en: "Her daughter doesn't want to study there", ru: "Её дочка не хочет учиться там", gt: "Ее дочь не хочет там учиться." },
+        { id: 14, en: "His parents don't feel happy", ru: "Его родители не чувствуют себя счастливыми", gt: "Его родители недовольны." },
+        { id: 15, en: "This person doesn't try to change his life", ru: "Этот человек не пытается поменять свою жизнь", gt: "Этот человек не пытается изменить свою жизнь." },
+        { id: 16, en: "My boss doesn't see her", ru: "Мой босс не видит её", gt: "Мой начальник её не видит." },
+        { id: 17, en: "My partner doesn't know him", ru: "Мой партнёр не знает его", gt: "Мой партнер его не знает." },
+        { id: 18, en: "My friend and I don't call them", ru: "Мой друг и я не звоним им", gt: "Мы с другом их так не называем." },
+        { id: 19, en: "Our teacher doesn't believe us", ru: "Наша учительница не верит в нас", gt: "Наш учитель нам не верит." },
+        { id: 20, en: "He thinks money doesn't bring people happiness", ru: "Он думает, деньги не приносят людям счастье", gt: "Он считает, что деньги не приносят людям счастья." },
+        { id: 21, en: "She thinks money doesn't make people happy", ru: "Она думает, деньги не делают людей счастливыми", gt: "Она считает, что деньги не делают людей счастливыми." },
+        { id: 22, en: "I really want to make you happy", ru: "Я реально хочу сделать вас счастливыми", gt: "Я очень хочу сделать тебя счастливой." }
+    ];
+
+    // 8-битный синтезатор звуков (Web Audio API)
+    let sfxEnabled = true;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, type, duration, delay = 0) {
+        if (!sfxEnabled) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime + delay);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime + delay);
+        osc.stop(audioCtx.currentTime + delay + duration);
+    }
+
+    function playWinSound() {
+        playTone(523.25, 'square', 0.1, 0);    // C5
+        playTone(659.25, 'square', 0.1, 0.1);  // E5
+        playTone(783.99, 'square', 0.1, 0.2);  // G5
+        playTone(1046.50, 'square', 0.25, 0.3); // C6
+    }
+
+    function playLoseSound() {
+        playTone(220, 'sawtooth', 0.2, 0);
+        playTone(164.81, 'sawtooth', 0.35, 0.2);
+    }
+
+    function playClickSound() {
+        playTone(440, 'square', 0.05, 0);
+    }
+
+    function toggleSound() {
+        sfxEnabled = !sfxEnabled;
+        document.getElementById('soundToggle').innerText = sfxEnabled ? 'SFX: ON' : 'SFX: OFF';
+        playClickSound();
+    }
+
+    // Озвучка текста (Web Speech API)
+    function speakText(text, lang = 'en-US') {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.92;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // Состояние игры
+    let score = 0;
+    let streak = 0;
+    let quizOrder = [];
+    let quizIndex = 0;
+    let quizAnswered = false;
+
+    let builderOrder = [];
+    let builderIndex = 0;
+    let selectedWords = [];
+    let bankWords = [];
+
+    let playerIndex = 0;
+    let autoPlayTimer = null;
+
+    function shuffle(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function updateHUD(current, total) {
+        document.getElementById('score').innerText = String(score).padStart(4, '0');
+        document.getElementById('streak').innerText = streak;
+        document.getElementById('progress').innerText = `${current}/${total}`;
+    }
+
+    // Переключение режимов
+    function switchMode(mode) {
+        playClickSound();
+        stopAutoPlay();
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+        const tabMap = { quiz: 0, builder: 1, player: 2, dict: 3 };
+        document.querySelectorAll('.tab-btn')[tabMap[mode]].classList.add('active');
+        document.getElementById(`screen-${mode}`).classList.add('active');
+
+        if (mode === 'quiz') updateHUD(quizIndex + 1, lessonData.length);
+        if (mode === 'builder') updateHUD(builderIndex + 1, lessonData.length);
+        if (mode === 'player') {
+            updateHUD(playerIndex + 1, lessonData.length);
+            renderPlayerCard();
+        }
+        if (mode === 'dict') updateHUD(22, 22);
+    }
+
+    // --- ЛОГИКА РЕЖИМА 1: QUIZ ---
+    function initQuiz() {
+        quizOrder = shuffle(lessonData);
+        quizIndex = 0;
+        renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+        quizAnswered = false;
+        const current = quizOrder[quizIndex];
+        updateHUD(quizIndex + 1, quizOrder.length);
+
+        document.getElementById('quiz-ru').innerText = current.ru;
+        document.getElementById('quiz-gt').innerText = `(${current.gt})`;
+        document.getElementById('quiz-feedback').className = 'feedback-banner';
+        document.getElementById('quiz-next-btn').style.display = 'none';
+
+        // Подбираем 3 похожих неправильных варианта (включая ловушки don't/doesn't и this/these/that/those)
+        let distractors = lessonData
+            .filter(item => item.id !== current.id)
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 2)
+            .map(item => item.en);
+
+        // Добавляем грамматическую ловушку (меняем don't <-> doesn't или this <-> these)
+        let trap = createGrammarTrap(current.en);
+        if (trap && trap !== current.en && !distractors.includes(trap)) {
+            distractors.push(trap);
+        } else {
+            const extra = lessonData.find(item => item.id !== current.id && !distractors.includes(item.en));
+            distractors.push(extra.en);
+        }
+
+        const options = shuffle([current.en, ...distractors]);
+        const container = document.getElementById('quiz-options');
+        container.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D'];
+        options.forEach((optText, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = `<span style="color:var(--neon-yellow)">[${letters[idx]}]</span> <span>${optText}</span>`;
+            btn.onclick = () => handleQuizAnswer(btn, optText, current.en);
+            container.appendChild(btn);
+        });
+    }
+
+    function createGrammarTrap(sentence) {
+        if (sentence.includes("doesn't")) return sentence.replace("doesn't", "don't");
+        if (sentence.includes("don't")) return sentence.replace("don't", "doesn't");
+        if (sentence.startsWith("These")) return sentence.replace("These", "This");
+        if (sentence.startsWith("This")) return sentence.replace("This", "These");
+        return null;
+    }
+
+    function handleQuizAnswer(btn, selected, correct) {
+        if (quizAnswered) return;
+        quizAnswered = true;
+
+        const allBtns = document.querySelectorAll('#quiz-options .option-btn');
+        allBtns.forEach(b => b.disabled = true);
+
+        const fb = document.getElementById('quiz-feedback');
+        if (selected === correct) {
+            btn.classList.add('correct');
+            score += 100 + (streak * 20);
+            streak++;
+            playWinSound();
+            fb.className = 'feedback-banner win';
+            fb.innerText = '★ EXCELLENT! +100 PTS ★';
+        } else {
+            btn.classList.add('wrong');
+            streak = 0;
+            playLoseSound();
+            allBtns.forEach(b => {
+                if (b.innerText.includes(correct)) b.classList.add('correct');
+            });
+            fb.className = 'feedback-banner lose';
+            fb.innerText = `✖ WRONG! CORRECT: "${correct}"`;
+        }
+
+        speakText(correct);
+        updateHUD(quizIndex + 1, quizOrder.length);
+        document.getElementById('quiz-next-btn').style.display = 'inline-block';
+    }
+
+    function nextQuizQuestion() {
+        playClickSound();
+        quizIndex++;
+        if (quizIndex >= quizOrder.length) {
+            quizOrder = shuffle(lessonData);
+            quizIndex = 0;
+        }
+        renderQuizQuestion();
+    }
+
+    function speakCurrentQuiz() {
+        speakText(quizOrder[quizIndex].en);
+    }
+
+    // --- ЛОГИКА РЕЖИМА 2: WORD BUILDER ---
+    function initBuilder() {
+        builderOrder = shuffle(lessonData);
+        builderIndex = 0;
+        renderBuilderQuestion();
+    }
+
+    function renderBuilderQuestion() {
+        const current = builderOrder[builderIndex];
+        updateHUD(builderIndex + 1, builderOrder.length);
+
+        document.getElementById('builder-ru').innerText = current.ru;
+        document.getElementById('builder-gt').innerText = `(${current.gt})`;
+        document.getElementById('builder-feedback').className = 'feedback-banner';
+        document.getElementById('builder-next-btn').style.display = 'none';
+        document.getElementById('builder-check-btn').style.display = 'inline-block';
+
+        selectedWords = [];
+        const words = current.en.split(' ');
+        bankWords = shuffle(words.map((w, i) => ({ id: i, text: w, used: false })));
+        renderBuilderWords();
+    }
+
+    function renderBuilderWords() {
+        const slotEl = document.getElementById('builder-slot');
+        const bankEl = document.getElementById('builder-bank');
+        slotEl.innerHTML = '';
+        bankEl.innerHTML = '';
+
+        selectedWords.forEach((wordObj, idx) => {
+            const chip = document.createElement('div');
+            chip.className = 'word-chip in-slot';
+            chip.innerText = wordObj.text;
+            chip.onclick = () => {
+                playClickSound();
+                wordObj.used = false;
+                selectedWords.splice(idx, 1);
+                renderBuilderWords();
+            };
+            slotEl.appendChild(chip);
+        });
+
+        bankWords.forEach(wordObj => {
+            if (!wordObj.used) {
+                const chip = document.createElement('div');
+                chip.className = 'word-chip';
+                chip.innerText = wordObj.text;
+                chip.onclick = () => {
+                    playClickSound();
+                    wordObj.used = true;
+                    selectedWords.push(wordObj);
+                    renderBuilderWords();
+                };
+                bankEl.appendChild(chip);
+            }
+        });
+    }
+
+    function resetBuilderCurrent() {
+        playClickSound();
+        selectedWords = [];
+        bankWords.forEach(w => w.used = false);
+        document.getElementById('builder-feedback').className = 'feedback-banner';
+        renderBuilderWords();
+    }
+
+    function checkBuilder() {
+        const current = builderOrder[builderIndex];
+        const userSentence = selectedWords.map(w => w.text).join(' ');
+        const fb = document.getElementById('builder-feedback');
+
+        if (userSentence === current.en) {
+            score += 150;
+            streak++;
+            playWinSound();
+            speakText(current.en);
+            fb.className = 'feedback-banner win';
+            fb.innerText = '★ PERFECT ASSEMBLY! +150 PTS ★';
+            document.getElementById('builder-check-btn').style.display = 'none';
+            document.getElementById('builder-next-btn').style.display = 'inline-block';
+        } else {
+            streak = 0;
+            playLoseSound();
+            fb.className = 'feedback-banner lose';
+            fb.innerText = `✖ TRY AGAIN! TARGET: "${current.en}"`;
+        }
+        updateHUD(builderIndex + 1, builderOrder.length);
+    }
+
+    function nextBuilderQuestion() {
+        playClickSound();
+        builderIndex++;
+        if (builderIndex >= builderOrder.length) {
+            builderOrder = shuffle(lessonData);
+            builderIndex = 0;
+        }
+        renderBuilderQuestion();
+    }
+
+    // --- ЛОГИКА РЕЖИМА 3: AUTO PLAYER ---
+    function renderPlayerCard() {
+        const item = lessonData[playerIndex];
+        updateHUD(playerIndex + 1, lessonData.length);
+        document.getElementById('player-counter').innerText = `CARTRIDGE ${item.id} OF ${lessonData.length}`;
+        document.getElementById('player-en').innerText = item.en;
+        document.getElementById('player-ru').innerText = item.ru;
+        document.getElementById('player-gt').innerText = item.gt;
+    }
+
+    function speakPlayerCard() {
+        speakText(lessonData[playerIndex].en);
+    }
+
+    function nextPlayerCard() {
+        playClickSound();
+        playerIndex = (playerIndex + 1) % lessonData.length;
+        renderPlayerCard();
+        speakPlayerCard();
+    }
+
+    function prevPlayerCard() {
+        playClickSound();
+        playerIndex = (playerIndex - 1 + lessonData.length) % lessonData.length;
+        renderPlayerCard();
+        speakPlayerCard();
+    }
+
+    function toggleAutoPlay() {
+        const btn = document.getElementById('autoplay-btn');
+        if (autoPlayTimer) {
+            stopAutoPlay();
+        } else {
+            btn.innerText = '⏸ PAUSE';
+            speakPlayerCard();
+            autoPlayTimer = setInterval(() => {
+                playerIndex = (playerIndex + 1) % lessonData.length;
+                renderPlayerCard();
+                speakPlayerCard();
+            }, 3800);
+        }
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+            document.getElementById('autoplay-btn').innerText = '▶ AUTO PLAY';
+        }
+    }
+
+    // --- ЛОГИКА РЕЖИМА 4: СЛОВАРЬ ---
+    function renderDictionary() {
+        const container = document.getElementById('dict-container');
+        container.innerHTML = '';
+        lessonData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'dict-item';
+            div.innerHTML = `
+                <div>
+                    <div class="dict-en">${item.id}. ${item.en}</div>
+                    <div class="dict-ru">${item.ru}</div>
+                    <div class="dict-gt">GT: ${item.gt}</div>
+                </div>
+                <button class="speak-btn" onclick="speakText('${item.en.replace(/'/g, "\\'")}')">🔊 PLAY</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // Инициализация при запуске
+    window.onload = () => {
+        initQuiz();
+        initBuilder();
+        renderDictionary();
+    };
+</script>
+
+</body>
+</html>
