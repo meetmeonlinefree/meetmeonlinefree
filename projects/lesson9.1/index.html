@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson #9.1 — Kahoot Quiz Arena</title>
+  <style>
+    :root {
+      --bg: #120926;
+      --surface: #1e113d;
+      --surface-2: #2a1854;
+      --text: #ffffff;
+      --muted: #b8a9dc;
+      --red: #e21b3c;
+      --red-dark: #a6112a;
+      --blue: #1368ce;
+      --blue-dark: #0d4891;
+      --yellow: #ffa602;
+      --yellow-dark: #b87700;
+      --green: #26890c;
+      --green-dark: #195d07;
+      --accent: #8b5cf6;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(circle at top, #271552, var(--bg) 65%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(18, 9, 38, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.4px;
+    }
+
+    .badge {
+      background: var(--accent);
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .hud {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .hud-pill {
+      background: var(--surface-2);
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .btn {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+
+    .btn:hover { background: #37206e; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); border-color: transparent; }
+    .btn-primary:hover { background: #7c3aed; }
+
+    main {
+      flex: 1;
+      max-width: 980px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .lobby-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .mode-card {
+      background: var(--surface-2);
+      border: 2px solid transparent;
+      border-radius: var(--radius);
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .mode-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.25); }
+    .mode-card.active { border-color: #38bdf8; background: #331d66; }
+    .mode-card h3 { margin-bottom: 6px; font-size: 1.05rem; }
+    .mode-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.4; }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    select {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .timer-bar-wrap {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .timer-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+      transition: width 0.2s linear;
+    }
+
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .q-prompt {
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+
+    .q-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .q-prompt { font-size: 1.25rem; }
+    }
+
+    .opt-btn {
+      border: none;
+      border-radius: var(--radius);
+      padding: 18px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 82px;
+      transition: transform 0.1s ease, filter 0.15s ease, opacity 0.2s ease;
+    }
+
+    .opt-btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.08); }
+    .opt-btn:disabled { cursor: default; }
+
+    .opt-0 { background: var(--red); box-shadow: 0 5px 0 var(--red-dark); }
+    .opt-1 { background: var(--blue); box-shadow: 0 5px 0 var(--blue-dark); }
+    .opt-2 { background: var(--yellow); color: #141007; box-shadow: 0 5px 0 var(--yellow-dark); }
+    .opt-3 { background: var(--green); box-shadow: 0 5px 0 var(--green-dark); }
+
+    .shape {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+    }
+
+    .opt-btn.dimmed { opacity: 0.35; }
+    .opt-btn.correct-highlight { outline: 4px solid #ffffff; filter: brightness(1.12); opacity: 1; }
+
+    .feedback-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      border-left: 5px solid #38bdf8;
+      line-height: 1.5;
+    }
+
+    .feedback-box.ok { border-left-color: #22c55e; }
+    .feedback-box.bad { border-left-color: #ef4444; }
+
+    .diff-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.9rem;
+    }
+
+    .diff-table th, .diff-table td {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .diff-table th { color: var(--muted); font-size: 0.82rem; text-transform: uppercase; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span>KAHOOT ARENA</span>
+      <span class="badge">LESSON #9.1 • 38 ITEMS</span>
+    </div>
+    <div class="hud">
+      <div class="hud-pill">Score: <span id="scoreVal">0</span></div>
+      <div class="hud-pill">Streak: <span id="streakVal">0</span>x</div>
+      <button class="btn" id="soundToggleBtn" type="button">Sound: ON</button>
+      <button class="btn" id="studyBtn" type="button">Study 38 Sentences</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- LOBBY -->
+    <section id="lobbyView" class="card">
+      <h1>Lesson #9.1 Drill & Kahoot Quiz</h1>
+      <p class="q-sub" style="margin-top:8px;">
+        Practice all 38 sentences from Lesson #9.1: negative & affirmative Present Simple (<code>don't</code> / <code>doesn't</code>), demonstratives, and comparisons between your Russian translation and Google Translate.
+      </p>
+
+      <div class="lobby-grid">
+        <div class="mode-card active" data-mode="en2ru">
+          <h3>1. EN → RU Translation</h3>
+          <p>Read or listen to the English sentence and pick the accurate Russian meaning before time runs out.</p>
+        </div>
+        <div class="mode-card" data-mode="ru2en">
+          <h3>2. RU → EN Recall</h3>
+          <p>Start from Russian and choose the exact English sentence (watching <code>this/that/these/those</code> and <code>don't/doesn't</code>).</p>
+        </div>
+        <div class="mode-card" data-mode="gt_compare">
+          <h3>3. Human vs. Google Translate</h3>
+          <p>Test tricky differences between your Russian translation and Google Translate (like #18, #21, #26, #35).</p>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <label for="qCountSelect">Questions:</label>
+        <select id="qCountSelect">
+          <option value="10">10 Questions (Quick)</option>
+          <option value="20" selected>20 Questions (Standard)</option>
+          <option value="38">All 38 Sentences (Full Marathon)</option>
+        </select>
+
+        <label for="timerSelect">Timer:</label>
+        <select id="timerSelect">
+          <option value="15">15s (Fast)</option>
+          <option value="20" selected>20s (Normal)</option>
+          <option value="35">35s (Relaxed)</option>
+        </select>
+
+        <button class="btn btn-primary" id="startBtn" type="button">Start Kahoot Game</button>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="gameView" class="card hidden">
+      <div class="timer-bar-wrap">
+        <div class="timer-bar" id="timerBar"></div>
+      </div>
+
+      <div class="q-meta">
+        <span id="qCounter">Question 1 / 20</span>
+        <span id="qModeLabel">EN → RU</span>
+        <span id="timerLabel">20s</span>
+      </div>
+
+      <div class="q-prompt" id="qPrompt"></div>
+      <div class="q-sub" id="qSub"></div>
+
+      <div class="controls-row" style="margin-bottom: 18px;">
+        <button class="btn" id="speakBtn" type="button">🔊 Pronounce English</button>
+        <button class="btn" id="quitBtn" type="button">Back to Lobby</button>
+      </div>
+
+      <div class="options-grid" id="optionsGrid"></div>
+
+      <div class="feedback-box hidden" id="feedbackBox"></div>
+      <div class="controls-row hidden" id="nextRow">
+        <button class="btn btn-primary" id="nextBtn" type="button">Next Question →</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="resultView" class="card hidden">
+      <h2>Round Complete!</h2>
+      <p class="q-sub" style="margin-top:8px;">Here is how you scored on Lesson #9.1:</p>
+      <div class="hud" style="margin: 16px 0;">
+        <div class="hud-pill">Final Score: <span id="finalScore">0</span></div>
+        <div class="hud-pill">Accuracy: <span id="finalAcc">0%</span></div>
+        <div class="hud-pill">Best Streak: <span id="bestStreak">0</span>x</div>
+      </div>
+      <div id="missedList" style="margin-top: 14px;"></div>
+      <div class="controls-row" style="margin-top: 20px;">
+        <button class="btn btn-primary" id="playAgainBtn" type="button">Play Again</button>
+        <button class="btn" id="lobbyBtn" type="button">Change Mode</button>
+      </div>
+    </section>
+
+    <!-- STUDY DECK -->
+    <section id="studyView" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <h2>Lesson #9.1 Study Sheet (38 Sentences)</h2>
+        <button class="btn" id="closeStudyBtn" type="button">← Back</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="diff-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>English</th>
+              <th>Your Russian</th>
+              <th>Google Translate</th>
+              <th>Audio</th>
+            </tr>
+          </thead>
+          <tbody id="studyTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const DATA = [
+      { id: 1, en: "That offer doesn`t seem strange", ru: "Это предложение не кажется странным", gt: "Это предложение не кажется странным." },
+      { id: 2, en: "His boss doesn`t speak English fluently", ru: "Его бос не говорит по-английски свободно", gt: "Его начальник не владеет английским языком в совершенстве." },
+      { id: 3, en: "My parents don`t discuss it", ru: "Мои родители не обсуждают это", gt: "Мои родители это не обсуждают." },
+      { id: 4, en: "These things don`t attract me", ru: "Эти вещи не привлекают меня", gt: "Меня это не привлекает." },
+      { id: 5, en: "Those things don`t seem strange", ru: "Те вещи не кажутся странными", gt: "Эти вещи не кажутся странными." },
+      { id: 6, en: "His son doesn`t want to become a doctor", ru: "Его сын не хочет стать доктором", gt: "Его сын не хочет становиться врачом." },
+      { id: 7, en: "Our teacher doesn`t believe us", ru: "Наша учительница не верит в нас", gt: "Наш учитель нам не верит" },
+      { id: 8, en: "My partner doesn`t know him", ru: "Мой партнёр не знает его", gt: "Мой партнер его не знает." },
+      { id: 9, en: "My friend doesn`t like this idea", ru: "Моему другу не нравится это идея", gt: "Моему другу эта идея не нравится." },
+      { id: 10, en: "She thinks money doesn`t make people happy", ru: "Она думает деньги не делают людей счастливыми", gt: "Она считает, что деньги не делают людей счастливыми." },
+      { id: 11, en: "This person doesn`t want to change his life", ru: "Этот человек не хочет изменить свою жизнь", gt: "Этот человек не хочет менять свою жизнь." },
+      { id: 12, en: "My boss doesn`t see her", ru: "Мой босс не видит её", gt: "Мой начальник её не видит" },
+      { id: 13, en: "These things don`t attract me", ru: "Эти вещи не привлекают меня", gt: "Меня это не привлекает." },
+      { id: 14, en: "This thing doesn`t attract me", ru: "Эта вешь не привлекает меня", gt: "Это меня не привлекает." },
+      { id: 15, en: "My friends don`t recommend this hotel", ru: "Мои друзья не рекомендуют этот отель", gt: "Мои друзья не рекомендуют этот отель." },
+      { id: 16, en: "My sister doesn`t know this person", ru: "Моя сестра не знает этого человека", gt: "Моя сестра не знает этого человека." },
+      { id: 17, en: "My brother doesn`t want to think about his future", ru: "Мой брат не хочет думать о своём будущем", gt: "Мой брат не хочет думать о своем будущем." },
+      { id: 18, en: "My friend and I don`t call them", ru: "Мой друг и я не хотим позвонить им", gt: "Мы с другом их так не называем." },
+      { id: 19, en: "My friend doesn`t think so", ru: "Мой друг не думает так", gt: "Мой друг так не считает." },
+      { id: 20, en: "My friend doesn`t think the same", ru: "Мой друг не думает также", gt: "Мой друг так не думает." },
+      { id: 21, en: "Those lessons don`t seem useful", ru: "Эти уроки не кажутся полезными", gt: "Эти уроки, похоже, бесполезны." },
+      { id: 22, en: "These lessons seem very useful", ru: "Эти уроки кажутся очень полезными", gt: "Эти уроки кажутся очень полезными." },
+      { id: 23, en: "My sister doesn`t want to do it later", ru: "Моя сестра не хочет сдлеать это позже", gt: "Моя сестра не хочет делать это позже." },
+      { id: 24, en: "She wants to do it right now", ru: "Она хочет сделать это прямо сейчас", gt: "Она хочет сделать это прямо сейчас." },
+      { id: 25, en: "This thing doesn`t interest me", ru: "Эта вещь не интересует меня", gt: "Меня это не интересует." },
+      { id: 26, en: "Its profit doesn`t seem big", ru: "Его прибыль не кажется большим", gt: "Похоже, прибыль невелика." },
+      { id: 27, en: "My friend doesn`t try to do it", ru: "Мой друг не пытается сделать это", gt: "Мой друг не пытается этого сделать." },
+      { id: 28, en: "Their company doesn`t try to do it", ru: "Их компания не пытается сделать это", gt: "Их компания не пытается этого делать." },
+      { id: 29, en: "That thing doesn`t seem interesting", ru: "Та вещь не кажется интересным", gt: "Эта штука не кажется интересной." },
+      { id: 30, en: "My sister doesn`t want to study there", ru: "Моя сестра не хочет учиться там", gt: "Моя сестра не хочет там учиться." },
+      { id: 31, en: "That method doesn`t work", ru: "Этот метод не работает", gt: "Этот метод не работает." },
+      { id: 32, en: "This method really helps", ru: "Этот метод реально помогает", gt: "Этот метод действительно помогает." },
+      { id: 33, en: "Their parents don`t feel happy", ru: "Их родители не чувствуют себя счастливыми", gt: "Их родители не чувствуют себя счастливыми." },
+      { id: 34, en: "He thinks money doesn`t bring people happiness", ru: "Он думает деньги не приносят людям счатье", gt: "Он считает, что деньги не приносят людям счастья." },
+      { id: 35, en: "This offer doesn`t seem so interesting", ru: "Это предложение кажется таким интересным", gt: "Это предложение не кажется таким уж интересным." },
+      { id: 36, en: "Our company doesn`t want it", ru: "Наша компания не хочет это", gt: "Наша компания этого не хочет." },
+      { id: 37, en: "My friend doesn`t agree with me", ru: "Мой друг не согласен со мной", gt: "Мой друг со мной не согласен." },
+      { id: 38, en: "I agree with you", ru: "Я согласен с тобой", gt: "Я согласен с вами" }
+    ];
+
+    const SHAPES = ["▲", "◆", "●", "■"];
+    const cleanText = (s) => s.replace(/`/g, "'").replace(/[.]+$/, "").trim();
+
+    let soundOn = true;
+    let audioCtx = null;
+    function playTone(type) {
+      if (!soundOn) return;
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        if (type === "ok") {
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+          osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.08);
+        } else if (type === "bad") {
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+          osc.frequency.setValueAtTime(160, audioCtx.currentTime + 0.12);
+        } else {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        }
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.22);
+      } catch (_) {}
+    }
+
+    function speakEnglish(text) {
+      if (!("speechSynthesis" in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(cleanText(text));
+      u.lang = "en-US";
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    let state = {
+      mode: "en2ru",
+      questions: [],
+      index: 0,
+      score: 0,
+      streak: 0,
+      bestStreak: 0,
+      correctCount: 0,
+      missed: [],
+      timerId: null,
+      timeLeft: 20,
+      maxTime: 20,
+      answered: false
+    };
+
+    const el = (id) => document.getElementById(id);
+    const shuffle = (arr) => {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+
+    document.querySelectorAll(".mode-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".mode-card").forEach((c) => c.classList.remove("active"));
+        card.classList.add("active");
+        state.mode = card.dataset.mode;
+        playTone("click");
+      });
+    });
+
+    el("soundToggleBtn").addEventListener("click", () => {
+      soundOn = !soundOn;
+      el("soundToggleBtn").textContent = soundOn ? "Sound: ON" : "Sound: OFF";
+    });
+
+    function showView(viewId) {
+      ["lobbyView", "gameView", "resultView", "studyView"].forEach((id) => {
+        el(id).classList.toggle("hidden", id !== viewId);
+      });
+    }
+
+    // Populate Study Sheet
+    el("studyTableBody").innerHTML = DATA.map((row) => `
+      <tr>
+        <td>#${row.id}</td>
+        <td><strong>${cleanText(row.en)}</strong></td>
+        <td>${row.ru}</td>
+        <td>${row.gt}</td>
+        <td><button class="btn" onclick="speakEnglish('${cleanText(row.en).replace(/'/g, "\\'")}')">🔊</button></td>
+      </tr>
+    `).join("");
+
+    el("studyBtn").addEventListener("click", () => {
+      clearInterval(state.timerId);
+      showView("studyView");
+    });
+    el("closeStudyBtn").addEventListener("click", () => showView("lobbyView"));
+
+    function buildQuestion(item, mode) {
+      const others = shuffle(DATA.filter((d) => d.id !== item.id)).slice(0, 3);
+      if (mode === "en2ru") {
+        const correct = cleanText(item.ru);
+        const choices = shuffle([correct, ...others.map((o) => cleanText(o.ru))]);
+        return {
+          item,
+          modeLabel: "EN → RU",
+          prompt: cleanText(item.en),
+          sub: "Select the matching Russian translation:",
+          choices,
+          answer: correct,
+          explain: `EN: "${cleanText(item.en)}" | RU: "${item.ru}" | GT: "${item.gt}"`
+        };
+      }
+      if (mode === "ru2en") {
+        const correct = cleanText(item.en);
+        const choices = shuffle([correct, ...others.map((o) => cleanText(o.en))]);
+        return {
+          item,
+          modeLabel: "RU → EN",
+          prompt: item.ru,
+          sub: "Choose the accurate English sentence:",
+          choices,
+          answer: correct,
+          explain: `EN: "${correct}" | GT RU: "${item.gt}"`
+        };
+      }
+      // gt_compare mode: test spotting accurate translation vs distractor/nuance
+      const trickyIds = [18, 21, 26, 35, 5, 7, 14, 31];
+      const useItem = item;
+      const choices = shuffle([
+        `Your RU: "${cleanText(useItem.ru)}"`,
+        `Google Translate: "${cleanText(useItem.gt)}"`,
+        `Wrong meaning: "${cleanText(others[0].ru)}"`,
+        `Wrong meaning: "${cleanText(others[1].gt)}"`
+      ]);
+      const bestChoice =
+        useItem.id === 18
+          ? `Google Translate: "${cleanText(useItem.gt)}"`
+          : `Your RU: "${cleanText(useItem.ru)}"`;
+
+      return {
+        item: useItem,
+        modeLabel: "HUMAN vs. GOOGLE TRANSLATE",
+        prompt: cleanText(useItem.en),
+        sub: useItem.id === 18
+          ? "Watch out! #18 says 'don't call them' — which Russian option matches 'call' rather than 'want to call'?"
+          : "Pick the closest match to the English sentence:",
+        choices,
+        answer: bestChoice,
+        explain: useItem.id === 18
+          ? `In #18 ("My friend and I don't call them"), "не хотим позвонить" added "want to call", whereas GT wrote "не называем" (call/name).`
+          : `EN: "${cleanText(useItem.en)}" | Your RU: "${item.ru}" | Google Translate: "${item.gt}"`
+      };
+    }
+
+    function startGame() {
+      const count = parseInt(el("qCountSelect").value, 10);
+      const maxTime = parseInt(el("timerSelect").value, 10);
+      const picked = shuffle(DATA).slice(0, Math.min(count, DATA.length));
+
+      state.questions = picked.map((it) => buildQuestion(it, state.mode));
+      state.index = 0;
+      state.score = 0;
+      state.streak = 0;
+      state.bestStreak = 0;
+      state.correctCount = 0;
+      state.missed = [];
+      state.maxTime = maxTime;
+
+      el("scoreVal").textContent = "0";
+      el("streakVal").textContent = "0";
+      showView("gameView");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      clearInterval(state.timerId);
+      state.answered = false;
+      const q = state.questions[state.index];
+
+      el("qCounter").textContent = `Question ${state.index + 1} / ${state.questions.length}`;
+      el("qModeLabel").textContent = `${q.modeLabel} (#${q.item.id})`;
+      el("qPrompt").textContent = q.prompt;
+      el("qSub").textContent = q.sub;
+      el("feedbackBox").classList.add("hidden");
+      el("nextRow").classList.add("hidden");
+
+      const grid = el("optionsGrid");
+      grid.innerHTML = "";
+      q.choices.forEach((choiceText, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `opt-btn opt-${idx}`;
+        btn.innerHTML = `<span class="shape">${SHAPES[idx]}</span><span>${choiceText}</span>`;
+        btn.addEventListener("click", () => handleAnswer(choiceText, btn));
+        grid.appendChild(btn);
+      });
+
+      state.timeLeft = state.maxTime;
+      updateTimerUI();
+      state.timerId = setInterval(() => {
+        state.timeLeft = Math.max(0, +(state.timeLeft - 0.2).toFixed(1));
+        updateTimerUI();
+        if (state.timeLeft <= 0) {
+          clearInterval(state.timerId);
+          handleAnswer(null, null);
+        }
+      }, 200);
+    }
+
+    function updateTimerUI() {
+      el("timerLabel").textContent = `${Math.ceil(state.timeLeft)}s`;
+      el("timerBar").style.width = `${(state.timeLeft / state.maxTime) * 100}%`;
+    }
+
+    function handleAnswer(selectedText, clickedBtn) {
+      if (state.answered) return;
+      state.answered = true;
+      clearInterval(state.timerId);
+
+      const q = state.questions[state.index];
+      const allBtns = [...document.querySelectorAll(".opt-btn")];
+      allBtns.forEach((b) => {
+        b.disabled = true;
+        const label = b.querySelector("span:last-child").textContent;
+        if (label === q.answer) {
+          b.classList.add("correct-highlight");
+        } else if (b !== clickedBtn) {
+          b.classList.add("dimmed");
+        }
+      });
+
+      const isCorrect = selectedText === q.answer;
+      const fb = el("feedbackBox");
+      fb.classList.remove("hidden", "ok", "bad");
+
+      if (isCorrect) {
+        state.streak += 1;
+        state.bestStreak = Math.max(state.bestStreak, state.streak);
+        state.correctCount += 1;
+        const speedBonus = Math.round((state.timeLeft / state.maxTime) * 500);
+        const streakBonus = Math.min(state.streak - 1, 5) * 100;
+        const earned = 500 + speedBonus + streakBonus;
+        state.score += earned;
+        playTone("ok");
+        fb.classList.add("ok");
+        fb.innerHTML = `<strong>+${earned} pts!</strong> ${q.explain}`;
+      } else {
+        state.streak = 0;
+        playTone("bad");
+        fb.classList.add("bad");
+        fb.innerHTML = `<strong>${selectedText === null ? "Time's up!" : "Not quite!"}</strong> Correct answer: <strong>${q.answer}</strong><br>${q.explain}`;
+        state.missed.push({ q, chosen: selectedText || "Time expired" });
+      }
+
+      el("scoreVal").textContent = state.score;
+      el("streakVal").textContent = state.streak;
+      el("nextRow").classList.remove("hidden");
+      el("nextBtn").textContent = state.index + 1 === state.questions.length ? "See Final Results" : "Next Question →";
+    }
+
+    el("speakBtn").addEventListener("click", () => {
+      const q = state.questions[state.index];
+      if (q) speakEnglish(q.item.en);
+    });
+
+    el("nextBtn").addEventListener("click", () => {
+      if (state.index + 1 < state.questions.length) {
+        state.index += 1;
+        renderQuestion();
+      } else {
+        finishGame();
+      }
+    });
+
+    function finishGame() {
+      showView("resultView");
+      const acc = Math.round((state.correctCount / state.questions.length) * 100);
+      el("finalScore").textContent = state.score;
+      el("finalAcc").textContent = `${acc}%`;
+      el("bestStreak").textContent = state.bestStreak;
+
+      if (state.missed.length === 0) {
+        el("missedList").innerHTML = `<p><strong>Perfect run!</strong> You got every single question right.</p>`;
+      } else {
+        el("missedList").innerHTML = `
+          <h3>Review Missed Items (${state.missed.length})</h3>
+          <table class="diff-table">
+            <thead>
+              <tr><th>#</th><th>English</th><th>Your Choice</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              ${state.missed.map((m) => `
+                <tr>
+                  <td>#${m.q.item.id}</td>
+                  <td>${cleanText(m.q.item.en)}</td>
+                  <td>${m.chosen}</td>
+                  <td><strong>${m.q.answer}</strong></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+    }
+
+    el("startBtn").addEventListener("click", startGame);
+    el("playAgainBtn").addEventListener("click", startGame);
+    el("lobbyBtn").addEventListener("click", () => showView("lobbyView"));
+    el("quitBtn").addEventListener("click", () => {
+      clearInterval(state.timerId);
+      showView("lobbyView");
+    });
+  </script>
+</body>
+</html>
